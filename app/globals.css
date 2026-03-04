@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter);
+}
+
+body {
+  font-family: var(--font-inter), sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(0, 166, 81, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 166, 81, 0.6);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-1 {
+  animation: fade-in 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fade-in 0.8s ease-out 0.4s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-3 {
+  animation: fade-in 0.8s ease-out 0.6s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-4 {
+  animation: fade-in 0.8s ease-out 0.8s forwards;
+  opacity: 0;
+}
+
+.animate-fade-in-delay-5 {
+  animation: fade-in 0.8s ease-out 1s forwards;
+  opacity: 0;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
