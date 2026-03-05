@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   Battery,
   Shield,
@@ -65,95 +64,45 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="hero-section relative overflow-hidden bg-[#0A0A0A]">
-        {/* Animated gradient background */}
-        <div className="hero-gradient absolute inset-0" />
-        {/* Floating particles (wind effect) */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="particle particle-1" />
-          <div className="particle particle-2" />
-          <div className="particle particle-3" />
-          <div className="particle particle-4" />
-          <div className="particle particle-5" />
-        </div>
+      <section className="relative bg-[#F5F5F5]">
+        <div className="mx-auto max-w-[1600px] px-6 py-24 sm:py-32 lg:px-10 lg:py-40">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#356B0D]">
+              Distributeur exclusif France
+            </p>
 
-        <div className="relative mx-auto max-w-[1600px] px-6 py-20 sm:py-28 lg:px-10 lg:py-36">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-            {/* Left: Text */}
-            <div className="text-center lg:text-left">
-              <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]">
-                Distributeur exclusif France
-              </p>
+            <h1 className="animate-fade-in-delay-1 text-4xl font-bold leading-tight tracking-tight text-[#0F0F10] sm:text-5xl lg:text-7xl">
+              Chariots electriques{" "}
+              <span className="text-[#356B0D]">PowerBug</span>
+            </h1>
 
-              <h1 className="animate-fade-in-delay-1 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Chariots electriques{" "}
-                <span className="text-[#8DC63F]">PowerBug</span>
-              </h1>
+            <p className="animate-fade-in-delay-2 mx-auto mt-6 max-w-xl text-lg text-[#6B7280]">
+              Plus de 20 ans d&apos;innovation britannique. Decouvrez la serie NX,
+              enfin disponible pour les golfeurs francais.
+            </p>
 
-              <p className="animate-fade-in-delay-2 mx-auto mt-6 max-w-xl text-lg text-white/60 lg:mx-0">
-                Plus de 20 ans d&apos;innovation britannique. Decouvrez la serie NX,
-                enfin disponible pour les golfeurs francais.
-              </p>
-
-              <div className="animate-fade-in-delay-3 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
-                <Button
-                  asChild
-                  size="lg"
-                  className="btn-glass rounded-[10px] px-8 text-base font-semibold text-white"
-                >
-                  <Link href="/trolleys">
-                    Decouvrir la gamme
-                    <ChevronRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="rounded-[10px] border-white/20 bg-white/5 px-8 text-base text-white backdrop-blur-sm hover:bg-white/10"
-                >
-                  <Link href="/configurateur">
-                    <Settings className="mr-2 h-4 w-4" />
-                    Configurer mon trolley
-                  </Link>
-                </Button>
-              </div>
-            </div>
-
-            {/* Right: Trolley images with animation */}
-            <div className="relative flex items-center justify-center">
-              {/* Glow ring behind trolleys */}
-              <div className="absolute h-80 w-80 rounded-full bg-[#356B0D]/20 blur-[80px] sm:h-96 sm:w-96" />
-
-              {/* NX - left */}
-              <div className="hero-trolley-left relative z-10 -mr-8 sm:-mr-12">
-                <Image
-                  src="/images/nx-main.jpg"
-                  alt="PowerBug NX Lithium"
-                  width={320}
-                  height={400}
-                  className="h-auto w-48 drop-shadow-2xl sm:w-64 lg:w-72"
-                  priority
-                />
-                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
-                  NX &mdash; 899&euro;
-                </div>
-              </div>
-
-              {/* NX DHC - right, slightly elevated */}
-              <div className="hero-trolley-right relative z-20 -ml-8 -mt-8 sm:-ml-12 sm:-mt-12">
-                <Image
-                  src="/images/nx-dhc-main.jpg"
-                  alt="PowerBug NX DHC Lithium"
-                  width={320}
-                  height={400}
-                  className="h-auto w-48 drop-shadow-2xl sm:w-64 lg:w-72"
-                  priority
-                />
-                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-[#356B0D]/80 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
-                  NX DHC &mdash; 999&euro;
-                </div>
-              </div>
+            <div className="animate-fade-in-delay-3 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Button
+                asChild
+                size="lg"
+                className="btn-glass rounded-[10px] px-8 text-base font-semibold text-white"
+              >
+                <Link href="/trolleys">
+                  Decouvrir la gamme
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="btn-glass-outline rounded-[10px] px-8 text-base text-[#0F0F10]"
+              >
+                <Link href="/configurateur">
+                  <Settings className="mr-2 h-4 w-4" />
+                  Configurer mon trolley
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
