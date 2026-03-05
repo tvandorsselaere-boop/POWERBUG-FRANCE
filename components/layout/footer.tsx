@@ -6,7 +6,8 @@ const footerLinks = {
     { name: "NX Lithium", href: "/trolleys/nx-lithium" },
     { name: "NX DHC Lithium", href: "/trolleys/nx-dhc-lithium" },
     { name: "Accessoires", href: "/accessoires" },
-    { name: "Batteries & Pieces", href: "/batteries" },
+    { name: "Batteries", href: "/batteries" },
+    { name: "Pieces detachees", href: "/pieces-detachees" },
     { name: "Configurateur", href: "/configurateur" },
   ],
   informations: [

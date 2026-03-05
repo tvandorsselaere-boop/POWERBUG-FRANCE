@@ -11,7 +11,9 @@ import { CartCount } from "@/components/cart-count";
 const navigation = [
   { name: "Chariots", href: "/trolleys" },
   { name: "Accessoires", href: "/accessoires" },
-  { name: "Piles", href: "/batteries" },
+  { name: "Batteries", href: "/batteries" },
+  { name: "Pieces", href: "/pieces-detachees" },
+  { name: "Videos", href: "/videos" },
   { name: "Infos", href: "/notre-histoire" },
   { name: "Contactez", href: "/contact" },
 ];

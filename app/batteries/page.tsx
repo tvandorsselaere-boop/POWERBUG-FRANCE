@@ -6,9 +6,9 @@ import { getBatteries } from "@/lib/supabase/queries";
 import { AddToCartSimple } from "@/components/add-to-cart-simple";
 
 export const metadata: Metadata = {
-  title: "Piles & Pieces detachees - PowerBug France",
+  title: "Batteries - PowerBug France",
   description:
-    "Batteries lithium de remplacement, roues, chargeurs et pieces detachees officielles PowerBug.",
+    "Batteries lithium de remplacement et chargeurs officiels PowerBug pour votre trolley de golf electrique.",
 };
 
 export const revalidate = 3600;
@@ -22,15 +22,15 @@ export default async function BatteriesPage() {
       <nav className="mb-8 flex items-center gap-2 text-sm text-[#6B7280]">
         <Link href="/" className="hover:text-[#356B0D]">Accueil</Link>
         <ChevronRight className="h-3 w-3" />
-        <span className="text-[#0F0F10]">Piles & Pieces</span>
+        <span className="text-[#0F0F10]">Batteries</span>
       </nav>
 
       <div className="mb-14">
         <h1 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
-          Piles & Pieces detachees
+          Batteries
         </h1>
         <p className="mt-3 text-lg text-[#6B7280]">
-          Pieces officielles PowerBug pour maintenir votre trolley en parfait etat.
+          Batteries lithium et chargeurs officiels PowerBug pour votre trolley de golf.
         </p>
       </div>
 

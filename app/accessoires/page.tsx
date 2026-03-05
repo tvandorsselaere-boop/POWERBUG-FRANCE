@@ -1,10 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronRight, Settings, Gift } from "lucide-react";
+import { ChevronRight, Settings, Percent } from "lucide-react";
 import { getAccessories } from "@/lib/supabase/queries";
-
-const BUNDLE_SLUGS = ["housse-transport", "porte-boisson", "porte-parapluie"];
 
 export const metadata: Metadata = {
   title: "Accessoires PowerBug",
@@ -38,7 +36,6 @@ export default async function AccessoiresPage() {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {accessories.map((acc) => {
           const price = acc.product_variants?.[0]?.price ?? acc.base_price;
-          const isBundle = BUNDLE_SLUGS.includes(acc.slug);
           return (
             <Link
               key={acc.id}
@@ -59,12 +56,10 @@ export default async function AccessoiresPage() {
                 )}
               </div>
 
-              {isBundle && (
-                <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-[#356B0D]/10 px-2 py-0.5 text-xs font-medium text-[#356B0D]">
-                  <Gift className="h-3 w-3" />
-                  Offert avec un trolley
-                </span>
-              )}
+              <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-[#356B0D]/10 px-2 py-0.5 text-xs font-medium text-[#356B0D]">
+                <Percent className="h-3 w-3" />
+                -50% avec un trolley
+              </span>
 
               <h2 className="text-lg font-semibold text-[#0F0F10] group-hover:text-[#356B0D]">
                 {acc.name}

@@ -5,6 +5,7 @@ import { AddToCartButton } from "@/components/add-to-cart-button";
 import { ProductGallery } from "@/components/product-gallery";
 import { TrolleyFeatures } from "@/components/trolley-features";
 import { ReviewsSection } from "@/components/reviews-section";
+import { VideoSection } from "@/components/video-section";
 import type { DbProduct } from "@/lib/supabase/queries";
 
 export function ProductPageDb({ product }: { product: DbProduct }) {
@@ -134,6 +135,7 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
       {isTrolley && (
         <>
           <TrolleyFeatures slug={product.slug} />
+          <VideoSection slug={product.slug} />
           <ReviewsSection />
         </>
       )}

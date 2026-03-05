@@ -1,0 +1,127 @@
+export type FeatureDetail = {
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  benefits: string[];
+  trolleys: ("nx" | "dhc" | "both")[];
+};
+
+export const features: FeatureDetail[] = [
+  {
+    slug: "28v-power",
+    title: "Systeme 28V Power",
+    subtitle: "Puissance superieure sur tous les terrains",
+    description:
+      "Le systeme 28 volts offre une puissance superieure aux systemes 24V standard. Montees, pentes, fairways lourds apres la pluie : votre trolley avance sans effort et sans ralentir.",
+    benefits: [
+      "Puissance superieure aux systemes 24V",
+      "Performances constantes en montee",
+      "Adapte aux terrains lourds et humides",
+      "Fiabilite eprouvee sur 19 ans",
+    ],
+    trolleys: ["both"],
+  },
+  {
+    slug: "pliage-vrap",
+    title: "Pliage VRAP ultra-compact",
+    subtitle: "Un seul geste, quelques secondes",
+    description:
+      "Le systeme brevete VRAP (Vertical Rapid Action Pack) permet de plier le trolley en un seul mouvement fluide. Le resultat : un encombrement minimal qui tient facilement dans n'importe quel coffre de voiture.",
+    benefits: [
+      "Pliage en quelques secondes",
+      "Un seul geste suffit",
+      "Encombrement minimal dans le coffre",
+      "Pas d'outils necessaires",
+    ],
+    trolleys: ["both"],
+  },
+  {
+    slug: "roue-anti-colmatage",
+    title: "Roue avant anti-colmatage",
+    subtitle: "Performante en toutes saisons",
+    description:
+      "Le design exclusif de la roue avant empeche l'accumulation de boue, d'herbe et de debris. Votre trolley roule librement meme sur les terrains les plus boueux, avec un nettoyage minimal apres la partie.",
+    benefits: [
+      "Pas d'accumulation de boue ou d'herbe",
+      "Roulement libre en toutes conditions",
+      "Nettoyage rapide et facile",
+      "Design exclusif PowerBug",
+    ],
+    trolleys: ["both"],
+  },
+  {
+    slug: "nx-handle",
+    title: "NX Handle — ecran + USB",
+    subtitle: "Controle et connectivite",
+    description:
+      "La poignee NX integre un ecran digital pour controler la vitesse et un port USB pour charger votre telephone ou GPS pendant la partie. Tout est a portee de main.",
+    benefits: [
+      "Ecran digital de controle",
+      "Port USB integre pour recharger vos appareils",
+      "Reglage de vitesse intuitif",
+      "Design ergonomique",
+    ],
+    trolleys: ["both"],
+  },
+  {
+    slug: "pneus-winter-ready",
+    title: "Pneus Winter-Ready",
+    subtitle: "Jouez toute l'annee",
+    description:
+      "Les pneus inversibles avec profil crante offrent une adherence maximale sur terrain humide, boueux ou givre. Inversez simplement les pneus pour passer du mode ete au mode hiver.",
+    benefits: [
+      "Profil crante pour l'hiver",
+      "Inversibles ete/hiver",
+      "Adherence sur terrain humide et givre",
+      "Pas besoin d'acheter des pneus supplementaires",
+    ],
+    trolleys: ["both"],
+  },
+  {
+    slug: "station-accessoires",
+    title: "Station accessoires integree",
+    subtitle: "Personnalisez votre trolley",
+    description:
+      "Le systeme de fixation universel permet d'ajouter tous les accessoires PowerBug en un clic : siege, porte-parapluie, GPS, porte-boisson et bien plus.",
+    benefits: [
+      "Fixation universelle en un clic",
+      "Compatible tous accessoires PowerBug",
+      "Ajout et retrait sans outils",
+      "Large gamme d'accessoires disponibles",
+    ],
+    trolleys: ["both"],
+  },
+  {
+    slug: "downhill-control",
+    title: "Downhill Control (DHC)",
+    subtitle: "Controle total en descente",
+    description:
+      "La technologie exclusive Downhill Control freine automatiquement le trolley en descente. Le trolley adapte sa vitesse a la pente pour un controle total sans effort. Indispensable pour les parcours vallonnes.",
+    benefits: [
+      "Freinage automatique en descente",
+      "Adaptation automatique a la pente",
+      "Securite maximale sur terrain vallonne",
+      "Technologie exclusive PowerBug",
+    ],
+    trolleys: ["dhc"],
+  },
+  {
+    slug: "frein-parking",
+    title: "Frein parking electronique",
+    subtitle: "Immobilisation instantanee",
+    description:
+      "Le frein parking electronique immobilise votre trolley sur simple pression d'un bouton. Votre trolley reste parfaitement stable sur les pentes les plus raides pendant que vous jouez.",
+    benefits: [
+      "Immobilisation instantanee",
+      "Activation par simple pression",
+      "Stable sur les pentes les plus raides",
+      "Exclusif au modele NX DHC",
+    ],
+    trolleys: ["dhc"],
+  },
+];
+
+export function getFeatureBySlug(slug: string) {
+  return features.find((f) => f.slug === slug);
+}
