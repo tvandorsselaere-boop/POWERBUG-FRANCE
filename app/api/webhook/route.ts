@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe/server";
-import { createServerClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/server";
 import Stripe from "stripe";
 
 export async function POST(req: NextRequest) {
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
         { expand: ["data.price.product"] }
       );
 
-      const supabase = createServerClient();
+      const supabase = createServiceClient();
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const shippingDetails = (session as any).shipping_details as {

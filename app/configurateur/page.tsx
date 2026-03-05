@@ -217,7 +217,7 @@ export default function ConfigurateurPage() {
 
         {/* Right: Summary */}
         <div className="lg:col-span-1">
-          <div className="sticky top-24 rounded-2xl border border-[#DBDBDB] bg-white p-6 shadow-sm">
+          <div className="sticky top-24 card-glass rounded-2xl p-6">
             <h2 className="mb-6 flex items-center gap-2 text-lg font-bold text-[#0F0F10]">
               <ShoppingCart className="h-5 w-5 text-[#356B0D]" />
               Recapitulatif
@@ -304,7 +304,7 @@ export default function ConfigurateurPage() {
                 </div>
 
                 <Button
-                  className="w-full rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509]"
+                  className="w-full btn-glass rounded-[10px] text-white"
                   size="lg"
                   disabled={!trolley}
                   onClick={() => {

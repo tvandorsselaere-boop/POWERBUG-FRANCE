@@ -107,6 +107,52 @@ body {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
+/* Glassmorphism buttons - iOS style */
+.btn-glass {
+  background: linear-gradient(135deg, rgba(53, 107, 13, 0.9), rgba(53, 107, 13, 0.75));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(141, 198, 63, 0.25);
+  box-shadow: 0 4px 16px rgba(53, 107, 13, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.btn-glass:hover {
+  background: linear-gradient(135deg, rgba(53, 107, 13, 1), rgba(42, 85, 9, 0.9));
+  box-shadow: 0 6px 24px rgba(53, 107, 13, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+.btn-glass:active {
+  transform: scale(0.96) translateY(0);
+  box-shadow: 0 2px 8px rgba(53, 107, 13, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.btn-glass-outline {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(219, 219, 219, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.btn-glass-outline:hover {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+.btn-glass-outline:active {
+  transform: scale(0.96) translateY(0);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* Glass card */
+.card-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(219, 219, 219, 0.5);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
 :root {
   --radius: 0.625rem;
   /* PowerBug light theme - charte officielle powerbug.eu */

@@ -36,7 +36,7 @@ export function CheckoutButton() {
     <Button
       onClick={handleCheckout}
       disabled={loading || items.length === 0}
-      className="w-full rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509]"
+      className="w-full btn-glass rounded-[10px] text-white"
       size="lg"
     >
       {loading ? (

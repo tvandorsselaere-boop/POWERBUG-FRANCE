@@ -69,14 +69,14 @@ export default function PanierPage() {
           <div className="mt-8 flex gap-4">
             <Button
               asChild
-              className="rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509]"
+              className="btn-glass rounded-[10px] text-white"
             >
               <Link href="/trolleys">Voir les chariots</Link>
             </Button>
             <Button
               asChild
               variant="outline"
-              className="rounded-[10px] border-[#DBDBDB] text-[#0F0F10] hover:bg-[#F5F5F5]"
+              className="btn-glass-outline rounded-[10px] text-[#0F0F10]"
             >
               <Link href="/configurateur">Configurateur</Link>
             </Button>
@@ -169,7 +169,7 @@ export default function PanierPage() {
 
           {/* Summary */}
           <div className="lg:col-span-1">
-            <div className="sticky top-24 rounded-2xl border border-[#DBDBDB] bg-white p-6">
+            <div className="sticky top-24 card-glass rounded-2xl p-6">
               <h2 className="mb-4 text-lg font-bold text-[#0F0F10]">
                 Recapitulatif
               </h2>

@@ -85,7 +85,7 @@ export default function Home() {
               <Button
                 asChild
                 size="lg"
-                className="rounded-[10px] bg-[#356B0D] px-8 text-base font-semibold text-white hover:bg-[#2a5509]"
+                className="btn-glass rounded-[10px] px-8 text-base font-semibold text-white"
               >
                 <Link href="/trolleys">
                   Decouvrir la gamme
@@ -96,7 +96,7 @@ export default function Home() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="rounded-[10px] border-[#DBDBDB] px-8 text-base text-[#0F0F10] hover:bg-[#F5F5F5]"
+                className="btn-glass-outline rounded-[10px] px-8 text-base text-[#0F0F10]"
               >
                 <Link href="/configurateur">
                   <Settings className="mr-2 h-4 w-4" />
@@ -138,7 +138,7 @@ export default function Home() {
               <Link
                 key={trolley.name}
                 href={trolley.href}
-                className="group rounded-2xl border border-[#DBDBDB] bg-white p-8 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
+                className="group card-glass rounded-2xl p-8 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
               >
                 {/* Placeholder image area */}
                 <div className="mb-6 flex h-64 items-center justify-center rounded-xl bg-[#F5F5F5]">
@@ -182,7 +182,7 @@ export default function Home() {
             <Button
               asChild
               variant="outline"
-              className="rounded-[10px] border-[#DBDBDB] text-[#0F0F10] hover:bg-[#F5F5F5]"
+              className="btn-glass-outline rounded-[10px] text-[#0F0F10]"
             >
               <Link href="/trolleys">
                 Comparer NX vs NX DHC
@@ -209,7 +209,7 @@ export default function Home() {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="rounded-xl bg-white p-6 text-center shadow-sm"
+                className="card-glass rounded-xl p-6 text-center"
               >
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#356B0D]/10">
                   <feature.icon className="h-6 w-6 text-[#356B0D]" />
@@ -237,7 +237,7 @@ export default function Home() {
           <Button
             asChild
             size="lg"
-            className="mt-8 rounded-[10px] bg-[#356B0D] px-10 text-base font-semibold text-white hover:bg-[#2a5509]"
+            className="mt-8 btn-glass rounded-[10px] px-10 text-base font-semibold text-white"
           >
             <Link href="/configurateur">
               <Settings className="mr-2 h-5 w-5" />

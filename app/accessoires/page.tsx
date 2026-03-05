@@ -42,7 +42,7 @@ export default async function AccessoiresPage() {
             <Link
               key={acc.id}
               href={`/accessoires/${acc.slug}`}
-              className="group rounded-2xl border border-[#DBDBDB] bg-white p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
+              className="group card-glass rounded-2xl p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
             >
               <div className="mb-4 flex h-40 items-center justify-center rounded-xl bg-[#F5F5F5]">
                 {acc.product_images?.[0] ? (

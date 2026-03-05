@@ -41,7 +41,7 @@ export default function TrolleysPage() {
       {/* Mobile cards */}
       <div className="mb-12 grid grid-cols-1 gap-6 md:hidden">
         {/* NX */}
-        <div className="rounded-2xl border border-[#DBDBDB] bg-white p-6">
+        <div className="card-glass rounded-2xl p-6">
           <div className="mb-4 flex items-center justify-center rounded-xl bg-[#F5F5F5] py-16">
             <Zap className="h-16 w-16 text-[#DBDBDB]" />
           </div>
@@ -57,7 +57,7 @@ export default function TrolleysPage() {
           </p>
           <Button
             asChild
-            className="mt-4 w-full rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509]"
+            className="mt-4 w-full btn-glass rounded-[10px] text-white"
           >
             <Link href="/trolleys/nx-lithium">
               <ShoppingCart className="mr-2 h-4 w-4" />
@@ -67,7 +67,7 @@ export default function TrolleysPage() {
         </div>
 
         {/* NX DHC */}
-        <div className="rounded-2xl border-2 border-[#356B0D] bg-white p-6">
+        <div className="card-glass rounded-2xl border-2 border-[#356B0D] p-6">
           <div className="mb-4 flex items-center justify-center rounded-xl bg-[#356B0D]/5 py-16">
             <Zap className="h-16 w-16 text-[#8DC63F]" />
           </div>
@@ -83,7 +83,7 @@ export default function TrolleysPage() {
           </p>
           <Button
             asChild
-            className="mt-4 w-full rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509]"
+            className="mt-4 w-full btn-glass rounded-[10px] text-white"
           >
             <Link href="/trolleys/nx-dhc-lithium">
               <ShoppingCart className="mr-2 h-4 w-4" />
@@ -176,7 +176,7 @@ export default function TrolleysPage() {
               <Button
                 asChild
                 variant="outline"
-                className="rounded-[10px] border-[#DBDBDB] text-[#0F0F10] hover:bg-white"
+                className="btn-glass-outline rounded-[10px] text-[#0F0F10]"
               >
                 <Link href="/trolleys/nx-lithium">
                   Voir le NX
@@ -187,7 +187,7 @@ export default function TrolleysPage() {
             <div className="flex justify-center px-6 py-6">
               <Button
                 asChild
-                className="rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509]"
+                className="btn-glass rounded-[10px] text-white"
               >
                 <Link href="/trolleys/nx-dhc-lithium">
                   Voir le NX DHC
@@ -212,7 +212,7 @@ export default function TrolleysPage() {
           </p>
           <Button
             asChild
-            className="mt-4 rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509]"
+            className="mt-4 btn-glass rounded-[10px] text-white"
           >
             <Link href="/configurateur">Configurer mon trolley</Link>
           </Button>

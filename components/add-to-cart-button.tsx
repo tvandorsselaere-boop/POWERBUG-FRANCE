@@ -46,7 +46,7 @@ export function AddToCartButton({
     <Button
       size={size}
       onClick={handleClick}
-      className={`rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509] ${className}`}
+      className={`btn-glass rounded-[10px] text-white ${className}`}
     >
       {added ? (
         <>

@@ -27,7 +27,7 @@ export function AddToCartSimple({
     <Button
       size="sm"
       onClick={handleClick}
-      className="rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509]"
+      className="btn-glass rounded-[10px] text-white"
     >
       {added ? (
         <Check className="h-4 w-4" />

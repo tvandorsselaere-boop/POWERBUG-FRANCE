@@ -43,14 +43,14 @@ function ConfirmationContent() {
       <div className="mt-10 flex justify-center gap-4">
         <Button
           asChild
-          className="rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509]"
+          className="btn-glass rounded-[10px] text-white"
         >
           <Link href="/">Retour a l&apos;accueil</Link>
         </Button>
         <Button
           asChild
           variant="outline"
-          className="rounded-[10px] border-[#DBDBDB] text-[#0F0F10] hover:bg-[#F5F5F5]"
+          className="btn-glass-outline rounded-[10px] text-[#0F0F10]"
         >
           <Link href="/trolleys">Continuer les achats</Link>
         </Button>
