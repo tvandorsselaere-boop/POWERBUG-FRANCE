@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight, Zap, Check, Gift } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AddToCartButton } from "@/components/add-to-cart-button";
@@ -48,9 +49,11 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
         {/* Image */}
         <div className="flex items-center justify-center rounded-2xl border border-[#DBDBDB] bg-[#F5F5F5] aspect-square">
           {images.length > 0 ? (
-            <img
+            <Image
               src={images[0].url}
               alt={images[0].alt_text ?? product.name}
+              width={600}
+              height={600}
               className="h-full w-full rounded-2xl object-contain p-8"
             />
           ) : (

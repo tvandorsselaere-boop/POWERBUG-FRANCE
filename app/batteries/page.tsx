@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight, Battery, Wrench } from "lucide-react";
 import { getBatteries } from "@/lib/supabase/queries";
 import { AddToCartSimple } from "@/components/add-to-cart-simple";
@@ -44,9 +45,11 @@ export default async function BatteriesPage() {
             >
               <div className="mb-4 flex h-32 items-center justify-center rounded-xl bg-[#F5F5F5]">
                 {item.product_images?.[0] ? (
-                  <img
+                  <Image
                     src={item.product_images[0].url}
                     alt={item.product_images[0].alt_text ?? item.name}
+                    width={300}
+                    height={300}
                     className="h-full w-full rounded-xl object-contain p-4"
                   />
                 ) : isBattery ? (

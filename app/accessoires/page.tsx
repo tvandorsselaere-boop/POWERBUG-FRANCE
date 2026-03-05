@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight, Settings, Gift } from "lucide-react";
 import { getAccessories } from "@/lib/supabase/queries";
 
@@ -46,9 +47,11 @@ export default async function AccessoiresPage() {
             >
               <div className="mb-4 flex h-40 items-center justify-center rounded-xl bg-[#F5F5F5]">
                 {acc.product_images?.[0] ? (
-                  <img
+                  <Image
                     src={acc.product_images[0].url}
                     alt={acc.product_images[0].alt_text ?? acc.name}
+                    width={300}
+                    height={300}
                     className="h-full w-full rounded-xl object-contain p-4"
                   />
                 ) : (
