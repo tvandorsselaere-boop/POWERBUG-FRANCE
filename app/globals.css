@@ -153,6 +153,77 @@ body {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 }
 
+/* Hero section */
+.hero-section {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-gradient {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 50%, rgba(53, 107, 13, 0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(141, 198, 63, 0.08) 0%, transparent 60%),
+    linear-gradient(180deg, #0A0A0A 0%, #0D1F13 50%, #0A0A0A 100%);
+  animation: gradient-shift 8s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+/* Trolley floating animations */
+.hero-trolley-left {
+  animation: float-left 6s ease-in-out infinite;
+}
+.hero-trolley-right {
+  animation: float-right 5s ease-in-out infinite;
+}
+
+@keyframes float-left {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-12px) rotate(0deg); }
+}
+@keyframes float-right {
+  0%, 100% { transform: translateY(-8px) rotate(1deg); }
+  50% { transform: translateY(4px) rotate(0deg); }
+}
+
+/* Wind particles */
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(141, 198, 63, 0.4);
+  border-radius: 50%;
+  animation: wind linear infinite;
+}
+.particle-1 { top: 20%; left: -5%; animation-duration: 8s; animation-delay: 0s; width: 3px; height: 3px; }
+.particle-2 { top: 40%; left: -5%; animation-duration: 6s; animation-delay: 1s; opacity: 0.6; }
+.particle-3 { top: 60%; left: -5%; animation-duration: 10s; animation-delay: 2s; width: 4px; height: 4px; }
+.particle-4 { top: 30%; left: -5%; animation-duration: 7s; animation-delay: 3s; opacity: 0.4; }
+.particle-5 { top: 75%; left: -5%; animation-duration: 9s; animation-delay: 0.5s; width: 2px; height: 2px; }
+
+@keyframes wind {
+  0% {
+    transform: translate(0, 0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translate(10vw, -5px) scale(1);
+  }
+  90% {
+    opacity: 0.5;
+    transform: translate(100vw, -20px) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(110vw, -25px) scale(0);
+  }
+}
+
 :root {
   --radius: 0.625rem;
   /* PowerBug light theme - charte officielle powerbug.eu */

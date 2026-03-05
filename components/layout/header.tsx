@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
-import { Menu, ShoppingCart, Zap, Search, User } from "lucide-react";
+import { Menu, ShoppingCart, Search, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CartCount } from "@/components/cart-count";
@@ -22,11 +23,15 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-[#DBDBDB] bg-white">
       <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6 lg:px-10">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Zap className="h-6 w-6 text-[#356B0D]" />
-          <span className="text-xl font-semibold tracking-tight text-[#0F0F10]">
-            POWER<span className="font-bold">BUG</span>
-          </span>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/images/powerbug-logo.png"
+            alt="PowerBug"
+            width={160}
+            height={40}
+            className="h-8 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop nav */}
