@@ -8,14 +8,13 @@ type Video = {
 };
 
 const nxVideos: Video[] = [
-  { id: "PLACEHOLDER_NX_OVERVIEW", title: "NX Lithium — Presentation" },
-  { id: "PLACEHOLDER_NX_FOLDING", title: "Pliage VRAP en action" },
+  { id: "HDm7eUlzQFc", title: "PowerBug GT Lithium — Presentation" },
+  { id: "UPN07G1B2wY", title: "Connexion et retrait de la batterie" },
 ];
 
 const dhcVideos: Video[] = [
-  { id: "PLACEHOLDER_DHC_OVERVIEW", title: "NX DHC — Presentation" },
-  { id: "PLACEHOLDER_DHC_DOWNHILL", title: "Downhill Control en action" },
-  { id: "PLACEHOLDER_DHC_FOLDING", title: "Pliage VRAP en action" },
+  { id: "x5cDyT2jT9g", title: "PowerBug GTX1 Lithium — Presentation" },
+  { id: "UPN07G1B2wY", title: "Connexion et retrait de la batterie" },
 ];
 
 export function VideoSection({ slug }: { slug: string }) {

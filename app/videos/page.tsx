@@ -6,18 +6,22 @@ import { VideoEmbed } from "@/components/video-embed";
 export const metadata: Metadata = {
   title: "Videos PowerBug - Nos chariots en action",
   description:
-    "Decouvrez nos chariots electriques PowerBug en video. Presentations, demonstrations du pliage VRAP et du Downhill Control.",
+    "Decouvrez nos chariots electriques PowerBug en video. Presentations, tutoriels et guides de maintenance.",
 };
 
-const nxVideos = [
-  { id: "PLACEHOLDER_NX_OVERVIEW", title: "NX Lithium — Presentation" },
-  { id: "PLACEHOLDER_NX_FOLDING", title: "Pliage VRAP en action" },
+const presentationVideos = [
+  { id: "HDm7eUlzQFc", title: "PowerBug GT Lithium Electric Golf Trolley" },
+  { id: "x5cDyT2jT9g", title: "PowerBug GTX1 Lithium Golf Trolley" },
 ];
 
-const dhcVideos = [
-  { id: "PLACEHOLDER_DHC_OVERVIEW", title: "NX DHC — Presentation" },
-  { id: "PLACEHOLDER_DHC_DOWNHILL", title: "Downhill Control en action" },
-  { id: "PLACEHOLDER_DHC_FOLDING", title: "Pliage VRAP en action" },
+const tutorialVideos = [
+  { id: "UPN07G1B2wY", title: "Connexion et retrait de la batterie (NX Lithium)" },
+  { id: "bKXsyp8CA20", title: "Changement de batterie du manche" },
+  { id: "Eljk3GDaQAA", title: "Installation des inserts bac batterie lithium" },
+  { id: "FVrwNDoMuEM", title: "Convertir une batterie lithium universelle vers connecteur PowerBug" },
+  { id: "2WiRZPa8S64", title: "Remplacement de la charniere" },
+  { id: "B41lt06pXFQ", title: "Remplacement du boitier electronique (ECU)" },
+  { id: "FbCoTKlglz4", title: "Remplacement du moteur" },
 ];
 
 export default function VideosPage() {
@@ -36,15 +40,17 @@ export default function VideosPage() {
         Nos chariots en action
       </h1>
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-[#6B7280]">
-        Decouvrez les chariots electriques PowerBug en video : presentations,
-        demonstrations et fonctionnalites exclusives.
+        Decouvrez les chariots electriques PowerBug en video : presentations
+        produits, tutoriels et guides de maintenance.
       </p>
 
-      {/* NX Lithium Section */}
+      {/* Presentations */}
       <section className="mt-16">
-        <h2 className="mb-8 text-2xl font-bold text-[#0F0F10]">NX Lithium</h2>
+        <h2 className="mb-8 text-2xl font-bold text-[#0F0F10]">
+          Presentations
+        </h2>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-          {nxVideos.map((video) => (
+          {presentationVideos.map((video) => (
             <div key={video.id} className="card-glass rounded-2xl p-4">
               <VideoEmbed videoId={video.id} title={video.title} />
               <p className="mt-3 text-center text-sm font-medium text-[#6B7280]">
@@ -55,13 +61,13 @@ export default function VideosPage() {
         </div>
       </section>
 
-      {/* NX DHC Lithium Section */}
+      {/* Tutoriels & Maintenance */}
       <section className="mt-16">
         <h2 className="mb-8 text-2xl font-bold text-[#0F0F10]">
-          NX DHC Lithium
+          Tutoriels & Maintenance
         </h2>
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {dhcVideos.map((video) => (
+          {tutorialVideos.map((video) => (
             <div key={video.id} className="card-glass rounded-2xl p-4">
               <VideoEmbed videoId={video.id} title={video.title} />
               <p className="mt-3 text-center text-sm font-medium text-[#6B7280]">
@@ -81,7 +87,7 @@ export default function VideosPage() {
           Tutoriels, presentations de produits et conseils d&apos;utilisation.
         </p>
         <a
-          href="https://www.youtube.com/@PLACEHOLDER_POWERBUG_CHANNEL"
+          href="https://www.youtube.com/@PowerBugElectricGolfTrolleys"
           target="_blank"
           rel="noopener noreferrer"
           className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#356B0D] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#2A5509]"
