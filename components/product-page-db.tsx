@@ -1,8 +1,10 @@
 import Link from "next/link";
-import Image from "next/image";
-import { ChevronRight, Zap, Check, Gift } from "lucide-react";
+import { ChevronRight, Check, Gift } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AddToCartButton } from "@/components/add-to-cart-button";
+import { ProductGallery } from "@/components/product-gallery";
+import { TrolleyFeatures } from "@/components/trolley-features";
+import { ReviewsSection } from "@/components/reviews-section";
 import type { DbProduct } from "@/lib/supabase/queries";
 import { BUNDLE_VALUE } from "@/lib/data/products";
 
@@ -46,20 +48,8 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
       </nav>
 
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-        {/* Image */}
-        <div className="flex items-center justify-center rounded-2xl border border-[#DBDBDB] bg-[#F5F5F5] aspect-square">
-          {images.length > 0 ? (
-            <Image
-              src={images[0].url}
-              alt={images[0].alt_text ?? product.name}
-              width={600}
-              height={600}
-              className="h-full w-full rounded-2xl object-contain p-8"
-            />
-          ) : (
-            <Zap className="h-24 w-24 text-[#DBDBDB]" />
-          )}
-        </div>
+        {/* Gallery */}
+        <ProductGallery images={images} productName={product.name} />
 
         {/* Info */}
         <div className="flex flex-col justify-center">
@@ -144,6 +134,14 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
           )}
         </div>
       </div>
+
+      {/* Trolley-specific sections */}
+      {isTrolley && (
+        <>
+          <TrolleyFeatures slug={product.slug} />
+          <ReviewsSection />
+        </>
+      )}
     </div>
   );
 }

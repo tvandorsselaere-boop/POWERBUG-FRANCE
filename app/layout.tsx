@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ConstructionBanner } from "@/components/construction-banner";
+import { TrustBanner } from "@/components/trust-banner";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body className={`${poppins.variable} antialiased bg-white text-[#0F0F10]`}>
         <ConstructionBanner />
         <Header />
+        <TrustBanner />
         <main className="min-h-screen">{children}</main>
         <Footer />
       </body>
