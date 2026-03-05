@@ -1,14 +1,18 @@
 import { Metadata } from "next";
-import { ProductPage } from "@/components/product-page";
-import { trolleys } from "@/lib/data/products";
+import { notFound } from "next/navigation";
+import { getProductBySlug } from "@/lib/supabase/queries";
+import { ProductPageDb } from "@/components/product-page-db";
 
 export const metadata: Metadata = {
   title: "PowerBug NX DHC Lithium - Chariot electrique premium",
   description:
-    "Le PowerBug NX DHC Lithium : Downhill Control, frein parking electronique, port USB, batterie lithium 36 trous. A partir de 449 EUR.",
+    "Le PowerBug NX DHC Lithium : Downhill Control, frein parking electronique, batterie lithium 36 trous. 999 EUR.",
 };
 
-export default function NxDhcLithiumPage() {
-  const product = trolleys.find((t) => t.slug === "nx-dhc-lithium")!;
-  return <ProductPage product={product} />;
+export const revalidate = 3600;
+
+export default async function NxDhcLithiumPage() {
+  const product = await getProductBySlug("nx-dhc-lithium");
+  if (!product) notFound();
+  return <ProductPageDb product={product} />;
 }

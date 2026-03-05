@@ -1,29 +1,32 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ProductPage } from "@/components/product-page";
-import { accessories } from "@/lib/data/products";
+import { getProductBySlug, getAccessories } from "@/lib/supabase/queries";
+import { ProductPageDb } from "@/components/product-page-db";
 
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const product = accessories.find((a) => a.slug === slug);
+  const product = await getProductBySlug(slug);
   if (!product) return {};
   return {
     title: `${product.name} - Accessoire PowerBug`,
-    description: product.description,
+    description: product.seo_description ?? product.description,
   };
 }
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const accessories = await getAccessories();
   return accessories.map((a) => ({ slug: a.slug }));
 }
 
 export default async function AccessoirePage({ params }: Props) {
   const { slug } = await params;
-  const product = accessories.find((a) => a.slug === slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
-  return <ProductPage product={product} />;
+  return <ProductPageDb product={product} />;
 }
