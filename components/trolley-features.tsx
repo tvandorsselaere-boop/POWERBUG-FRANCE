@@ -56,15 +56,15 @@ const nxFeatures: Feature[] = [
   },
   {
     icon: Shield,
-    title: "Garantie 3 ans France",
+    title: "Garantie 2 ans constructeur",
     description:
-      "Trolley et batterie garantis 3 ans. SAV base en France pour une prise en charge rapide et locale.",
+      "Trolley et batterie couverts par la garantie constructeur de 2 ans. SAV base en France pour une prise en charge rapide et locale.",
   },
   {
     icon: Star,
-    title: "5 800+ avis clients",
+    title: "8 000+ avis clients",
     description:
-      "Classe N°1 en fiabilite et service client par les golfeurs du monde entier. Plus de 20 ans d'excellence britannique.",
+      "N°1 au classement client des marques de chariots electriques de golf. Depuis 2003.",
   },
 ];
 

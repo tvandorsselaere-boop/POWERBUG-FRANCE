@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ChevronRight, Zap, Check, Gift } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Product } from "@/lib/data/products";
-import { BUNDLE_VALUE } from "@/lib/data/products";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 
 export function ProductPage({ product }: { product: Product }) {
@@ -71,10 +70,10 @@ export function ProductPage({ product }: { product: Product }) {
               <Gift className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
               <div>
                 <p className="text-sm font-semibold text-[#356B0D]">
-                  3 accessoires offerts (valeur {BUNDLE_VALUE.toFixed(2)}&euro;)
+                  -50% sur tous les accessoires
                 </p>
                 <p className="mt-1 text-xs text-[#6B7280]">
-                  Travel Cover + Drink Holder + Umbrella Holder inclus avec votre trolley
+                  Ajoutez des accessoires a votre trolley et beneficiez de 50% de reduction
                 </p>
               </div>
             </div>
@@ -122,10 +121,10 @@ export function ProductPage({ product }: { product: Product }) {
             </p>
           )}
 
-          {product.inBundle && (
+          {product.category === "accessoire" && (
             <p className="mt-4 flex items-center gap-1 text-sm text-[#356B0D]">
               <Gift className="h-4 w-4" />
-              Offert avec l&apos;achat d&apos;un trolley
+              -50% avec l&apos;achat d&apos;un trolley
             </p>
           )}
         </div>

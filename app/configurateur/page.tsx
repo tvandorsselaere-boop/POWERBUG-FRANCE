@@ -10,14 +10,14 @@ import {
   Check,
   Settings,
   Gift,
+  Percent,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart-store";
 import {
   trolleys,
   accessories,
-  bundleAccessories,
-  BUNDLE_VALUE,
+  ACCESSORY_DISCOUNT,
 } from "@/lib/data/products";
 
 export default function ConfigurateurPage() {
@@ -25,14 +25,7 @@ export default function ConfigurateurPage() {
   const [selectedExtras, setSelectedExtras] = useState<string[]>([]);
 
   const trolley = trolleys.find((t) => t.slug === selectedTrolley);
-  const { addItem, addTrolleyBundle } = useCartStore();
-
-  const extraAccessories = accessories.filter(
-    (a) => !bundleAccessories.includes(a.slug)
-  );
-  const bundleItems = accessories.filter((a) =>
-    bundleAccessories.includes(a.slug)
-  );
+  const { addItem } = useCartStore();
 
   const toggleExtra = (slug: string) => {
     setSelectedExtras((prev) =>
@@ -40,11 +33,14 @@ export default function ConfigurateurPage() {
     );
   };
 
-  const extrasTotal = extraAccessories
-    .filter((a) => selectedExtras.includes(a.slug))
-    .reduce((sum, a) => sum + a.price, 0);
+  const selectedAccessories = accessories.filter((a) =>
+    selectedExtras.includes(a.slug)
+  );
 
-  const total = (trolley?.price ?? 0) + extrasTotal;
+  const accessoriesFullPrice = selectedAccessories.reduce((sum, a) => sum + a.price, 0);
+  const discount = trolley ? accessoriesFullPrice * ACCESSORY_DISCOUNT : 0;
+  const accessoriesDiscounted = accessoriesFullPrice - discount;
+  const total = (trolley?.price ?? 0) + accessoriesDiscounted;
 
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-12 sm:py-16 lg:px-10">
@@ -62,11 +58,10 @@ export default function ConfigurateurPage() {
           Configurez votre trolley
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-lg text-[#6B7280]">
-          Choisissez votre modele et recevez{" "}
+          Choisissez votre modele et beneficiez de{" "}
           <span className="font-semibold text-[#356B0D]">
-            3 accessoires offerts
-          </span>{" "}
-          d&apos;une valeur de {BUNDLE_VALUE.toFixed(2)}&euro;.
+            -50% sur tous les accessoires
+          </span>.
         </p>
       </div>
 
@@ -128,58 +123,40 @@ export default function ConfigurateurPage() {
             </div>
           </div>
 
-          {/* Bundle included */}
+          {/* -50% banner */}
           {trolley && (
-            <div>
-              <h2 className="mb-4 flex items-center gap-3 text-xl font-bold text-[#0F0F10]">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#8DC63F] text-sm font-bold text-white">
-                  <Gift className="h-4 w-4" />
-                </span>
-                Accessoires offerts
-                <span className="text-sm font-normal text-[#356B0D]">
-                  inclus avec votre chariot
-                </span>
-              </h2>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                {bundleItems.map((acc) => (
-                  <div
-                    key={acc.slug}
-                    className="flex items-center gap-3 rounded-xl border border-[#8DC63F]/30 bg-[#8DC63F]/5 p-4"
-                  >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#8DC63F]/20">
-                      <Gift className="h-5 w-5 text-[#356B0D]" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-medium text-[#0F0F10] truncate">
-                        {acc.name}
-                      </h3>
-                      <p className="text-xs text-[#356B0D]">
-                        OFFERT{" "}
-                        <span className="text-[#6B7280] line-through">
-                          {acc.price}&euro;
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                ))}
+            <div className="flex items-start gap-3 rounded-xl bg-[#356B0D]/5 border border-[#356B0D]/20 p-4">
+              <Percent className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
+              <div>
+                <p className="text-sm font-semibold text-[#356B0D]">
+                  -50% sur tous les accessoires
+                </p>
+                <p className="mt-1 text-xs text-[#6B7280]">
+                  La reduction s&apos;applique automatiquement avec votre trolley
+                </p>
               </div>
             </div>
           )}
 
-          {/* Step 2: Extra accessories */}
+          {/* Step 2: Accessories */}
           <div>
             <h2 className="mb-4 flex items-center gap-3 text-xl font-bold text-[#0F0F10]">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#356B0D] text-sm font-bold text-white">
-                {trolley ? "2" : "2"}
+                2
               </span>
-              Accessoires supplementaires
-              <span className="text-sm font-normal text-[#6B7280]">
-                (optionnel)
-              </span>
+              Ajoutez des accessoires
+              {trolley && (
+                <span className="text-sm font-normal text-[#356B0D]">
+                  (-50% applique)
+                </span>
+              )}
             </h2>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {extraAccessories.map((acc) => {
+              {accessories.map((acc) => {
                 const isSelected = selectedExtras.includes(acc.slug);
+                const discountedPrice = trolley
+                  ? acc.price * (1 - ACCESSORY_DISCOUNT)
+                  : acc.price;
                 return (
                   <button
                     key={acc.slug}
@@ -209,10 +186,22 @@ export default function ConfigurateurPage() {
                         {acc.description}
                       </p>
                     </div>
-                    <span className="shrink-0 font-bold text-[#0F0F10]">
-                      {acc.price}
-                      <span className="text-xs text-[#6B7280]">&euro;</span>
-                    </span>
+                    <div className="shrink-0 text-right">
+                      {trolley ? (
+                        <>
+                          <span className="text-xs text-[#6B7280] line-through">
+                            {acc.price}&euro;
+                          </span>
+                          <span className="ml-1 font-bold text-[#356B0D]">
+                            {discountedPrice.toFixed(2)}&euro;
+                          </span>
+                        </>
+                      ) : (
+                        <span className="font-bold text-[#0F0F10]">
+                          {acc.price}&euro;
+                        </span>
+                      )}
+                    </div>
                   </button>
                 );
               })}
@@ -249,52 +238,46 @@ export default function ConfigurateurPage() {
                   </div>
                 )}
 
-                {/* Bundle items */}
-                {trolley && (
-                  <div className="space-y-2 border-b border-[#DBDBDB]/50 pb-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#356B0D]">
-                      Accessoires offerts
-                    </p>
-                    {bundleItems.map((acc) => (
-                      <div
-                        key={acc.slug}
-                        className="flex items-center justify-between text-sm"
-                      >
-                        <span className="text-[#6B7280]">{acc.name}</span>
-                        <span className="text-[#356B0D] font-medium">
-                          OFFERT
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Extra accessories */}
-                {selectedExtras.length > 0 && (
+                {/* Accessories */}
+                {selectedAccessories.length > 0 && (
                   <div className="space-y-2 border-b border-[#DBDBDB]/50 pb-4">
                     <p className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
-                      Accessoires supplementaires
+                      Accessoires
                     </p>
-                    {extraAccessories
-                      .filter((a) => selectedExtras.includes(a.slug))
-                      .map((acc) => (
+                    {selectedAccessories.map((acc) => {
+                      const discounted = trolley
+                        ? acc.price * (1 - ACCESSORY_DISCOUNT)
+                        : acc.price;
+                      return (
                         <div
                           key={acc.slug}
                           className="flex items-center justify-between text-sm"
                         >
                           <span className="text-[#6B7280]">{acc.name}</span>
-                          <span className="text-[#0F0F10]">{acc.price}&euro;</span>
+                          {trolley ? (
+                            <span>
+                              <span className="text-xs text-[#6B7280] line-through mr-1">
+                                {acc.price}&euro;
+                              </span>
+                              <span className="text-[#356B0D] font-medium">
+                                {discounted.toFixed(2)}&euro;
+                              </span>
+                            </span>
+                          ) : (
+                            <span className="text-[#0F0F10]">{acc.price}&euro;</span>
+                          )}
                         </div>
-                      ))}
+                      );
+                    })}
                   </div>
                 )}
 
                 {/* Savings */}
-                {trolley && (
+                {trolley && discount > 0 && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-[#356B0D] font-medium">Economie bundle</span>
+                    <span className="text-[#356B0D] font-medium">Economie (-50%)</span>
                     <span className="font-bold text-[#356B0D]">
-                      -{BUNDLE_VALUE.toFixed(2)}&euro;
+                      -{discount.toFixed(2)}&euro;
                     </span>
                   </div>
                 )}
@@ -303,7 +286,7 @@ export default function ConfigurateurPage() {
                 <div className="flex items-center justify-between border-t border-[#DBDBDB] pt-4">
                   <span className="text-lg font-bold text-[#0F0F10]">Total</span>
                   <span className="text-2xl font-bold text-[#0F0F10]">
-                    {total}
+                    {total.toFixed(2)}
                     <span className="text-sm text-[#6B7280]">&euro;</span>
                   </span>
                 </div>
@@ -314,13 +297,12 @@ export default function ConfigurateurPage() {
                   disabled={!trolley}
                   onClick={() => {
                     if (!trolley) return;
-                    addTrolleyBundle(
-                      { slug: trolley.slug, name: trolley.name, price: trolley.price },
-                      bundleItems.map((b) => ({ slug: b.slug, name: b.name, price: b.price }))
-                    );
-                    selectedExtras.forEach((slug) => {
-                      const acc = extraAccessories.find((a) => a.slug === slug);
-                      if (acc) addItem({ slug: acc.slug, name: acc.name, price: acc.price });
+                    addItem({ slug: trolley.slug, name: trolley.name, price: trolley.price });
+                    selectedAccessories.forEach((acc) => {
+                      const discounted = trolley
+                        ? acc.price * (1 - ACCESSORY_DISCOUNT)
+                        : acc.price;
+                      addItem({ slug: acc.slug, name: acc.name, price: Number(discounted.toFixed(2)) });
                     });
                   }}
                 >

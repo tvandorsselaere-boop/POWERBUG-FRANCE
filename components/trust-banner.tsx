@@ -1,8 +1,8 @@
 import { Shield, Star, Truck, Headphones } from "lucide-react";
 
 const trustItems = [
-  { icon: Shield, label: "Garantie 3 ans" },
-  { icon: Star, label: "5 800+ avis clients" },
+  { icon: Shield, label: "Garantie 2 ans" },
+  { icon: Star, label: "8 000+ avis clients" },
   { icon: Truck, label: "Livraison France offerte" },
   { icon: Headphones, label: "SAV reactif" },
 ];

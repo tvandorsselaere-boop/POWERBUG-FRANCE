@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "PowerBug France | Chariots Electriques de Golf Premium",
     description:
-      "Distributeur exclusif France des chariots electriques de golf PowerBug. Plus de 20 ans de qualite britannique.",
+      "Distributeur exclusif France des chariots electriques de golf PowerBug. Qualite britannique depuis 2003.",
     type: "website",
     locale: "fr_FR",
     siteName: "PowerBug France",

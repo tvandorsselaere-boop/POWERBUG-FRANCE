@@ -6,15 +6,11 @@ import { ProductGallery } from "@/components/product-gallery";
 import { TrolleyFeatures } from "@/components/trolley-features";
 import { ReviewsSection } from "@/components/reviews-section";
 import type { DbProduct } from "@/lib/supabase/queries";
-import { BUNDLE_VALUE } from "@/lib/data/products";
-
-const BUNDLE_SLUGS = ["housse-transport", "porte-boisson", "porte-parapluie"];
 
 export function ProductPageDb({ product }: { product: DbProduct }) {
   const categorySlug = product.category?.slug ?? "";
   const isTrolley = categorySlug === "chariots-electriques";
   const isAccessoire = categorySlug === "accessoires-trolley";
-  const isBundleItem = BUNDLE_SLUGS.includes(product.slug);
   const variant = product.product_variants?.[0];
   const price = variant?.price ?? product.base_price;
   const specs = product.specs ?? {};
@@ -33,7 +29,6 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
     specs: Object.entries(specs).map(([label, value]) => ({ label, value: String(value) })),
     features: [],
     category: (isTrolley ? "trolley" : isAccessoire ? "accessoire" : "batterie") as "trolley" | "accessoire" | "batterie",
-    inBundle: isBundleItem,
   };
 
   return (
@@ -73,10 +68,10 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
               <Gift className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
               <div>
                 <p className="text-sm font-semibold text-[#356B0D]">
-                  3 accessoires offerts (valeur {BUNDLE_VALUE.toFixed(2)}&euro;)
+                  -50% sur tous les accessoires
                 </p>
                 <p className="mt-1 text-xs text-[#6B7280]">
-                  Travel Cover + Drink Holder + Umbrella Holder inclus
+                  Ajoutez des accessoires a votre trolley et beneficiez de 50% de reduction
                 </p>
               </div>
             </div>
@@ -126,10 +121,10 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
             </p>
           )}
 
-          {isBundleItem && (
+          {isAccessoire && (
             <p className="mt-4 flex items-center gap-1 text-sm text-[#356B0D]">
               <Gift className="h-4 w-4" />
-              Offert avec l&apos;achat d&apos;un trolley
+              -50% avec l&apos;achat d&apos;un trolley
             </p>
           )}
         </div>

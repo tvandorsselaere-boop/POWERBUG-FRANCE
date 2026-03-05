@@ -6,7 +6,6 @@ export type CartItem = {
   name: string;
   price: number;
   quantity: number;
-  isBundle?: boolean; // accessoire offert avec trolley
 };
 
 type CartStore = {
@@ -15,10 +14,6 @@ type CartStore = {
   removeItem: (slug: string) => void;
   updateQuantity: (slug: string, quantity: number) => void;
   clearCart: () => void;
-  addTrolleyBundle: (
-    trolley: Omit<CartItem, "quantity">,
-    bundleItems: Omit<CartItem, "quantity" | "isBundle">[]
-  ) => void;
 };
 
 export const useCartStore = create<CartStore>()(
@@ -58,24 +53,6 @@ export const useCartStore = create<CartStore>()(
       },
 
       clearCart: () => set({ items: [] }),
-
-      addTrolleyBundle: (trolley, bundleItems) => {
-        const items = get().items.filter(
-          (i) => !i.isBundle && i.slug !== trolley.slug
-        );
-        set({
-          items: [
-            ...items,
-            { ...trolley, quantity: 1 },
-            ...bundleItems.map((b) => ({
-              ...b,
-              quantity: 1,
-              price: 0,
-              isBundle: true,
-            })),
-          ],
-        });
-      },
     }),
     {
       name: "powerbug-cart",

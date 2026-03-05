@@ -11,7 +11,6 @@ import {
   Gift,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { BUNDLE_VALUE } from "@/lib/data/products";
 import { getTrolleys } from "@/lib/supabase/queries";
 
 const trolleyMeta = [
@@ -46,9 +45,9 @@ const features = [
   },
   {
     icon: Shield,
-    title: "Garantie 3 ans",
+    title: "Garantie 2 ans",
     description:
-      "Trolley et batterie garantis 3 ans en France. SAV local reactif.",
+      "Trolley et batterie couverts par la garantie constructeur de 2 ans. SAV en France.",
   },
   {
     icon: Truck,
@@ -58,9 +57,9 @@ const features = [
   },
   {
     icon: Star,
-    title: "5 800+ avis",
+    title: "8 000+ avis",
     description:
-      "Plus de 20 ans d'excellence britannique, plebiscite par les golfeurs du monde entier.",
+      "N°1 au classement client des marques de chariots electriques. Depuis 2003.",
   },
 ];
 
@@ -90,7 +89,7 @@ export default async function Home() {
             </h1>
 
             <p className="animate-fade-in-delay-2 mx-auto mt-6 max-w-xl text-lg text-[#6B7280]">
-              Plus de 20 ans d&apos;innovation britannique. Decouvrez la serie NX,
+              Depuis 2003, l&apos;innovation britannique au service du golf. Decouvrez la serie NX,
               enfin disponible pour les golfeurs francais.
             </p>
 
@@ -126,8 +125,7 @@ export default async function Home() {
         <div className="mx-auto flex max-w-[1600px] items-center justify-center gap-3 px-6 text-white">
           <Gift className="h-5 w-5" />
           <p className="text-sm font-medium sm:text-base">
-            <span className="font-bold">Offre bundle :</span> 3 accessoires offerts (valeur{" "}
-            {BUNDLE_VALUE.toFixed(2)}&euro;) avec chaque trolley !
+            <span className="font-bold">Offre speciale :</span> -50% sur tous les accessoires avec l&apos;achat d&apos;un trolley !
           </p>
         </div>
       </section>
@@ -253,8 +251,7 @@ export default async function Home() {
             Configurez votre trolley ideal
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[#6B7280]">
-            Choisissez votre modele et recevez 3 accessoires offerts (housse,
-            porte-boisson, porte-parapluie) d&apos;une valeur de {BUNDLE_VALUE.toFixed(2)}&euro;.
+            Choisissez votre modele et beneficiez de -50% sur tous les accessoires.
           </p>
           <Button
             asChild

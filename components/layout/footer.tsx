@@ -38,7 +38,7 @@ export function Footer() {
             </Link>
             <p className="text-sm leading-relaxed text-[#6B7280]">
               Distributeur exclusif France des chariots electriques de golf PowerBug.
-              Plus de 20 ans de qualite britannique.
+              Qualite britannique depuis 2003.
             </p>
           </div>
 

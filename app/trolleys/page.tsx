@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight, ShoppingCart, Zap, Check, X, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { trolleySpecs, BUNDLE_VALUE } from "@/lib/data/products";
+import { trolleySpecs } from "@/lib/data/products";
 import { getTrolleys } from "@/lib/supabase/queries";
 
 export const metadata: Metadata = {
@@ -249,11 +249,10 @@ export default async function TrolleysPage() {
         <Gift className="h-10 w-10 shrink-0 text-[#356B0D]" />
         <div>
           <h2 className="text-xl font-bold text-[#0F0F10] sm:text-2xl">
-            3 accessoires offerts avec votre trolley
+            -50% sur les accessoires avec votre trolley
           </h2>
           <p className="mt-2 text-sm text-[#6B7280] sm:text-base">
-            Travel Cover + Drink Holder + Umbrella Holder (valeur{" "}
-            {BUNDLE_VALUE.toFixed(2)}&euro;) offerts automatiquement.
+            Ajoutez des accessoires a votre trolley et beneficiez de 50% de reduction sur toute la gamme.
           </p>
           <Button
             asChild

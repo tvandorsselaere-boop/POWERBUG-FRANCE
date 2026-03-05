@@ -7,7 +7,6 @@ import {
   Trash2,
   Minus,
   Plus,
-  Gift,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CheckoutButton } from "@/components/checkout-button";
@@ -32,8 +31,6 @@ export default function PanierPage() {
 
   const total = cartTotal(items);
   const count = cartCount(items);
-  const paidItems = items.filter((i) => !i.isBundle);
-  const bundleItems = items.filter((i) => i.isBundle);
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12 sm:py-16 lg:px-10">
@@ -86,8 +83,7 @@ export default function PanierPage() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Items */}
           <div className="space-y-4 lg:col-span-2">
-            {/* Paid items */}
-            {paidItems.map((item) => (
+            {items.map((item) => (
               <div
                 key={item.slug}
                 className="flex items-center gap-4 rounded-xl border border-[#DBDBDB] bg-white p-4"
@@ -100,7 +96,7 @@ export default function PanierPage() {
                     {item.name}
                   </h3>
                   <p className="text-sm text-[#6B7280]">
-                    {item.price}&euro; / unite
+                    {item.price.toFixed(2)}&euro; / unite
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -136,29 +132,6 @@ export default function PanierPage() {
               </div>
             ))}
 
-            {/* Bundle items */}
-            {bundleItems.length > 0 && (
-              <div className="rounded-xl border border-[#8DC63F]/30 bg-[#8DC63F]/5 p-4">
-                <p className="mb-3 flex items-center gap-2 text-sm font-semibold text-[#356B0D]">
-                  <Gift className="h-4 w-4" />
-                  Accessoires offerts avec votre trolley
-                </p>
-                <div className="space-y-2">
-                  {bundleItems.map((item) => (
-                    <div
-                      key={item.slug}
-                      className="flex items-center justify-between text-sm"
-                    >
-                      <span className="text-[#0F0F10]">{item.name}</span>
-                      <span className="font-medium text-[#356B0D]">
-                        OFFERT
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             <button
               onClick={clearCart}
               className="text-sm text-[#6B7280] hover:text-[#AE1717]"
@@ -185,14 +158,6 @@ export default function PanierPage() {
                     {total >= 500 ? "Offerte" : "A calculer"}
                   </span>
                 </div>
-                {bundleItems.length > 0 && (
-                  <div className="flex justify-between text-sm">
-                    <span className="text-[#356B0D]">Bundle offert</span>
-                    <span className="text-[#356B0D] font-medium">
-                      -{bundleItems.length} articles
-                    </span>
-                  </div>
-                )}
               </div>
 
               <div className="mt-4 flex justify-between">
