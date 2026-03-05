@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronRight, ShoppingCart, Zap, Check, X, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trolleySpecs, BUNDLE_VALUE } from "@/lib/data/products";
+import { getTrolleys } from "@/lib/supabase/queries";
 
 export const metadata: Metadata = {
   title: "Comparateur NX vs NX DHC - Chariots PowerBug",
@@ -10,7 +12,30 @@ export const metadata: Metadata = {
     "Comparez les chariots electriques PowerBug NX Lithium et NX DHC Lithium. Specs, prix, fonctionnalites cote a cote.",
 };
 
-export default function TrolleysPage() {
+export const revalidate = 3600;
+
+function TrolleyImage({ url, alt, className }: { url?: string; alt: string; className?: string }) {
+  if (url) {
+    return (
+      <Image
+        src={url}
+        alt={alt}
+        width={300}
+        height={300}
+        className={className ?? "h-full w-full object-contain p-4"}
+      />
+    );
+  }
+  return <Zap className="h-16 w-16 text-[#DBDBDB]" />;
+}
+
+export default async function TrolleysPage() {
+  const trolleys = await getTrolleys();
+  const nx = trolleys.find((t) => t.slug === "nx-lithium");
+  const nxDhc = trolleys.find((t) => t.slug === "nx-dhc-lithium");
+  const nxImg = nx?.product_images?.find((i) => i.is_primary)?.url ?? nx?.product_images?.[0]?.url;
+  const dhcImg = nxDhc?.product_images?.find((i) => i.is_primary)?.url ?? nxDhc?.product_images?.[0]?.url;
+
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-12 sm:py-16 lg:px-10">
       {/* Breadcrumb */}
@@ -42,16 +67,22 @@ export default function TrolleysPage() {
       <div className="mb-12 grid grid-cols-1 gap-6 md:hidden">
         {/* NX */}
         <div className="card-glass rounded-2xl p-6">
-          <div className="mb-4 flex items-center justify-center rounded-xl bg-[#F5F5F5] py-16">
-            <Zap className="h-16 w-16 text-[#DBDBDB]" />
+          <div className="mb-4 flex items-center justify-center rounded-xl bg-[#F5F5F5] py-8 h-56 overflow-hidden">
+            <TrolleyImage url={nxImg} alt="NX Lithium" className="h-full w-full object-contain p-4" />
           </div>
           <span className="mb-2 inline-flex rounded-full bg-[#F5F5F5] px-3 py-1 text-xs font-medium text-[#6B7280]">
             Populaire
           </span>
           <h2 className="text-2xl font-bold text-[#0F0F10]">NX Lithium</h2>
           <p className="mt-2 text-sm text-[#6B7280]">
-            28V Power System, pliage VRAP, batterie 36 trous. L&apos;essentiel du chariot electrique.
+            Systeme 28V, batterie lithium 36 trous, pliage VRAP
+            ultra-compact. Le chariot electrique fiable et performant.
           </p>
+          <ul className="mt-4 space-y-1.5 text-sm text-[#6B7280]">
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />28V Power System</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Batterie Lithium 36 trous</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Pliage VRAP compact</li>
+          </ul>
           <p className="mt-4 text-3xl font-bold text-[#0F0F10]">
             899<span className="text-lg text-[#6B7280]">&euro;</span>
           </p>
@@ -68,16 +99,22 @@ export default function TrolleysPage() {
 
         {/* NX DHC */}
         <div className="card-glass rounded-2xl border-2 border-[#356B0D] p-6">
-          <div className="mb-4 flex items-center justify-center rounded-xl bg-[#356B0D]/5 py-16">
-            <Zap className="h-16 w-16 text-[#8DC63F]" />
+          <div className="mb-4 flex items-center justify-center rounded-xl bg-[#356B0D]/5 py-8 h-56 overflow-hidden">
+            <TrolleyImage url={dhcImg} alt="NX DHC Lithium" className="h-full w-full object-contain p-4" />
           </div>
           <span className="mb-2 inline-flex rounded-full bg-[#356B0D]/10 px-3 py-1 text-xs font-medium text-[#356B0D]">
             Premium
           </span>
           <h2 className="text-2xl font-bold text-[#0F0F10]">NX DHC Lithium</h2>
           <p className="mt-2 text-sm text-[#6B7280]">
-            Downhill Control, frein parking electronique. Le controle total.
+            Tous les avantages du NX, plus le Downhill Control
+            et le frein parking electronique. Le controle total.
           </p>
+          <ul className="mt-4 space-y-1.5 text-sm text-[#6B7280]">
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Downhill Control (DHC)</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Frein parking electronique</li>
+            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Toutes les specs du NX</li>
+          </ul>
           <p className="mt-4 text-3xl font-bold text-[#0F0F10]">
             999<span className="text-lg text-[#6B7280]">&euro;</span>
           </p>
@@ -104,8 +141,12 @@ export default function TrolleysPage() {
                 </th>
                 <th className="px-6 py-6 text-center">
                   <div className="flex flex-col items-center gap-3">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-white">
-                      <Zap className="h-10 w-10 text-[#DBDBDB]" />
+                    <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-white overflow-hidden">
+                      {nxImg ? (
+                        <Image src={nxImg} alt="NX Lithium" width={96} height={96} className="h-full w-full object-contain p-2" />
+                      ) : (
+                        <Zap className="h-10 w-10 text-[#DBDBDB]" />
+                      )}
                     </div>
                     <div>
                       <span className="mb-1 inline-flex rounded-full bg-white px-2 py-0.5 text-xs text-[#6B7280]">
@@ -117,8 +158,12 @@ export default function TrolleysPage() {
                 </th>
                 <th className="px-6 py-6 text-center">
                   <div className="flex flex-col items-center gap-3">
-                    <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-[#356B0D]/10">
-                      <Zap className="h-10 w-10 text-[#8DC63F]" />
+                    <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-[#356B0D]/10 overflow-hidden">
+                      {dhcImg ? (
+                        <Image src={dhcImg} alt="NX DHC Lithium" width={96} height={96} className="h-full w-full object-contain p-2" />
+                      ) : (
+                        <Zap className="h-10 w-10 text-[#8DC63F]" />
+                      )}
                     </div>
                     <div>
                       <span className="mb-1 inline-flex rounded-full bg-[#356B0D]/10 px-2 py-0.5 text-xs text-[#356B0D]">

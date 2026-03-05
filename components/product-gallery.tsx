@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Zap } from "lucide-react";
+import { Zap, ChevronLeft, ChevronRight } from "lucide-react";
 
 type ProductImage = {
   url: string;
@@ -28,10 +28,13 @@ export function ProductGallery({
     );
   }
 
+  const prev = () => setSelected((s) => (s === 0 ? images.length - 1 : s - 1));
+  const next = () => setSelected((s) => (s === images.length - 1 ? 0 : s + 1));
+
   return (
     <div className="space-y-3">
       {/* Main image */}
-      <div className="flex items-center justify-center rounded-2xl border border-[#DBDBDB] bg-[#F5F5F5] aspect-square overflow-hidden">
+      <div className="relative flex items-center justify-center rounded-2xl border border-[#DBDBDB] bg-[#F5F5F5] aspect-square overflow-hidden">
         <Image
           src={images[selected].url}
           alt={images[selected].alt_text ?? productName}
@@ -40,6 +43,26 @@ export function ProductGallery({
           className="h-full w-full object-contain p-6 transition-opacity duration-300"
           priority
         />
+
+        {/* Arrows */}
+        {images.length > 1 && (
+          <>
+            <button
+              onClick={prev}
+              aria-label="Image precedente"
+              className="absolute left-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm shadow-md transition-all hover:bg-white active:scale-95"
+            >
+              <ChevronLeft className="h-5 w-5 text-[#0F0F10]" />
+            </button>
+            <button
+              onClick={next}
+              aria-label="Image suivante"
+              className="absolute right-2 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm shadow-md transition-all hover:bg-white active:scale-95"
+            >
+              <ChevronRight className="h-5 w-5 text-[#0F0F10]" />
+            </button>
+          </>
+        )}
       </div>
 
       {/* Thumbnails */}

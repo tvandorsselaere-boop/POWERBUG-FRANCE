@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Battery,
   Shield,
@@ -11,9 +12,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BUNDLE_VALUE } from "@/lib/data/products";
+import { getTrolleys } from "@/lib/supabase/queries";
 
-const trolleys = [
+const trolleyMeta = [
   {
+    slug: "nx-lithium",
     name: "NX Lithium",
     price: "899",
     description:
@@ -23,6 +26,7 @@ const trolleys = [
     badge: "Populaire",
   },
   {
+    slug: "nx-dhc-lithium",
     name: "NX DHC Lithium",
     price: "999",
     description:
@@ -60,7 +64,16 @@ const features = [
   },
 ];
 
-export default function Home() {
+export const revalidate = 3600;
+
+export default async function Home() {
+  const dbTrolleys = await getTrolleys();
+  const imageMap: Record<string, string> = {};
+  for (const t of dbTrolleys) {
+    const img = t.product_images?.find((i) => i.is_primary)?.url ?? t.product_images?.[0]?.url;
+    if (img) imageMap[t.slug] = img;
+  }
+
   return (
     <>
       {/* Hero */}
@@ -134,15 +147,24 @@ export default function Home() {
           </div>
 
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
-            {trolleys.map((trolley) => (
+            {trolleyMeta.map((trolley) => (
               <Link
                 key={trolley.name}
                 href={trolley.href}
                 className="group card-glass rounded-2xl p-8 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
               >
-                {/* Placeholder image area */}
-                <div className="mb-6 flex h-64 items-center justify-center rounded-xl bg-[#F5F5F5]">
-                  <Zap className="h-20 w-20 text-[#DBDBDB] transition-colors group-hover:text-[#8DC63F]" />
+                <div className="mb-6 flex h-64 items-center justify-center rounded-xl bg-[#F5F5F5] overflow-hidden">
+                  {imageMap[trolley.slug] ? (
+                    <Image
+                      src={imageMap[trolley.slug]}
+                      alt={trolley.name}
+                      width={400}
+                      height={400}
+                      className="h-full w-full object-contain p-6"
+                    />
+                  ) : (
+                    <Zap className="h-20 w-20 text-[#DBDBDB] transition-colors group-hover:text-[#8DC63F]" />
+                  )}
                 </div>
 
                 <div className="mb-2 inline-flex rounded-full bg-[#356B0D]/10 px-3 py-1 text-xs font-medium text-[#356B0D]">

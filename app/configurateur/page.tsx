@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ChevronRight,
   ShoppingCart,
@@ -91,14 +92,18 @@ export default function ConfigurateurPage() {
                       : "border-[#DBDBDB] bg-white hover:border-[#356B0D]/30 hover:shadow"
                   }`}
                 >
-                  <div className="mb-3 flex h-28 items-center justify-center rounded-lg bg-[#F5F5F5]">
-                    <Zap
-                      className={`h-12 w-12 ${
-                        selectedTrolley === t.slug
-                          ? "text-[#8DC63F]"
-                          : "text-[#DBDBDB]"
-                      }`}
-                    />
+                  <div className="mb-3 flex h-28 items-center justify-center rounded-lg bg-[#F5F5F5] overflow-hidden">
+                    {t.slug === "nx-lithium" || t.slug === "nx-dhc-lithium" ? (
+                      <Image
+                        src={t.slug === "nx-lithium" ? "/images/nx-main.jpg" : "/images/nx-dhc-main.jpg"}
+                        alt={t.name}
+                        width={200}
+                        height={200}
+                        className="h-full w-full object-contain p-2"
+                      />
+                    ) : (
+                      <Zap className={`h-12 w-12 ${selectedTrolley === t.slug ? "text-[#8DC63F]" : "text-[#DBDBDB]"}`} />
+                    )}
                   </div>
                   <div className="flex items-center justify-between">
                     <div>
