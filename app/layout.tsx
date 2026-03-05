@@ -1,20 +1,27 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { ConstructionBanner } from "@/components/construction-banner";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "PowerBug France | Chariots Électriques de Golf Premium — Bientôt Disponible",
+  title: {
+    default: "PowerBug France | Chariots Electriques de Golf Premium",
+    template: "%s | PowerBug France",
+  },
   description:
-    "Le chariot électrique de golf PowerBug arrive en France. Plus de 20 ans de qualité britannique, 8400+ avis clients. Inscrivez-vous pour être informé du lancement.",
+    "Distributeur exclusif France des chariots electriques de golf PowerBug. NX Lithium et NX DHC Lithium, accessoires, batteries. Livraison France entiere.",
   openGraph: {
-    title: "PowerBug France | Chariots Électriques de Golf Premium",
+    title: "PowerBug France | Chariots Electriques de Golf Premium",
     description:
-      "Le chariot électrique de golf PowerBug arrive en France. Plus de 20 ans de qualité britannique, 8400+ avis clients.",
+      "Distributeur exclusif France des chariots electriques de golf PowerBug. Plus de 20 ans de qualite britannique.",
     type: "website",
     locale: "fr_FR",
     siteName: "PowerBug France",
@@ -35,7 +42,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${inter.variable} antialiased`}>{children}</body>
+      <body className={`${poppins.variable} antialiased bg-white text-[#0F0F10]`}>
+        <ConstructionBanner />
+        <Header />
+        <main className="min-h-screen">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
