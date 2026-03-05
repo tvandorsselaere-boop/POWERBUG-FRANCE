@@ -11,26 +11,42 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing signature" }, { status: 400 });
   }
 
+  if (!process.env.STRIPE_WEBHOOK_SECRET) {
+    console.error("STRIPE_WEBHOOK_SECRET is not set");
+    return NextResponse.json(
+      { error: "Webhook secret not configured" },
+      { status: 500 }
+    );
+  }
+
   let event: Stripe.Event;
 
   try {
     event = stripe.webhooks.constructEvent(
       body,
       sig,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      process.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     console.error("Webhook signature verification failed:", message);
-    return NextResponse.json({ error: message }, { status: 400 });
+    return NextResponse.json(
+      { error: `Signature verification failed: ${message}` },
+      { status: 400 }
+    );
   }
+
+  console.log("Webhook event received:", event.type, event.id);
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
+    console.log("Session metadata:", JSON.stringify(session.metadata));
+
     // Only process PowerBug orders
     if (session.metadata?.store !== "powerbug") {
-      return NextResponse.json({ received: true });
+      console.log("Skipping: not a powerbug order");
+      return NextResponse.json({ received: true, skipped: "not powerbug" });
     }
 
     try {
@@ -67,6 +83,8 @@ export async function POST(req: NextRequest) {
       const total = (session.amount_total ?? 0) / 100;
       const subtotal = (session.amount_subtotal ?? 0) / 100;
 
+      console.log("Inserting order:", { email: session.customer_details?.email, total, subtotal });
+
       // Insert order
       const { data: order, error: orderError } = await supabase
         .from("orders")
@@ -86,9 +104,9 @@ export async function POST(req: NextRequest) {
         .single();
 
       if (orderError) {
-        console.error("Failed to insert order:", orderError);
+        console.error("Failed to insert order:", JSON.stringify(orderError));
         return NextResponse.json(
-          { error: "Failed to save order" },
+          { error: `DB insert failed: ${orderError.message}` },
           { status: 500 }
         );
       }
@@ -110,16 +128,15 @@ export async function POST(req: NextRequest) {
         .insert(orderItems);
 
       if (itemsError) {
-        console.error("Failed to insert order items:", itemsError);
+        console.error("Failed to insert order items:", JSON.stringify(itemsError));
       }
 
-      console.log(
-        `Order ${order.id} created for ${session.customer_details?.email}`
-      );
+      console.log(`Order ${order.id} created for ${session.customer_details?.email}`);
     } catch (err) {
-      console.error("Webhook processing error:", err);
+      const message = err instanceof Error ? err.message : "Unknown error";
+      console.error("Webhook processing error:", message);
       return NextResponse.json(
-        { error: "Processing failed" },
+        { error: `Processing failed: ${message}` },
         { status: 500 }
       );
     }
