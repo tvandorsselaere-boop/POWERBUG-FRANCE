@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "powerbug.co.uk",
       },
+      {
+        protocol: "https",
+        hostname: "www.powerbug.com.au",
+      },
     ],
   },
 };

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Check,
   ChevronRight,
@@ -87,23 +88,37 @@ export default async function FeatureDetailPage({
         </Link>
 
         {/* Hero section */}
-        <div className="card-glass mb-12 rounded-2xl p-8 sm:p-12">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-10">
-            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#356B0D]/10">
-              <Icon className="h-8 w-8 text-[#356B0D]" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-[#0F0F10] sm:text-4xl">
-                {feature.title}
-              </h1>
-              <p className="mt-2 text-lg font-medium text-[#356B0D]">
-                {feature.subtitle}
-              </p>
-              <p className="mt-6 max-w-3xl text-base leading-relaxed text-[#6B7280]">
-                {feature.description}
-              </p>
+        <div className="mb-12 grid grid-cols-1 items-center gap-8 lg:grid-cols-2">
+          <div className="card-glass rounded-2xl p-8 sm:p-12">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-10">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#356B0D]/10">
+                <Icon className="h-8 w-8 text-[#356B0D]" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-[#0F0F10] sm:text-4xl">
+                  {feature.title}
+                </h1>
+                <p className="mt-2 text-lg font-medium text-[#356B0D]">
+                  {feature.subtitle}
+                </p>
+                <p className="mt-6 max-w-3xl text-base leading-relaxed text-[#6B7280]">
+                  {feature.description}
+                </p>
+              </div>
             </div>
           </div>
+          {feature.image && (
+            <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#F5F5F5]">
+              <Image
+                src={feature.image}
+                alt={feature.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                unoptimized={feature.image.endsWith(".gif")}
+              />
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">

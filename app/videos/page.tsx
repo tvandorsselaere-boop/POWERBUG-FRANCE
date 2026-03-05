@@ -15,6 +15,7 @@ const presentationVideos = [
 ];
 
 const tutorialVideos = [
+  { id: "cL7ygIYda6g", title: "Guide d'utilisation complet du PowerBug NX" },
   { id: "UPN07G1B2wY", title: "Connexion et retrait de la batterie (NX Lithium)" },
   { id: "bKXsyp8CA20", title: "Changement de batterie du manche" },
   { id: "Eljk3GDaQAA", title: "Installation des inserts bac batterie lithium" },

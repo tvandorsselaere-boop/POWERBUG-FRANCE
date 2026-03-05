@@ -6,7 +6,6 @@ type CartItem = {
   name: string;
   price: number;
   quantity: number;
-  isBundle?: boolean;
 };
 
 export async function POST(req: NextRequest) {
@@ -32,7 +31,6 @@ export async function POST(req: NextRequest) {
           name: item.name,
           metadata: {
             slug: item.slug,
-            isBundle: item.isBundle ? "true" : "false",
           },
         },
         unit_amount: Math.round(item.price * 100), // Stripe uses cents

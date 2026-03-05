@@ -9,12 +9,12 @@ type Video = {
 
 const nxVideos: Video[] = [
   { id: "HDm7eUlzQFc", title: "PowerBug GT Lithium — Presentation" },
-  { id: "UPN07G1B2wY", title: "Connexion et retrait de la batterie" },
+  { id: "cL7ygIYda6g", title: "Guide d'utilisation du NX" },
 ];
 
 const dhcVideos: Video[] = [
   { id: "x5cDyT2jT9g", title: "PowerBug GTX1 Lithium — Presentation" },
-  { id: "UPN07G1B2wY", title: "Connexion et retrait de la batterie" },
+  { id: "cL7ygIYda6g", title: "Guide d'utilisation du NX" },
 ];
 
 export function VideoSection({ slug }: { slug: string }) {

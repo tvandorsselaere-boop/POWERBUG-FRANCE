@@ -5,7 +5,10 @@ export type FeatureDetail = {
   description: string;
   benefits: string[];
   trolleys: ("nx" | "dhc" | "both")[];
+  image?: string;
 };
+
+const CDN = "https://www.powerbug.com.au/cdn/shop/files";
 
 export const features: FeatureDetail[] = [
   {
@@ -18,7 +21,7 @@ export const features: FeatureDetail[] = [
       "Puissance superieure aux systemes 24V",
       "Performances constantes en montee",
       "Adapte aux terrains lourds et humides",
-      "Fiabilite eprouvee sur 19 ans",
+      "Fiabilite eprouvee depuis 2003",
     ],
     trolleys: ["both"],
   },
@@ -35,6 +38,7 @@ export const features: FeatureDetail[] = [
       "Pas d'outils necessaires",
     ],
     trolleys: ["both"],
+    image: `${CDN}/unnamed.gif?v=1684130739`,
   },
   {
     slug: "roue-anti-colmatage",
@@ -49,6 +53,7 @@ export const features: FeatureDetail[] = [
       "Design exclusif PowerBug",
     ],
     trolleys: ["both"],
+    image: `${CDN}/NX-Anti-Clog-Front-Wheel-min.webp?v=1683852318`,
   },
   {
     slug: "nx-handle",
@@ -63,6 +68,7 @@ export const features: FeatureDetail[] = [
       "Design ergonomique",
     ],
     trolleys: ["both"],
+    image: `${CDN}/usb.jpg?v=1741750847`,
   },
   {
     slug: "pneus-winter-ready",
@@ -77,6 +83,7 @@ export const features: FeatureDetail[] = [
       "Pas besoin d'acheter des pneus supplementaires",
     ],
     trolleys: ["both"],
+    image: `${CDN}/Inverted-NX-Wheels-Dims2-min.webp?v=1683852579`,
   },
   {
     slug: "station-accessoires",
@@ -91,6 +98,7 @@ export const features: FeatureDetail[] = [
       "Large gamme d'accessoires disponibles",
     ],
     trolleys: ["both"],
+    image: `${CDN}/NX-Handle-Docking-min_1.webp?v=1683853473`,
   },
   {
     slug: "downhill-control",
