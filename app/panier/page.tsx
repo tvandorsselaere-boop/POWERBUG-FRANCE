@@ -10,6 +10,7 @@ import {
   Gift,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CheckoutButton } from "@/components/checkout-button";
 import { useCartStore, cartTotal, cartCount } from "@/store/cart-store";
 import { useEffect, useState } from "react";
 
@@ -201,12 +202,9 @@ export default function PanierPage() {
                 </span>
               </div>
 
-              <Button
-                className="mt-6 w-full rounded-[10px] bg-[#356B0D] text-white hover:bg-[#2a5509]"
-                size="lg"
-              >
-                Passer la commande
-              </Button>
+              <div className="mt-6">
+                <CheckoutButton />
+              </div>
 
               <p className="mt-3 text-center text-xs text-[#6B7280]">
                 TVA non applicable, art. 293 B du CGI
