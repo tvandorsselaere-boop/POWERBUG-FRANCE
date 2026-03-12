@@ -30,11 +30,59 @@ export default async function AccessoiresPage() {
         <span className="text-[#0F0F10]">Accessoires</span>
       </nav>
 
+      {/* Batteries & Chargeurs — en premier */}
+      {batteries.length > 0 && (
+        <div className="mb-20">
+          <div className="mb-10">
+            <h1 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
+              Batteries & Chargeurs
+            </h1>
+            <p className="mt-3 text-lg text-[#6B7280]">
+              Batteries lithium et chargeurs officiels PowerBug.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {batteries.map((item) => {
+              const price = item.product_variants?.[0]?.price ?? item.base_price;
+              return (
+                <div
+                  key={item.id}
+                  className="group rounded-2xl border border-[#DBDBDB] bg-white p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
+                >
+                  <div className="mb-4 flex h-40 items-center justify-center rounded-xl bg-[#F5F5F5]">
+                    {item.product_images?.[0] ? (
+                      <Image
+                        src={item.product_images[0].url}
+                        alt={item.product_images[0].alt_text ?? item.name}
+                        width={300}
+                        height={300}
+                        className="h-full w-full rounded-xl object-contain p-4"
+                      />
+                    ) : (
+                      <Battery className="h-12 w-12 text-[#DBDBDB] group-hover:text-[#8DC63F]" />
+                    )}
+                  </div>
+                  <h3 className="font-semibold text-[#0F0F10]">{item.name}</h3>
+                  <p className="mt-1 text-sm text-[#6B7280]">{item.description}</p>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-2xl font-bold text-[#0F0F10]">
+                      {price}<span className="text-sm text-[#6B7280]">&euro;</span>
+                    </span>
+                    <AddToCartSimple slug={item.slug} name={item.name} price={price} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Accessoires */}
       <div className="mb-14">
-        <h1 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
+        <h2 className="text-2xl font-bold tracking-tight text-[#0F0F10] sm:text-3xl">
           Accessoires PowerBug
-        </h1>
+        </h2>
         <p className="mt-3 text-lg text-[#6B7280]">
           Personnalisez votre trolley avec nos accessoires officiels.
         </p>
@@ -89,53 +137,6 @@ export default async function AccessoiresPage() {
         })}
       </div>
 
-      {/* Batteries & Chargeurs */}
-      {batteries.length > 0 && (
-        <div className="mt-20">
-          <div className="mb-10">
-            <h2 className="text-2xl font-bold tracking-tight text-[#0F0F10] sm:text-3xl">
-              Batteries & Chargeurs
-            </h2>
-            <p className="mt-3 text-lg text-[#6B7280]">
-              Batteries lithium et chargeurs officiels PowerBug.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {batteries.map((item) => {
-              const price = item.product_variants?.[0]?.price ?? item.base_price;
-              return (
-                <div
-                  key={item.id}
-                  className="group rounded-2xl border border-[#DBDBDB] bg-white p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
-                >
-                  <div className="mb-4 flex h-40 items-center justify-center rounded-xl bg-[#F5F5F5]">
-                    {item.product_images?.[0] ? (
-                      <Image
-                        src={item.product_images[0].url}
-                        alt={item.product_images[0].alt_text ?? item.name}
-                        width={300}
-                        height={300}
-                        className="h-full w-full rounded-xl object-contain p-4"
-                      />
-                    ) : (
-                      <Battery className="h-12 w-12 text-[#DBDBDB] group-hover:text-[#8DC63F]" />
-                    )}
-                  </div>
-                  <h3 className="font-semibold text-[#0F0F10]">{item.name}</h3>
-                  <p className="mt-1 text-sm text-[#6B7280]">{item.description}</p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="text-2xl font-bold text-[#0F0F10]">
-                      {price}<span className="text-sm text-[#6B7280]">&euro;</span>
-                    </span>
-                    <AddToCartSimple slug={item.slug} name={item.name} price={price} />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -107,7 +107,7 @@ export async function getAccessories() {
     .select(PRODUCT_SELECT)
     .eq("store", "powerbug")
     .eq("is_active", true)
-    .eq("categories.slug", "accessoires-trolley")
+    .in("categories.slug", ["accessoires-trolley", "pieces-detachees", "telemetres"])
     .order("base_price", { ascending: true });
 
   if (error) {
@@ -124,7 +124,7 @@ export async function getBatteries() {
     .select(PRODUCT_SELECT)
     .eq("store", "powerbug")
     .eq("is_active", true)
-    .in("categories.slug", ["batteries", "pieces-detachees", "telemetres"])
+    .eq("categories.slug", "batteries")
     .order("base_price", { ascending: false });
 
   if (error) {
