@@ -8,8 +8,6 @@ export type FeatureDetail = {
   image?: string;
 };
 
-const CDN = "https://www.powerbug.com.au/cdn/shop/files";
-
 export const features: FeatureDetail[] = [
   {
     slug: "28v-power",
@@ -38,7 +36,7 @@ export const features: FeatureDetail[] = [
       "Pas d'outils necessaires",
     ],
     trolleys: ["both"],
-    image: `${CDN}/unnamed.gif?v=1684130739`,
+    image: "/videos/nx-folding.mp4",
   },
   {
     slug: "roue-anti-colmatage",
@@ -53,7 +51,7 @@ export const features: FeatureDetail[] = [
       "Design exclusif PowerBug",
     ],
     trolleys: ["both"],
-    image: `${CDN}/NX-Anti-Clog-Front-Wheel-min.webp?v=1683852318`,
+    image: "/images/lifestyle/NX-Lifestyle-26-Front-Wheel-Detail.jpg",
   },
   {
     slug: "nx-handle",
@@ -68,7 +66,7 @@ export const features: FeatureDetail[] = [
       "Design ergonomique",
     ],
     trolleys: ["both"],
-    image: `${CDN}/usb.jpg?v=1741750847`,
+    image: "/images/lifestyle/NX-Lifestyle-18-Handle-Detail.jpg",
   },
   {
     slug: "pneus-winter-ready",
@@ -83,7 +81,7 @@ export const features: FeatureDetail[] = [
       "Pas besoin d'acheter des pneus supplementaires",
     ],
     trolleys: ["both"],
-    image: `${CDN}/Inverted-NX-Wheels-Dims2-min.webp?v=1683852579`,
+    image: "/images/lifestyle/NX-Lifestyle-52-Rear-Wheel-Detail.jpg",
   },
   {
     slug: "station-accessoires",
@@ -98,7 +96,7 @@ export const features: FeatureDetail[] = [
       "Large gamme d'accessoires disponibles",
     ],
     trolleys: ["both"],
-    image: `${CDN}/NX-Handle-Docking-min_1.webp?v=1683853473`,
+    image: "/images/lifestyle/NX-Lifestyle-33-Folded-Wheels-Inverted.jpg",
   },
   {
     slug: "downhill-control",

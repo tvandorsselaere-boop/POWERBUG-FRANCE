@@ -97,16 +97,29 @@ function FeatureSection({
     );
   }
 
+  const isVideo = feature.image!.endsWith(".mp4");
+
   const imageContent = (
     <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#F5F5F5]">
-      <Image
-        src={feature.image!}
-        alt={feature.title}
-        fill
-        className="object-cover"
-        sizes="(max-width: 768px) 100vw, 50vw"
-        unoptimized={feature.image!.endsWith(".gif")}
-      />
+      {isVideo ? (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="h-full w-full object-cover"
+        >
+          <source src={feature.image!} type="video/mp4" />
+        </video>
+      ) : (
+        <Image
+          src={feature.image!}
+          alt={feature.title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+      )}
     </div>
   );
 

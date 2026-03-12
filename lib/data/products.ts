@@ -28,8 +28,9 @@ export const trolleySpecs: TrolleySpec[] = [
   { label: "Garantie", nx: "2 ans", nxDhc: "2 ans" },
 ];
 
-// -50% sur les accessoires avec l'achat d'un trolley (source: powerbug.eu)
-export const ACCESSORY_DISCOUNT = 0.5;
+// Bundle offert : Score Card Holder (24,99€) + Umbrella Holder (34,99€) + Travel Cover (44,99€) = ~105€ (source: Fred, mars 2026)
+// Voir app/configurateur/page.tsx pour la logique bundle
+export const ACCESSORY_DISCOUNT = 0; // Plus utilise — kept for type compatibility
 
 export type Product = {
   slug: string;

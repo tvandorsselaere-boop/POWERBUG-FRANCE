@@ -249,10 +249,10 @@ export default async function TrolleysPage() {
         <Gift className="h-10 w-10 shrink-0 text-[#356B0D]" />
         <div>
           <h2 className="text-xl font-bold text-[#0F0F10] sm:text-2xl">
-            -50% sur les accessoires avec votre trolley
+            3 accessoires offerts avec votre trolley (~105&euro;)
           </h2>
           <p className="mt-2 text-sm text-[#6B7280] sm:text-base">
-            Ajoutez des accessoires a votre trolley et beneficiez de 50% de reduction sur toute la gamme.
+            Travel Cover, Umbrella Holder et Score Card Holder inclus offerts avec tout achat de trolley PowerBug NX.
           </p>
           <Button
             asChild

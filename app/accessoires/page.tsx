@@ -58,7 +58,7 @@ export default async function AccessoiresPage() {
 
               <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-[#356B0D]/10 px-2 py-0.5 text-xs font-medium text-[#356B0D]">
                 <Percent className="h-3 w-3" />
-                -50% avec un trolley
+                Offert avec un trolley
               </span>
 
               <h2 className="text-lg font-semibold text-[#0F0F10] group-hover:text-[#356B0D]">

@@ -69,10 +69,10 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
               <Gift className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
               <div>
                 <p className="text-sm font-semibold text-[#356B0D]">
-                  -50% sur tous les accessoires
+                  3 accessoires offerts (~105&euro;)
                 </p>
                 <p className="mt-1 text-xs text-[#6B7280]">
-                  Ajoutez des accessoires a votre trolley et beneficiez de 50% de reduction
+                  Travel Cover + Umbrella Holder + Score Card Holder inclus offerts avec votre achat
                 </p>
               </div>
             </div>
@@ -125,7 +125,7 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
           {isAccessoire && (
             <p className="mt-4 flex items-center gap-1 text-sm text-[#356B0D]">
               <Gift className="h-4 w-4" />
-              -50% avec l&apos;achat d&apos;un trolley
+              Certains accessoires offerts avec l&apos;achat d&apos;un trolley
             </p>
           )}
         </div>

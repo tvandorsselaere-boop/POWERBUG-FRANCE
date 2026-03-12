@@ -10,15 +10,17 @@ import {
   Check,
   Settings,
   Gift,
-  Percent,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart-store";
 import {
   trolleys,
   accessories,
-  ACCESSORY_DISCOUNT,
 } from "@/lib/data/products";
+
+// 3 accessoires OFFERTS avec tout achat trolley (source: Fred, mars 2026)
+const BUNDLE_SLUGS = ["housse-transport", "porte-parapluie", "scorecard-holder"];
+const BUNDLE_VALUE = 44.99 + 34.99 + 24.99; // Travel Cover + Umbrella Holder + Score Card Holder
 
 export default function ConfigurateurPage() {
   const [selectedTrolley, setSelectedTrolley] = useState<string | null>(null);
@@ -28,19 +30,22 @@ export default function ConfigurateurPage() {
   const { addItem } = useCartStore();
 
   const toggleExtra = (slug: string) => {
+    // Ne pas permettre de décocher les accessoires du bundle
+    if (BUNDLE_SLUGS.includes(slug)) return;
     setSelectedExtras((prev) =>
       prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
     );
   };
 
-  const selectedAccessories = accessories.filter((a) =>
-    selectedExtras.includes(a.slug)
+  // Accessoires supplémentaires (hors bundle)
+  const extraAccessories = accessories.filter((a) =>
+    selectedExtras.includes(a.slug) && !BUNDLE_SLUGS.includes(a.slug)
   );
+  const extrasFullPrice = extraAccessories.reduce((sum, a) => sum + a.price, 0);
+  const total = (trolley?.price ?? 0) + extrasFullPrice;
 
-  const accessoriesFullPrice = selectedAccessories.reduce((sum, a) => sum + a.price, 0);
-  const discount = trolley ? accessoriesFullPrice * ACCESSORY_DISCOUNT : 0;
-  const accessoriesDiscounted = accessoriesFullPrice - discount;
-  const total = (trolley?.price ?? 0) + accessoriesDiscounted;
+  // Accessoires bundle (toujours inclus quand un trolley est choisi)
+  const bundleAccessories = accessories.filter((a) => BUNDLE_SLUGS.includes(a.slug));
 
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-12 sm:py-16 lg:px-10">
@@ -58,10 +63,11 @@ export default function ConfigurateurPage() {
           Configurez votre trolley
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-lg text-[#6B7280]">
-          Choisissez votre modele et beneficiez de{" "}
+          Choisissez votre modele et recevez{" "}
           <span className="font-semibold text-[#356B0D]">
-            -50% sur tous les accessoires
-          </span>.
+            3 accessoires offerts (~105&euro;)
+          </span>{" "}
+          avec votre achat.
         </p>
       </div>
 
@@ -90,7 +96,11 @@ export default function ConfigurateurPage() {
                   <div className="mb-3 flex h-28 items-center justify-center rounded-lg bg-[#F5F5F5] overflow-hidden">
                     {t.slug === "nx-lithium" || t.slug === "nx-dhc-lithium" ? (
                       <Image
-                        src={t.slug === "nx-lithium" ? "/images/nx-main.jpg" : "/images/nx-dhc-main.jpg"}
+                        src={
+                          t.slug === "nx-lithium"
+                            ? "/images/produit/nx/PowerBug-NX-Main-1.jpg"
+                            : "/images/produit/nx-dhc/PowerBug-NX-Main-1-DHC.jpg"
+                        }
                         alt={t.name}
                         width={200}
                         height={200}
@@ -123,88 +133,104 @@ export default function ConfigurateurPage() {
             </div>
           </div>
 
-          {/* -50% banner */}
+          {/* Bundle offert banner */}
           {trolley && (
-            <div className="flex items-start gap-3 rounded-xl bg-[#356B0D]/5 border border-[#356B0D]/20 p-4">
-              <Percent className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
-              <div>
-                <p className="text-sm font-semibold text-[#356B0D]">
-                  -50% sur tous les accessoires
-                </p>
-                <p className="mt-1 text-xs text-[#6B7280]">
-                  La reduction s&apos;applique automatiquement avec votre trolley
-                </p>
+            <div className="rounded-xl border border-[#356B0D]/20 bg-[#356B0D]/5 p-5">
+              <div className="mb-4 flex items-center gap-3">
+                <Gift className="h-6 w-6 shrink-0 text-[#356B0D]" />
+                <div>
+                  <p className="font-semibold text-[#356B0D]">
+                    3 accessoires offerts avec votre trolley (~{BUNDLE_VALUE.toFixed(0)}&euro; de valeur)
+                  </p>
+                  <p className="mt-0.5 text-xs text-[#6B7280]">
+                    Inclus automatiquement avec tout achat de trolley PowerBug NX
+                  </p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                {bundleAccessories.map((acc) => (
+                  <div
+                    key={acc.slug}
+                    className="flex items-center gap-2 rounded-lg bg-white p-3 border border-[#356B0D]/20"
+                  >
+                    <Check className="h-4 w-4 shrink-0 text-[#356B0D]" />
+                    <div className="min-w-0">
+                      <p className="text-xs font-medium text-[#0F0F10] truncate">
+                        {acc.name}
+                      </p>
+                      <p className="text-xs text-[#356B0D]">
+                        Valeur {acc.price}&euro;
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Bundle photo */}
+              <div className="mt-4 overflow-hidden rounded-lg">
+                <Image
+                  src="/images/lifestyle/NX-Lifestyle-50-Essential-Accessory-Bundle.jpg"
+                  alt="Bundle 3 accessoires offerts PowerBug NX"
+                  width={800}
+                  height={400}
+                  className="w-full object-cover"
+                />
               </div>
             </div>
           )}
 
-          {/* Step 2: Accessories */}
+          {/* Step 2: Accessories extras */}
           <div>
             <h2 className="mb-4 flex items-center gap-3 text-xl font-bold text-[#0F0F10]">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#356B0D] text-sm font-bold text-white">
                 2
               </span>
-              Ajoutez des accessoires
-              {trolley && (
-                <span className="text-sm font-normal text-[#356B0D]">
-                  (-50% applique)
-                </span>
-              )}
+              Ajoutez des accessoires supplementaires
+              <span className="text-sm font-normal text-[#6B7280]">
+                (optionnel)
+              </span>
             </h2>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-              {accessories.map((acc) => {
-                const isSelected = selectedExtras.includes(acc.slug);
-                const discountedPrice = trolley
-                  ? acc.price * (1 - ACCESSORY_DISCOUNT)
-                  : acc.price;
-                return (
-                  <button
-                    key={acc.slug}
-                    onClick={() => toggleExtra(acc.slug)}
-                    className={`flex items-center gap-4 rounded-xl border p-4 text-left transition-all ${
-                      isSelected
-                        ? "border-[#356B0D] bg-[#356B0D]/5 shadow"
-                        : "border-[#DBDBDB] bg-white hover:border-[#356B0D]/30"
-                    }`}
-                  >
-                    <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
-                        isSelected ? "bg-[#356B0D]/10" : "bg-[#F5F5F5]"
+              {accessories
+                .filter((a) => !BUNDLE_SLUGS.includes(a.slug))
+                .map((acc) => {
+                  const isSelected = selectedExtras.includes(acc.slug);
+                  return (
+                    <button
+                      key={acc.slug}
+                      onClick={() => toggleExtra(acc.slug)}
+                      className={`flex items-center gap-4 rounded-xl border p-4 text-left transition-all ${
+                        isSelected
+                          ? "border-[#356B0D] bg-[#356B0D]/5 shadow"
+                          : "border-[#DBDBDB] bg-white hover:border-[#356B0D]/30"
                       }`}
                     >
-                      {isSelected ? (
-                        <Check className="h-5 w-5 text-[#356B0D]" />
-                      ) : (
-                        <Settings className="h-5 w-5 text-[#DBDBDB]" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-medium text-[#0F0F10] truncate">
-                        {acc.name}
-                      </h3>
-                      <p className="text-xs text-[#6B7280] truncate">
-                        {acc.description}
-                      </p>
-                    </div>
-                    <div className="shrink-0 text-right">
-                      {trolley ? (
-                        <>
-                          <span className="text-xs text-[#6B7280] line-through">
-                            {acc.price}&euro;
-                          </span>
-                          <span className="ml-1 font-bold text-[#356B0D]">
-                            {discountedPrice.toFixed(2)}&euro;
-                          </span>
-                        </>
-                      ) : (
+                      <div
+                        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${
+                          isSelected ? "bg-[#356B0D]/10" : "bg-[#F5F5F5]"
+                        }`}
+                      >
+                        {isSelected ? (
+                          <Check className="h-5 w-5 text-[#356B0D]" />
+                        ) : (
+                          <Settings className="h-5 w-5 text-[#DBDBDB]" />
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-sm font-medium text-[#0F0F10] truncate">
+                          {acc.name}
+                        </h3>
+                        <p className="text-xs text-[#6B7280] truncate">
+                          {acc.description}
+                        </p>
+                      </div>
+                      <div className="shrink-0 text-right">
                         <span className="font-bold text-[#0F0F10]">
                           {acc.price}&euro;
                         </span>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
+                      </div>
+                    </button>
+                  );
+                })}
             </div>
           </div>
         </div>
@@ -238,47 +264,47 @@ export default function ConfigurateurPage() {
                   </div>
                 )}
 
-                {/* Accessories */}
-                {selectedAccessories.length > 0 && (
+                {/* Bundle offert */}
+                {trolley && (
                   <div className="space-y-2 border-b border-[#DBDBDB]/50 pb-4">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
-                      Accessoires
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#356B0D]">
+                      Inclus offerts
                     </p>
-                    {selectedAccessories.map((acc) => {
-                      const discounted = trolley
-                        ? acc.price * (1 - ACCESSORY_DISCOUNT)
-                        : acc.price;
-                      return (
-                        <div
-                          key={acc.slug}
-                          className="flex items-center justify-between text-sm"
-                        >
-                          <span className="text-[#6B7280]">{acc.name}</span>
-                          {trolley ? (
-                            <span>
-                              <span className="text-xs text-[#6B7280] line-through mr-1">
-                                {acc.price}&euro;
-                              </span>
-                              <span className="text-[#356B0D] font-medium">
-                                {discounted.toFixed(2)}&euro;
-                              </span>
-                            </span>
-                          ) : (
-                            <span className="text-[#0F0F10]">{acc.price}&euro;</span>
-                          )}
-                        </div>
-                      );
-                    })}
+                    {bundleAccessories.map((acc) => (
+                      <div
+                        key={acc.slug}
+                        className="flex items-center justify-between text-sm"
+                      >
+                        <span className="flex items-center gap-1 text-[#6B7280]">
+                          <Gift className="h-3 w-3 text-[#356B0D]" />
+                          {acc.name}
+                        </span>
+                        <span className="text-[#356B0D] font-medium">
+                          Offert
+                        </span>
+                      </div>
+                    ))}
+                    <p className="text-right text-xs text-[#356B0D]">
+                      Valeur ~{BUNDLE_VALUE.toFixed(0)}&euro; offerts
+                    </p>
                   </div>
                 )}
 
-                {/* Savings */}
-                {trolley && discount > 0 && (
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-[#356B0D] font-medium">Economie (-50%)</span>
-                    <span className="font-bold text-[#356B0D]">
-                      -{discount.toFixed(2)}&euro;
-                    </span>
+                {/* Extra accessories */}
+                {extraAccessories.length > 0 && (
+                  <div className="space-y-2 border-b border-[#DBDBDB]/50 pb-4">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-[#6B7280]">
+                      Accessoires supplementaires
+                    </p>
+                    {extraAccessories.map((acc) => (
+                      <div
+                        key={acc.slug}
+                        className="flex items-center justify-between text-sm"
+                      >
+                        <span className="text-[#6B7280]">{acc.name}</span>
+                        <span className="text-[#0F0F10]">{acc.price}&euro;</span>
+                      </div>
+                    ))}
                   </div>
                 )}
 
@@ -298,11 +324,13 @@ export default function ConfigurateurPage() {
                   onClick={() => {
                     if (!trolley) return;
                     addItem({ slug: trolley.slug, name: trolley.name, price: trolley.price });
-                    selectedAccessories.forEach((acc) => {
-                      const discounted = trolley
-                        ? acc.price * (1 - ACCESSORY_DISCOUNT)
-                        : acc.price;
-                      addItem({ slug: acc.slug, name: acc.name, price: Number(discounted.toFixed(2)) });
+                    // Accessoires bundle à 0€
+                    bundleAccessories.forEach((acc) => {
+                      addItem({ slug: acc.slug, name: acc.name, price: 0 });
+                    });
+                    // Accessoires extras au plein tarif
+                    extraAccessories.forEach((acc) => {
+                      addItem({ slug: acc.slug, name: acc.name, price: acc.price });
                     });
                   }}
                 >

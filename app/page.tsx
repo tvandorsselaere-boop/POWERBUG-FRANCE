@@ -125,7 +125,7 @@ export default async function Home() {
         <div className="mx-auto flex max-w-[1600px] items-center justify-center gap-3 px-6 text-white">
           <Gift className="h-5 w-5" />
           <p className="text-sm font-medium sm:text-base">
-            <span className="font-bold">Offre speciale :</span> -50% sur tous les accessoires avec l&apos;achat d&apos;un trolley !
+            <span className="font-bold">Offre speciale :</span> 3 accessoires offerts (~105&euro;) avec l&apos;achat d&apos;un trolley !
           </p>
         </div>
       </section>
@@ -251,7 +251,7 @@ export default async function Home() {
             Configurez votre trolley ideal
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[#6B7280]">
-            Choisissez votre modele et beneficiez de -50% sur tous les accessoires.
+            Choisissez votre modele et recevez 3 accessoires offerts (~105&euro;).
           </p>
           <Button
             asChild
