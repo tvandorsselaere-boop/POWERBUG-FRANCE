@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronRight, ShoppingCart, Zap, Check, X, Gift } from "lucide-react";
+import { ChevronRight, Zap, Check, X, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trolleySpecs } from "@/lib/data/products";
 import { getTrolleys } from "@/lib/supabase/queries";
@@ -66,7 +66,7 @@ export default async function TrolleysPage() {
       {/* Mobile cards */}
       <div className="mb-12 grid grid-cols-1 gap-6 md:hidden">
         {/* NX */}
-        <div className="card-glass rounded-2xl p-6">
+        <Link href="/trolleys/nx-lithium" className="group card-glass rounded-2xl p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg">
           <div className="mb-4 flex items-center justify-center rounded-xl bg-[#F5F5F5] py-8 h-56 overflow-hidden">
             <TrolleyImage url={nxImg} alt="NX Lithium" className="h-full w-full object-contain p-4" />
           </div>
@@ -83,22 +83,18 @@ export default async function TrolleysPage() {
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Batterie Lithium 36 trous</li>
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Pliage VRAP compact</li>
           </ul>
-          <p className="mt-4 text-3xl font-bold text-[#0F0F10]">
-            899<span className="text-lg text-[#6B7280]">&euro;</span>
-          </p>
-          <Button
-            asChild
-            className="mt-4 w-full btn-glass rounded-[10px] text-white"
-          >
-            <Link href="/trolleys/nx-lithium">
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              Voir le NX
-            </Link>
-          </Button>
-        </div>
+          <div className="mt-4 flex items-center justify-between">
+            <p className="text-3xl font-bold text-[#0F0F10]">
+              899<span className="text-lg text-[#6B7280]">&euro;</span>
+            </p>
+            <span className="text-sm font-medium text-[#356B0D]">
+              Decouvrir &rarr;
+            </span>
+          </div>
+        </Link>
 
         {/* NX DHC */}
-        <div className="card-glass rounded-2xl border-2 border-[#356B0D] p-6">
+        <Link href="/trolleys/nx-dhc-lithium" className="group card-glass rounded-2xl border-2 border-[#356B0D] p-6 transition-all hover:shadow-lg">
           <div className="mb-4 flex items-center justify-center rounded-xl bg-[#356B0D]/5 py-8 h-56 overflow-hidden">
             <TrolleyImage url={dhcImg} alt="NX DHC Lithium" className="h-full w-full object-contain p-4" />
           </div>
@@ -115,19 +111,15 @@ export default async function TrolleysPage() {
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Frein parking electronique</li>
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Toutes les specs du NX</li>
           </ul>
-          <p className="mt-4 text-3xl font-bold text-[#0F0F10]">
-            999<span className="text-lg text-[#6B7280]">&euro;</span>
-          </p>
-          <Button
-            asChild
-            className="mt-4 w-full btn-glass rounded-[10px] text-white"
-          >
-            <Link href="/trolleys/nx-dhc-lithium">
-              <ShoppingCart className="mr-2 h-4 w-4" />
-              Voir le NX DHC
-            </Link>
-          </Button>
-        </div>
+          <div className="mt-4 flex items-center justify-between">
+            <p className="text-3xl font-bold text-[#0F0F10]">
+              999<span className="text-lg text-[#6B7280]">&euro;</span>
+            </p>
+            <span className="text-sm font-medium text-[#356B0D]">
+              Decouvrir &rarr;
+            </span>
+          </div>
+        </Link>
       </div>
 
       {/* Desktop comparator table */}
@@ -140,7 +132,7 @@ export default async function TrolleysPage() {
                   Caracteristique
                 </th>
                 <th className="px-6 py-6 text-center">
-                  <div className="flex flex-col items-center gap-3">
+                  <Link href="/trolleys/nx-lithium" className="group flex flex-col items-center gap-3">
                     <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-white overflow-hidden">
                       {nxImg ? (
                         <Image src={nxImg} alt="NX Lithium" width={96} height={96} className="h-full w-full object-contain p-2" />
@@ -152,12 +144,12 @@ export default async function TrolleysPage() {
                       <span className="mb-1 inline-flex rounded-full bg-white px-2 py-0.5 text-xs text-[#6B7280]">
                         Populaire
                       </span>
-                      <p className="text-lg font-bold text-[#0F0F10]">NX Lithium</p>
+                      <p className="text-lg font-bold text-[#0F0F10] group-hover:text-[#356B0D]">NX Lithium</p>
                     </div>
-                  </div>
+                  </Link>
                 </th>
                 <th className="px-6 py-6 text-center">
-                  <div className="flex flex-col items-center gap-3">
+                  <Link href="/trolleys/nx-dhc-lithium" className="group flex flex-col items-center gap-3">
                     <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-[#356B0D]/10 overflow-hidden">
                       {dhcImg ? (
                         <Image src={dhcImg} alt="NX DHC Lithium" width={96} height={96} className="h-full w-full object-contain p-2" />
@@ -169,9 +161,9 @@ export default async function TrolleysPage() {
                       <span className="mb-1 inline-flex rounded-full bg-[#356B0D]/10 px-2 py-0.5 text-xs text-[#356B0D]">
                         Premium
                       </span>
-                      <p className="text-lg font-bold text-[#0F0F10]">NX DHC Lithium</p>
+                      <p className="text-lg font-bold text-[#0F0F10] group-hover:text-[#356B0D]">NX DHC Lithium</p>
                     </div>
-                  </div>
+                  </Link>
                 </th>
               </tr>
             </thead>
@@ -217,25 +209,25 @@ export default async function TrolleysPage() {
           {/* CTA row */}
           <div className="grid grid-cols-3 border-t border-[#DBDBDB] bg-[#F5F5F5]">
             <div className="px-6 py-6" />
-            <div className="flex justify-center px-6 py-6">
+            <div className="flex items-center justify-center px-6 py-6">
               <Button
                 asChild
                 variant="outline"
                 className="btn-glass-outline rounded-[10px] text-[#0F0F10]"
               >
                 <Link href="/trolleys/nx-lithium">
-                  Voir le NX
+                  Decouvrir le NX
                   <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
               </Button>
             </div>
-            <div className="flex justify-center px-6 py-6">
+            <div className="flex items-center justify-center px-6 py-6">
               <Button
                 asChild
                 className="btn-glass rounded-[10px] text-white"
               >
                 <Link href="/trolleys/nx-dhc-lithium">
-                  Voir le NX DHC
+                  Decouvrir le NX DHC
                   <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
               </Button>
@@ -258,7 +250,7 @@ export default async function TrolleysPage() {
             asChild
             className="mt-4 btn-glass rounded-[10px] text-white"
           >
-            <Link href="/configurateur">Configurer mon trolley</Link>
+            <Link href="/#quiz">Quel trolley pour moi ?</Link>
           </Button>
         </div>
       </div>

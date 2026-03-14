@@ -92,15 +92,14 @@ export default async function Home() {
             <p className="animate-fade-in mb-3 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]">
               Distributeur exclusif France
             </p>
-            <h1 className="animate-fade-in-delay-1 flex flex-col items-center gap-2 overflow-visible text-4xl font-bold tracking-tight text-white sm:text-5xl lg:flex-row lg:justify-center lg:gap-4 lg:text-6xl">
+            <h1 className="animate-fade-in-delay-1 flex flex-col items-center gap-2 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:flex-row lg:justify-center lg:gap-4 lg:text-6xl">
               <span>Chariots electriques</span>
               <Image
                 src="/images/logo/powerbug-logo-full.png"
                 alt="PowerBug"
-                width={280}
-                height={70}
-                className="inline-block h-[0.9em] w-auto brightness-0 invert"
-                style={{ overflow: "visible" }}
+                width={320}
+                height={80}
+                className="inline-block h-[1.3em] w-auto py-[0.15em] brightness-0 invert"
                 priority
               />
             </h1>
@@ -228,7 +227,7 @@ export default async function Home() {
       </section>
 
       {/* Quiz — Quel chariot pour vous ? */}
-      <section className="border-t border-[#DBDBDB] bg-white py-20 sm:py-28">
+      <section id="quiz" className="border-t border-[#DBDBDB] bg-white py-20 sm:py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
           <div className="mx-auto max-w-xl">
             <div className="mb-10 text-center">
