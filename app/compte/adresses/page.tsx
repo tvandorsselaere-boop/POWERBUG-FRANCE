@@ -42,9 +42,9 @@ export default function AdressesPage() {
         .from("profiles")
         .select("default_shipping_address")
         .eq("id", user.id)
-        .single();
+        .single() as { data: { default_shipping_address: Address | null } | null };
       if (data?.default_shipping_address) {
-        setAddress(data.default_shipping_address as unknown as Address);
+        setAddress(data.default_shipping_address);
       }
       setLoading(false);
     }
@@ -60,12 +60,11 @@ export default function AdressesPage() {
     } = await supabase.auth.getUser();
     if (!user) return;
 
-    await supabase
-      .from("profiles")
+    await (supabase
+      .from("profiles") as ReturnType<typeof supabase.from>)
       .update({
-        default_shipping_address:
-          address as unknown as Record<string, string>,
-      })
+        default_shipping_address: address as unknown as Record<string, string>,
+      } as never)
       .eq("id", user.id);
 
     setSaving(false);
