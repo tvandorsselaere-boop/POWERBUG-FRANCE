@@ -11,6 +11,7 @@ const footerLinks = {
   ],
   informations: [
     { name: "Notre histoire", href: "/notre-histoire" },
+    { name: "Avis & Tests", href: "/avis" },
     { name: "Garantie", href: "/garantie" },
     { name: "FAQ", href: "/faq" },
     { name: "Livraison", href: "/livraison" },
