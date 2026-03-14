@@ -81,45 +81,53 @@ export default async function Home() {
         {/* Background images carousel */}
         <HeroCarousel />
 
-        {/* Dark overlay — gradient to keep trolley visible on right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/20" />
+        {/* Dark overlay — subtle gradient, stronger at top and bottom for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />
 
-        {/* Content — left side, vertically centered on mobile, top on desktop */}
-        <div className="relative z-10 flex h-full items-center lg:items-start lg:pt-28">
-          <div className="mx-auto w-full max-w-[1600px] px-6 lg:px-10">
-            <div className="max-w-lg lg:max-w-xl">
-              <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]">
-                Distributeur exclusif France
-              </p>
+        {/* Content — full width, title at top, buttons at bottom */}
+        <div className="relative z-10 flex h-full flex-col justify-between py-12 sm:py-16 lg:py-20">
+          {/* Top — Title centered across full width */}
+          <div className="mx-auto w-full max-w-[1600px] px-6 text-center lg:px-10">
+            <Image
+              src="/images/logo/powerbug-logo-full.png"
+              alt="PowerBug"
+              width={220}
+              height={60}
+              className="animate-fade-in mx-auto mb-6 brightness-0 invert"
+              priority
+            />
+            <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]">
+              Distributeur exclusif France
+            </p>
+            <h1 className="animate-fade-in-delay-1 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
+              Chariots electriques{" "}
+              <span className="text-[#8DC63F]">PowerBug</span>
+            </h1>
+            <p className="animate-fade-in-delay-2 mx-auto mt-4 max-w-xl text-lg text-white/85">
+              Depuis 2003, l&apos;innovation britannique au service du golf. Decouvrez la serie NX,
+              enfin disponible pour les golfeurs francais.
+            </p>
+          </div>
 
-              <h1 className="animate-fade-in-delay-1 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-                Chariots electriques{" "}
-                <span className="text-[#8DC63F]">PowerBug</span>
-              </h1>
-
-              <p className="animate-fade-in-delay-2 mt-6 max-w-xl text-lg text-white/85">
-                Depuis 2003, l&apos;innovation britannique au service du golf. Decouvrez la serie NX,
-                enfin disponible pour les golfeurs francais.
-              </p>
-
-              <div className="animate-fade-in-delay-3 mt-10 flex flex-col gap-4 sm:flex-row">
-                <Button
-                  asChild
-                  size="lg"
-                  className="btn-glass rounded-[10px] px-8 text-base font-semibold text-white"
-                >
-                  <Link href="/trolleys">
-                    Decouvrir la gamme
-                    <ChevronRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Link
-                  href="/accessoires"
-                  className="inline-flex items-center justify-center rounded-[10px] border-2 border-white bg-transparent px-8 py-2.5 text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-[#0F0F10]"
-                >
-                  Voir les accessoires
+          {/* Bottom — CTA buttons centered */}
+          <div className="mx-auto w-full max-w-[1600px] px-6 text-center lg:px-10">
+            <div className="animate-fade-in-delay-3 inline-flex flex-col gap-4 sm:flex-row">
+              <Button
+                asChild
+                size="lg"
+                className="btn-glass rounded-[10px] px-8 text-base font-semibold text-white"
+              >
+                <Link href="/trolleys">
+                  Decouvrir la gamme
+                  <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
-              </div>
+              </Button>
+              <Link
+                href="/accessoires"
+                className="inline-flex items-center justify-center rounded-[10px] border-2 border-white bg-transparent px-8 py-2.5 text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-[#0F0F10]"
+              >
+                Voir les accessoires
+              </Link>
             </div>
           </div>
         </div>

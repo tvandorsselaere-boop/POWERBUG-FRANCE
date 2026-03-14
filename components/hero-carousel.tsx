@@ -49,7 +49,7 @@ export function HeroCarousel() {
           className={`object-cover transition-opacity duration-1000 ${
             i === current ? "opacity-100" : "opacity-0"
           }`}
-          style={{ objectPosition: "center 65%" }}
+          style={{ objectPosition: "center 60%" }}
           priority={i === 0}
           sizes="100vw"
         />
