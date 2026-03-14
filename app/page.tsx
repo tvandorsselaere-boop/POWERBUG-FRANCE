@@ -8,6 +8,7 @@ import {
   ChevronRight,
   Zap,
   Gift,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getTrolleys } from "@/lib/supabase/queries";
@@ -251,7 +252,7 @@ export default async function Home() {
               Pourquoi PowerBug ?
             </h2>
             <p className="mt-3 text-[#6B7280]">
-              La reference des chariots electriques depuis 2002.
+              La reference des chariots electriques depuis 2003.
             </p>
           </div>
 
@@ -274,8 +275,42 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* CTA Banner */}
+      {/* Trustpilot */}
       <section className="border-t border-[#DBDBDB] bg-white py-16 sm:py-20">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
+          <div className="mx-auto max-w-2xl text-center">
+            <div className="mb-4 flex items-center justify-center gap-1">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <Star
+                  key={i}
+                  className="h-7 w-7 fill-[#F6A429] text-[#F6A429]"
+                />
+              ))}
+            </div>
+            <p className="text-4xl font-bold text-[#0F0F10]">
+              4.9<span className="text-xl text-[#6B7280]">/5</span>
+            </p>
+            <p className="mt-2 text-lg text-[#6B7280]">
+              sur Trustpilot — 3 895 avis verifies
+            </p>
+            <p className="mt-2 text-sm italic text-[#6B7280]">
+              &laquo; Marque de chariot de golf la mieux notee pour le service client et la fiabilite &raquo;
+            </p>
+            <a
+              href="https://uk.trustpilot.com/review/powerbug.co.uk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-[#356B0D] hover:underline"
+            >
+              Voir tous les avis sur Trustpilot
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Banner */}
+      <section className="border-t border-[#DBDBDB] bg-[#F5F5F5] py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-6 text-center lg:px-10">
           <h2 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
             Pret a passer au chariot electrique ?
