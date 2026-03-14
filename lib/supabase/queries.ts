@@ -1,4 +1,12 @@
-import { createClient } from "./server";
+import { createClient as createPlainClient } from "@supabase/supabase-js";
+
+/** Public read-only client — no cookies needed, safe for build-time (generateStaticParams) */
+function createQueryClient() {
+  return createPlainClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+}
 
 export type DbProduct = {
   id: string;
@@ -45,7 +53,7 @@ const PRODUCT_SELECT = `
 `;
 
 export async function getProducts(categorySlug?: string) {
-  const supabase = await createClient();
+  const supabase = createQueryClient();
   let query = supabase
     .from("products")
     .select(PRODUCT_SELECT)
@@ -66,7 +74,7 @@ export async function getProducts(categorySlug?: string) {
 }
 
 export async function getProductBySlug(slug: string) {
-  const supabase = await createClient();
+  const supabase = createQueryClient();
   const { data, error } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
@@ -83,7 +91,7 @@ export async function getProductBySlug(slug: string) {
 }
 
 export async function getTrolleys() {
-  const supabase = await createClient();
+  const supabase = createQueryClient();
   const { data, error } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
@@ -101,7 +109,7 @@ export async function getTrolleys() {
 }
 
 export async function getAccessories() {
-  const supabase = await createClient();
+  const supabase = createQueryClient();
   const { data, error } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
@@ -118,7 +126,7 @@ export async function getAccessories() {
 }
 
 export async function getBatteries() {
-  const supabase = await createClient();
+  const supabase = createQueryClient();
   const { data, error } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getTrolleys } from "@/lib/supabase/queries";
+import { HeroCarousel } from "@/components/hero-carousel";
 
 const trolleyMeta = [
   {
@@ -74,27 +75,33 @@ export default async function Home() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-[#F5F5F5]">
-        <div className="mx-auto max-w-[1600px] px-6 py-16 sm:py-24 lg:px-10 lg:py-32">
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
-            {/* Text */}
-            <div className="text-center lg:text-left">
-              <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#356B0D]">
+      {/* Hero — full-width background carousel */}
+      <section className="relative h-[85vh] min-h-[500px] max-h-[900px] overflow-hidden">
+        {/* Background images carousel */}
+        <HeroCarousel />
+
+        {/* Dark overlay for text readability */}
+        <div className="absolute inset-0 bg-black/45" />
+
+        {/* Content */}
+        <div className="relative z-10 flex h-full items-center">
+          <div className="mx-auto w-full max-w-[1600px] px-6 lg:px-10">
+            <div className="max-w-2xl">
+              <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]">
                 Distributeur exclusif France
               </p>
 
-              <h1 className="animate-fade-in-delay-1 text-4xl font-bold leading-tight tracking-tight text-[#0F0F10] sm:text-5xl lg:text-6xl">
+              <h1 className="animate-fade-in-delay-1 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
                 Chariots electriques{" "}
-                <span className="text-[#356B0D]">PowerBug</span>
+                <span className="text-[#8DC63F]">PowerBug</span>
               </h1>
 
-              <p className="animate-fade-in-delay-2 mx-auto mt-6 max-w-xl text-lg text-[#6B7280] lg:mx-0">
+              <p className="animate-fade-in-delay-2 mt-6 max-w-xl text-lg text-white/85">
                 Depuis 2003, l&apos;innovation britannique au service du golf. Decouvrez la serie NX,
                 enfin disponible pour les golfeurs francais.
               </p>
 
-              <div className="animate-fade-in-delay-3 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
+              <div className="animate-fade-in-delay-3 mt-10 flex flex-col gap-4 sm:flex-row">
                 <Button
                   asChild
                   size="lg"
@@ -109,25 +116,13 @@ export default async function Home() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="btn-glass-outline rounded-[10px] px-8 text-base text-[#0F0F10]"
+                  className="rounded-[10px] border-white/40 px-8 text-base text-white hover:bg-white/10 hover:text-white"
                 >
                   <Link href="/accessoires">
                     Voir les accessoires
                   </Link>
                 </Button>
               </div>
-            </div>
-
-            {/* Image */}
-            <div className="animate-fade-in-delay-2 relative mx-auto w-full max-w-lg lg:max-w-none">
-              <Image
-                src="/images/lifestyle/NX-Lifestyle-1.jpg"
-                alt="PowerBug NX Lithium sur le parcours de golf"
-                width={800}
-                height={600}
-                className="rounded-2xl object-cover"
-                priority
-              />
             </div>
           </div>
         </div>

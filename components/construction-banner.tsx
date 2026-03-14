@@ -8,7 +8,7 @@ export function ConstructionBanner() {
           <Construction className="h-4 w-4" />
           <span>Site en cours de lancement — Commandez des maintenant</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col items-center gap-1 sm:flex-row sm:gap-3">
           <a href="mailto:contact@progolfdistribution.com" className="inline-flex items-center gap-1 underline hover:no-underline">
             <Mail className="h-3.5 w-3.5" />
             contact@progolfdistribution.com
