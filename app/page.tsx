@@ -86,23 +86,22 @@ export default async function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />
 
         {/* Content — full width, title at top, buttons at bottom */}
-        <div className="relative z-10 flex h-full flex-col justify-between py-12 sm:py-16 lg:py-20">
+        <div className="relative z-10 flex h-full flex-col justify-between py-8 sm:py-12 lg:py-16">
           {/* Top — Title centered across full width */}
           <div className="mx-auto w-full max-w-[1600px] px-6 text-center lg:px-10">
-            <Image
-              src="/images/logo/powerbug-logo-full.png"
-              alt="PowerBug"
-              width={220}
-              height={60}
-              className="animate-fade-in mx-auto mb-6 brightness-0 invert"
-              priority
-            />
-            <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]">
+            <p className="animate-fade-in mb-3 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]">
               Distributeur exclusif France
             </p>
-            <h1 className="animate-fade-in-delay-1 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Chariots electriques{" "}
-              <span className="text-[#8DC63F]">PowerBug</span>
+            <h1 className="animate-fade-in-delay-1 flex flex-col items-center gap-2 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:flex-row lg:justify-center lg:gap-4 lg:text-6xl">
+              <span>Chariots electriques</span>
+              <Image
+                src="/images/logo/powerbug-logo-full.png"
+                alt="PowerBug"
+                width={280}
+                height={70}
+                className="inline-block h-[1.1em] w-auto brightness-0 invert"
+                priority
+              />
             </h1>
             <p className="animate-fade-in-delay-2 mx-auto mt-4 max-w-xl text-lg text-white/85">
               Depuis 2003, l&apos;innovation britannique au service du golf. Decouvrez la serie NX,
