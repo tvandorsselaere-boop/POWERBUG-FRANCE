@@ -22,6 +22,10 @@ function GoogleButton() {
       },
     });
     if (data?.url) {
+      // DEBUG: voir l'URL generee par Supabase
+      console.log("OAuth URL:", data.url);
+      console.log("redirect_to present:", data.url.includes("redirect_to"));
+      alert("URL Supabase (copie-la) :\n" + data.url.substring(0, 200));
       window.location.href = data.url;
     } else {
       console.error("OAuth error:", error);
