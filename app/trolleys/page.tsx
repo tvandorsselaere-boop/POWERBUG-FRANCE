@@ -212,7 +212,7 @@ export default async function TrolleysPage() {
             <div className="flex items-center justify-center px-6 py-6">
               <Link
                 href="/trolleys/nx-lithium"
-                className="inline-flex items-center justify-center rounded-[10px] border border-[#356B0D] px-6 py-2.5 text-sm font-medium text-[#356B0D] transition-colors hover:bg-[#356B0D] hover:text-white"
+                className="inline-flex min-w-[200px] items-center justify-center rounded-[10px] border border-[#356B0D] px-6 py-2.5 text-sm font-medium text-[#356B0D] transition-colors hover:bg-[#356B0D] hover:text-white"
               >
                 Decouvrir le NX
                 <ChevronRight className="ml-1 h-4 w-4" />
@@ -221,7 +221,7 @@ export default async function TrolleysPage() {
             <div className="flex items-center justify-center px-6 py-6">
               <Link
                 href="/trolleys/nx-dhc-lithium"
-                className="inline-flex items-center justify-center rounded-[10px] bg-[#356B0D] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#356B0D]/90"
+                className="inline-flex min-w-[200px] items-center justify-center rounded-[10px] bg-[#356B0D] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#356B0D]/90"
               >
                 Decouvrir le NX DHC
                 <ChevronRight className="ml-1 h-4 w-4" />

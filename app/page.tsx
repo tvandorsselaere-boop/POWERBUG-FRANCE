@@ -99,7 +99,7 @@ export default async function Home() {
                 alt="PowerBug"
                 width={320}
                 height={80}
-                className="inline-block h-[1.3em] w-auto brightness-0 invert"
+                className="inline-block h-[1.6em] w-auto brightness-0 invert"
                 priority
               />
             </h1>
