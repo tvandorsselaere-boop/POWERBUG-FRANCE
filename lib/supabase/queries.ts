@@ -1,4 +1,4 @@
-import { createServerClient } from "./server";
+import { createClient } from "./server";
 
 export type DbProduct = {
   id: string;
@@ -45,7 +45,7 @@ const PRODUCT_SELECT = `
 `;
 
 export async function getProducts(categorySlug?: string) {
-  const supabase = createServerClient();
+  const supabase = await createClient();
   let query = supabase
     .from("products")
     .select(PRODUCT_SELECT)
@@ -66,7 +66,7 @@ export async function getProducts(categorySlug?: string) {
 }
 
 export async function getProductBySlug(slug: string) {
-  const supabase = createServerClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
@@ -83,7 +83,7 @@ export async function getProductBySlug(slug: string) {
 }
 
 export async function getTrolleys() {
-  const supabase = createServerClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
@@ -101,7 +101,7 @@ export async function getTrolleys() {
 }
 
 export async function getAccessories() {
-  const supabase = createServerClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
@@ -118,7 +118,7 @@ export async function getAccessories() {
 }
 
 export async function getBatteries() {
-  const supabase = createServerClient();
+  const supabase = await createClient();
   const { data, error } = await supabase
     .from("products")
     .select(PRODUCT_SELECT)
