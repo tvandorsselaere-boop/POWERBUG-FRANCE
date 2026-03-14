@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getTrolleys } from "@/lib/supabase/queries";
 import { HeroCarousel } from "@/components/hero-carousel";
+import { TrolleyQuiz } from "@/components/trolley-quiz";
 
 const trolleyMeta = [
   {
@@ -116,7 +117,7 @@ export default async function Home() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="rounded-[10px] border-white/40 px-8 text-base text-white hover:bg-white/10 hover:text-white"
+                  className="rounded-[10px] border-2 border-white px-8 text-base font-semibold text-white backdrop-blur-sm hover:bg-white hover:text-[#0F0F10]"
                 >
                   <Link href="/accessoires">
                     Voir les accessoires
@@ -217,6 +218,23 @@ export default async function Home() {
                 <ChevronRight className="ml-1 h-4 w-4" />
               </Link>
             </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Quiz — Quel chariot pour vous ? */}
+      <section className="border-t border-[#DBDBDB] bg-white py-20 sm:py-28">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
+          <div className="mx-auto max-w-xl">
+            <div className="mb-10 text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
+                Quel chariot pour vous ?
+              </h2>
+              <p className="mt-3 text-[#6B7280]">
+                3 questions pour trouver le modele adapte a votre jeu.
+              </p>
+            </div>
+            <TrolleyQuiz />
           </div>
         </div>
       </section>
