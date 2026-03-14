@@ -84,8 +84,8 @@ export default async function Home() {
         {/* Dark overlay for text readability */}
         <div className="absolute inset-0 bg-black/45" />
 
-        {/* Content */}
-        <div className="relative z-10 flex h-full items-center">
+        {/* Content — aligned top so text doesn't overlap the trolley */}
+        <div className="relative z-10 flex h-full items-start pt-16 sm:pt-24 lg:pt-32">
           <div className="mx-auto w-full max-w-[1600px] px-6 lg:px-10">
             <div className="max-w-2xl">
               <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]">
@@ -113,16 +113,12 @@ export default async function Home() {
                     <ChevronRight className="ml-1 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="rounded-[10px] border-2 border-white px-8 text-base font-semibold text-white backdrop-blur-sm hover:bg-white hover:text-[#0F0F10]"
+                <Link
+                  href="/accessoires"
+                  className="inline-flex items-center justify-center rounded-[10px] border-2 border-white bg-transparent px-8 py-2.5 text-base font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white hover:text-[#0F0F10]"
                 >
-                  <Link href="/accessoires">
-                    Voir les accessoires
-                  </Link>
-                </Button>
+                  Voir les accessoires
+                </Link>
               </div>
             </div>
           </div>
