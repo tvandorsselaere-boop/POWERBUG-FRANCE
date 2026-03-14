@@ -13,12 +13,19 @@ function GoogleButton() {
   const handleGoogleLogin = async () => {
     setLoading(true);
     const supabase = createBrowserClient();
-    await supabase.auth.signInWithOAuth({
+    const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
+        skipBrowserRedirect: true,
       },
     });
+    if (data?.url) {
+      window.location.href = data.url;
+    } else {
+      console.error("OAuth error:", error);
+      setLoading(false);
+    }
   };
 
   return (
