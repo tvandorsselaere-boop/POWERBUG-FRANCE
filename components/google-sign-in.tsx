@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createBrowserClient } from "@/lib/supabase/browser";
 
-// Public Google Client ID from Supabase Google provider config
+// Google Client ID — dedicated PowerBug project in Google Cloud
 const GOOGLE_CLIENT_ID =
   process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ||
-  "687158599254-5tvv2emfq2r63nefgmvgkkikacj05kke.apps.googleusercontent.com";
+  "1082109976096-k4hf61i1j88p6793rb87j89snvcc11da.apps.googleusercontent.com";
 
 const STORE = "powerbug";
 
