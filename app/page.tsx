@@ -95,11 +95,11 @@ export default async function Home() {
             <h1 className="animate-fade-in-delay-1 flex flex-col items-center gap-2 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:flex-row lg:justify-center lg:gap-4 lg:text-6xl">
               <span>Chariots electriques</span>
               <Image
-                src="/images/logo/powerbug-logo-full.png"
+                src="/images/powerbug-logo.png"
                 alt="PowerBug"
                 width={320}
                 height={80}
-                className="inline-block h-[1.3em] w-auto py-[0.15em] brightness-0 invert"
+                className="inline-block h-[1.3em] w-auto brightness-0 invert"
                 priority
               />
             </h1>

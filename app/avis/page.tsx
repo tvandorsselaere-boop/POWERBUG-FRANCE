@@ -127,29 +127,29 @@ export default function AvisPage() {
         </p>
       </div>
 
-      {/* Review platforms */}
-      <div className="mb-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:max-w-3xl">
+      {/* Review platforms + total — 3 columns aligned */}
+      <div className="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
         {reviewPlatforms.map((platform) => (
           <a
             key={platform.name}
             href={platform.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group rounded-2xl border border-[#DBDBDB] bg-white p-8 text-center transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
+            className="group rounded-2xl border border-[#DBDBDB] bg-white p-6 text-center transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
           >
-            <div className="mb-3 flex items-center justify-center gap-1">
+            <div className="mb-2 flex items-center justify-center gap-1">
               {Array.from({ length: platform.stars }).map((_, i) => (
                 <Star
                   key={i}
-                  className="h-6 w-6 fill-[#F6A429] text-[#F6A429]"
+                  className="h-5 w-5 fill-[#F6A429] text-[#F6A429]"
                 />
               ))}
             </div>
-            <p className="text-4xl font-bold text-[#0F0F10]">
+            <p className="text-3xl font-bold text-[#0F0F10]">
               {platform.score}
             </p>
             <p className="mt-1 text-sm text-[#6B7280]">{platform.count}</p>
-            <p className="mt-3 text-base font-semibold text-[#0F0F10]">
+            <p className="mt-2 text-base font-semibold text-[#0F0F10]">
               {platform.name}
             </p>
             <span className="mt-2 inline-flex items-center gap-1 text-sm text-[#356B0D] opacity-0 transition-opacity group-hover:opacity-100">
@@ -157,17 +157,15 @@ export default function AvisPage() {
             </span>
           </a>
         ))}
-      </div>
-
-      {/* Total reviews banner */}
-      <div className="mb-16 rounded-2xl bg-[#356B0D] p-8 text-center text-white sm:p-10">
-        <p className="text-5xl font-bold">8 300+</p>
-        <p className="mt-2 text-lg text-white/85">
-          avis clients verifies sur toutes les plateformes
-        </p>
-        <p className="mt-1 text-sm text-white/70">
-          Source : powerbug.co.uk — Trustpilot + Reviews.co.uk + avis directs
-        </p>
+        <div className="flex flex-col items-center justify-center rounded-2xl bg-[#356B0D] p-6 text-center text-white">
+          <p className="text-3xl font-bold">8 300+</p>
+          <p className="mt-1 text-sm text-white/85">
+            avis clients verifies
+          </p>
+          <p className="mt-1 text-xs text-white/60">
+            toutes plateformes confondues
+          </p>
+        </div>
       </div>
 
       {/* Expert reviews */}

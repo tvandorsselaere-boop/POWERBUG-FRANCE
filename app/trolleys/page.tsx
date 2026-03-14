@@ -210,27 +210,22 @@ export default async function TrolleysPage() {
           <div className="grid grid-cols-3 border-t border-[#DBDBDB] bg-[#F5F5F5]">
             <div className="px-6 py-6" />
             <div className="flex items-center justify-center px-6 py-6">
-              <Button
-                asChild
-                variant="outline"
-                className="btn-glass-outline rounded-[10px] text-[#0F0F10]"
+              <Link
+                href="/trolleys/nx-lithium"
+                className="inline-flex items-center justify-center rounded-[10px] border border-[#356B0D] px-6 py-2.5 text-sm font-medium text-[#356B0D] transition-colors hover:bg-[#356B0D] hover:text-white"
               >
-                <Link href="/trolleys/nx-lithium">
-                  Decouvrir le NX
-                  <ChevronRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
+                Decouvrir le NX
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
             </div>
             <div className="flex items-center justify-center px-6 py-6">
-              <Button
-                asChild
-                className="btn-glass rounded-[10px] text-white"
+              <Link
+                href="/trolleys/nx-dhc-lithium"
+                className="inline-flex items-center justify-center rounded-[10px] bg-[#356B0D] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#356B0D]/90"
               >
-                <Link href="/trolleys/nx-dhc-lithium">
-                  Decouvrir le NX DHC
-                  <ChevronRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
+                Decouvrir le NX DHC
+                <ChevronRight className="ml-1 h-4 w-4" />
+              </Link>
             </div>
           </div>
         </div>
