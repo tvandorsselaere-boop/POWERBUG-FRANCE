@@ -29,8 +29,10 @@ export default function PanierPage() {
     );
   }
 
-  const total = cartTotal(items);
+  const subtotal = cartTotal(items);
   const count = cartCount(items);
+  const shipping = count > 0 ? 15 : 0;
+  const total = subtotal + shipping;
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12 sm:py-16 lg:px-10">
@@ -150,12 +152,12 @@ export default function PanierPage() {
               <div className="space-y-3 border-b border-[#DBDBDB]/50 pb-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-[#6B7280]">Sous-total</span>
-                  <span className="text-[#0F0F10]">{total.toFixed(2)}&euro;</span>
+                  <span className="text-[#0F0F10]">{subtotal.toFixed(2)}&euro;</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-[#6B7280]">Livraison</span>
-                  <span className="text-[#356B0D] font-medium">
-                    {total >= 500 ? "Offerte" : "A calculer"}
+                  <span className="text-[#6B7280]">Livraison (DPD France)</span>
+                  <span className="text-[#0F0F10] font-medium">
+                    15,00&euro;
                   </span>
                 </div>
               </div>

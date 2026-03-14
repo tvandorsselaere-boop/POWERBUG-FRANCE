@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
           email: session.customer_details?.email ?? session.customer_email ?? "",
           status: "confirmed",
           subtotal,
-          shipping_cost: 0,
+          shipping_cost: 15,
           discount: 0,
           total,
           shipping_address: shippingAddress,

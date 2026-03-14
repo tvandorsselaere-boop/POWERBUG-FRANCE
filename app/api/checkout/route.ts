@@ -33,10 +33,25 @@ export async function POST(req: NextRequest) {
             slug: item.slug,
           },
         },
-        unit_amount: Math.round(item.price * 100), // Stripe uses cents
+        unit_amount: Math.round(item.price * 100),
       },
       quantity: item.quantity,
     }));
+
+    // Frais de livraison fixes 15€ (DPD France métropolitaine)
+    line_items.push({
+      price_data: {
+        currency: "eur",
+        product_data: {
+          name: "Livraison DPD France",
+          metadata: {
+            slug: "shipping",
+          },
+        },
+        unit_amount: 1500,
+      },
+      quantity: 1,
+    });
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",

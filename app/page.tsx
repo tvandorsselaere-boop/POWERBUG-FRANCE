@@ -81,13 +81,13 @@ export default async function Home() {
         {/* Background images carousel */}
         <HeroCarousel />
 
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-black/45" />
+        {/* Dark overlay — gradient to keep trolley visible on right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/20" />
 
-        {/* Content — aligned top so text doesn't overlap the trolley */}
-        <div className="relative z-10 flex h-full items-start pt-16 sm:pt-24 lg:pt-32">
+        {/* Content — left side, vertically centered on mobile, top on desktop */}
+        <div className="relative z-10 flex h-full items-center lg:items-start lg:pt-28">
           <div className="mx-auto w-full max-w-[1600px] px-6 lg:px-10">
-            <div className="max-w-2xl">
+            <div className="max-w-lg lg:max-w-xl">
               <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]">
                 Distributeur exclusif France
               </p>
