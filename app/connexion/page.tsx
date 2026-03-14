@@ -5,7 +5,6 @@ import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChevronRight, Loader2, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@supabase/supabase-js";
 import { createBrowserClient } from "@/lib/supabase/browser";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -14,20 +13,35 @@ function GoogleButton() {
 
   const handleGoogleLogin = async () => {
     setLoading(true);
-    // Use plain client (not SSR) for OAuth to ensure redirectTo is sent correctly
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    );
+    const supabase = createBrowserClient();
+
+    const redirectUrl = `${window.location.origin}/auth/callback`;
+    console.log("[PowerBug OAuth] origin:", window.location.origin);
+    console.log("[PowerBug OAuth] redirectTo:", redirectUrl);
+
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: redirectUrl,
+        skipBrowserRedirect: true,
       },
     });
+
     if (error) {
       console.error("OAuth error:", error);
       setLoading(false);
+      return;
+    }
+
+    if (data?.url) {
+      // Debug: verify redirect_to is in the generated URL
+      const oauthUrl = new URL(data.url);
+      const redirectParam = oauthUrl.searchParams.get("redirect_to");
+      console.log("[PowerBug OAuth] Generated URL:", data.url);
+      console.log("[PowerBug OAuth] redirect_to param:", redirectParam);
+
+      // Navigate to the OAuth URL
+      window.location.href = data.url;
     }
   };
 
