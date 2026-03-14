@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProductBySlug, getAccessories } from "@/lib/supabase/queries";
+import { getProductBySlug, getAccessories, getBatteries } from "@/lib/supabase/queries";
 import { ProductPageDb } from "@/components/product-page-db";
 
 type Props = {
@@ -20,8 +20,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const accessories = await getAccessories();
-  return accessories.map((a) => ({ slug: a.slug }));
+  const [accessories, batteries] = await Promise.all([
+    getAccessories(),
+    getBatteries(),
+  ]);
+  return [...accessories, ...batteries].map((a) => ({ slug: a.slug }));
 }
 
 export default async function AccessoirePage({ params }: Props) {

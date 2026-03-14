@@ -45,8 +45,9 @@ export default async function AccessoiresPage() {
             {batteries.map((item) => {
               const price = item.product_variants?.[0]?.price ?? item.base_price;
               return (
-                <div
+                <Link
                   key={item.id}
+                  href={`/accessoires/${item.slug}`}
                   className="group rounded-2xl border border-[#DBDBDB] bg-white p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
                 >
                   <div className="mb-4 flex h-40 items-center justify-center rounded-xl bg-[#F5F5F5]">
@@ -62,21 +63,17 @@ export default async function AccessoiresPage() {
                       <Battery className="h-12 w-12 text-[#DBDBDB] group-hover:text-[#8DC63F]" />
                     )}
                   </div>
-                  <h3 className="font-semibold text-[#0F0F10]">{item.name}</h3>
+                  <h3 className="font-semibold text-[#0F0F10] group-hover:text-[#356B0D]">{item.name}</h3>
                   <p className="mt-1 text-sm text-[#6B7280]">{item.description}</p>
                   <div className="mt-4 flex items-center justify-between">
                     <span className="text-2xl font-bold text-[#0F0F10]">
                       {price}<span className="text-sm text-[#6B7280]">&euro;</span>
                     </span>
+                    <span className="text-sm font-medium text-[#356B0D] opacity-0 transition-opacity group-hover:opacity-100">
+                      Voir &rarr;
+                    </span>
                   </div>
-                  <a
-                    href="tel:+33967876795"
-                    className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-[#356B0D] px-4 py-2 text-sm font-medium text-[#356B0D] hover:bg-[#356B0D]/5"
-                  >
-                    <Phone className="h-3.5 w-3.5" />
-                    Commander : 09 67 87 67 95
-                  </a>
-                </div>
+                </Link>
               );
             })}
           </div>
