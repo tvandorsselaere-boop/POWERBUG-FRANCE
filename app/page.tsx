@@ -7,7 +7,6 @@ import {
   Star,
   ChevronRight,
   Zap,
-  Settings,
   Gift,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -53,7 +52,7 @@ const features = [
     icon: Truck,
     title: "Livraison France",
     description:
-      "Livraison rapide partout en France via Colissimo et Mondial Relay.",
+      "Livraison rapide partout en France metropolitaine via DPD.",
   },
   {
     icon: Star,
@@ -76,45 +75,59 @@ export default async function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-[#F5F5F5]">
-        <div className="mx-auto max-w-[1600px] px-6 py-24 sm:py-32 lg:px-10 lg:py-40">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#356B0D]">
-              Distributeur exclusif France
-            </p>
+      <section className="relative overflow-hidden bg-[#F5F5F5]">
+        <div className="mx-auto max-w-[1600px] px-6 py-16 sm:py-24 lg:px-10 lg:py-32">
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+            {/* Text */}
+            <div className="text-center lg:text-left">
+              <p className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#356B0D]">
+                Distributeur exclusif France
+              </p>
 
-            <h1 className="animate-fade-in-delay-1 text-4xl font-bold leading-tight tracking-tight text-[#0F0F10] sm:text-5xl lg:text-7xl">
-              Chariots electriques{" "}
-              <span className="text-[#356B0D]">PowerBug</span>
-            </h1>
+              <h1 className="animate-fade-in-delay-1 text-4xl font-bold leading-tight tracking-tight text-[#0F0F10] sm:text-5xl lg:text-6xl">
+                Chariots electriques{" "}
+                <span className="text-[#356B0D]">PowerBug</span>
+              </h1>
 
-            <p className="animate-fade-in-delay-2 mx-auto mt-6 max-w-xl text-lg text-[#6B7280]">
-              Depuis 2003, l&apos;innovation britannique au service du golf. Decouvrez la serie NX,
-              enfin disponible pour les golfeurs francais.
-            </p>
+              <p className="animate-fade-in-delay-2 mx-auto mt-6 max-w-xl text-lg text-[#6B7280] lg:mx-0">
+                Depuis 2003, l&apos;innovation britannique au service du golf. Decouvrez la serie NX,
+                enfin disponible pour les golfeurs francais.
+              </p>
 
-            <div className="animate-fade-in-delay-3 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                className="btn-glass rounded-[10px] px-8 text-base font-semibold text-white"
-              >
-                <Link href="/trolleys">
-                  Decouvrir la gamme
-                  <ChevronRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="btn-glass-outline rounded-[10px] px-8 text-base text-[#0F0F10]"
-              >
-                <Link href="/configurateur">
-                  <Settings className="mr-2 h-4 w-4" />
-                  Configurer mon trolley
-                </Link>
-              </Button>
+              <div className="animate-fade-in-delay-3 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
+                <Button
+                  asChild
+                  size="lg"
+                  className="btn-glass rounded-[10px] px-8 text-base font-semibold text-white"
+                >
+                  <Link href="/trolleys">
+                    Decouvrir la gamme
+                    <ChevronRight className="ml-1 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
+                  className="btn-glass-outline rounded-[10px] px-8 text-base text-[#0F0F10]"
+                >
+                  <Link href="/accessoires">
+                    Voir les accessoires
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Image */}
+            <div className="animate-fade-in-delay-2 relative mx-auto w-full max-w-lg lg:max-w-none">
+              <Image
+                src="/images/lifestyle/NX-Lifestyle-1.jpg"
+                alt="PowerBug NX Lithium sur le parcours de golf"
+                width={800}
+                height={600}
+                className="rounded-2xl object-cover"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -248,19 +261,20 @@ export default async function Home() {
       <section className="border-t border-[#DBDBDB] bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-3xl px-6 text-center lg:px-10">
           <h2 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
-            Configurez votre trolley ideal
+            Pret a passer au chariot electrique ?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[#6B7280]">
-            Choisissez votre modele et recevez 3 accessoires offerts (~105&euro;).
+            Comparez nos deux modeles et trouvez celui qui correspond a votre jeu.
+            3 accessoires offerts (~105&euro;) avec chaque trolley.
           </p>
           <Button
             asChild
             size="lg"
             className="mt-8 btn-glass rounded-[10px] px-10 text-base font-semibold text-white"
           >
-            <Link href="/configurateur">
-              <Settings className="mr-2 h-5 w-5" />
-              Lancer le configurateur
+            <Link href="/trolleys">
+              Comparer NX vs NX DHC
+              <ChevronRight className="ml-1 h-5 w-5" />
             </Link>
           </Button>
         </div>

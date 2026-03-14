@@ -1,15 +1,58 @@
-import { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
-import { ChevronRight, Mail, Phone, MapPin } from "lucide-react";
+import { useState } from "react";
+import { ChevronRight, Mail, Phone, MapPin, Loader2, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export const metadata: Metadata = {
-  title: "Contact - PowerBug France",
-  description:
-    "Contactez le distributeur exclusif PowerBug en France. Questions, SAV, garantie.",
-};
-
 export default function ContactPage() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setSuccess(false);
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ firstname, lastname, email, subject, message }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        setError(data.error || "Une erreur est survenue. Veuillez reessayer.");
+        setLoading(false);
+        return;
+      }
+
+      setSuccess(true);
+      setFirstname("");
+      setLastname("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch {
+      setError("Une erreur est survenue. Veuillez reessayer.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const inputClass =
+    "w-full rounded-[10px] border border-[#DBDBDB] bg-white px-4 py-2.5 text-sm text-[#0F0F10] placeholder-[#9CA3AF] focus:border-[#356B0D] focus:outline-none focus:ring-1 focus:ring-[#356B0D]";
+
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-12 sm:py-16 lg:px-10">
       {/* Breadcrumb */}
@@ -32,7 +75,29 @@ export default function ContactPage() {
             repondons sous 24h.
           </p>
 
-          <form className="mt-8 space-y-6">
+          {/* Success message */}
+          {success && (
+            <div className="mt-6 flex items-start gap-3 rounded-[10px] border border-green-200 bg-green-50 px-4 py-3">
+              <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-600" />
+              <div>
+                <p className="text-sm font-medium text-green-800">
+                  Message envoye avec succes !
+                </p>
+                <p className="mt-1 text-sm text-green-700">
+                  Nous vous repondrons sous 24h ouvrees.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Error message */}
+          {error && (
+            <div className="mt-6 rounded-[10px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="mt-8 space-y-6">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="firstname" className="mb-1 block text-sm font-medium text-[#0F0F10]">
@@ -42,8 +107,11 @@ export default function ContactPage() {
                   type="text"
                   id="firstname"
                   name="firstname"
-                  className="w-full rounded-[10px] border border-[#DBDBDB] bg-white px-4 py-2.5 text-sm text-[#0F0F10] placeholder-[#9CA3AF] focus:border-[#356B0D] focus:outline-none focus:ring-1 focus:ring-[#356B0D]"
+                  value={firstname}
+                  onChange={(e) => setFirstname(e.target.value)}
+                  className={inputClass}
                   placeholder="Votre prenom"
+                  required
                 />
               </div>
               <div>
@@ -54,8 +122,11 @@ export default function ContactPage() {
                   type="text"
                   id="lastname"
                   name="lastname"
-                  className="w-full rounded-[10px] border border-[#DBDBDB] bg-white px-4 py-2.5 text-sm text-[#0F0F10] placeholder-[#9CA3AF] focus:border-[#356B0D] focus:outline-none focus:ring-1 focus:ring-[#356B0D]"
+                  value={lastname}
+                  onChange={(e) => setLastname(e.target.value)}
+                  className={inputClass}
                   placeholder="Votre nom"
+                  required
                 />
               </div>
             </div>
@@ -68,8 +139,11 @@ export default function ContactPage() {
                 type="email"
                 id="email"
                 name="email"
-                className="w-full rounded-[10px] border border-[#DBDBDB] bg-white px-4 py-2.5 text-sm text-[#0F0F10] placeholder-[#9CA3AF] focus:border-[#356B0D] focus:outline-none focus:ring-1 focus:ring-[#356B0D]"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={inputClass}
                 placeholder="votre@email.com"
+                required
               />
             </div>
 
@@ -80,7 +154,10 @@ export default function ContactPage() {
               <select
                 id="subject"
                 name="subject"
-                className="w-full rounded-[10px] border border-[#DBDBDB] bg-white px-4 py-2.5 text-sm text-[#0F0F10] focus:border-[#356B0D] focus:outline-none focus:ring-1 focus:ring-[#356B0D]"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                className={inputClass}
+                required
               >
                 <option value="">Choisir un sujet</option>
                 <option value="produit">Question sur un produit</option>
@@ -98,17 +175,28 @@ export default function ContactPage() {
                 id="message"
                 name="message"
                 rows={5}
-                className="w-full rounded-[10px] border border-[#DBDBDB] bg-white px-4 py-2.5 text-sm text-[#0F0F10] placeholder-[#9CA3AF] focus:border-[#356B0D] focus:outline-none focus:ring-1 focus:ring-[#356B0D]"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className={inputClass}
                 placeholder="Votre message..."
+                required
               />
             </div>
 
             <Button
               type="submit"
               size="lg"
+              disabled={loading}
               className="w-full btn-glass rounded-[10px] text-white sm:w-auto"
             >
-              Envoyer le message
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Envoi en cours...
+                </>
+              ) : (
+                "Envoyer le message"
+              )}
             </Button>
           </form>
         </div>
@@ -128,21 +216,21 @@ export default function ContactPage() {
                 <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
                 <div>
                   <p className="text-sm font-medium text-[#0F0F10]">Email</p>
-                  <p className="text-sm text-[#6B7280]">contact@powerbug-france.fr</p>
+                  <a href="mailto:contact@powerbug.fr" className="text-sm text-[#6B7280] hover:text-[#356B0D]">contact@powerbug.fr</a>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
                 <div>
                   <p className="text-sm font-medium text-[#0F0F10]">Telephone</p>
-                  <p className="text-sm text-[#6B7280]">A venir</p>
+                  <a href="tel:+33967876795" className="text-sm text-[#6B7280] hover:text-[#356B0D]">09 67 87 67 95</a>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
                 <div>
                   <p className="text-sm font-medium text-[#0F0F10]">Adresse</p>
-                  <p className="text-sm text-[#6B7280]">France metropolitaine</p>
+                  <p className="text-sm text-[#6B7280]">Domaine de Riquetti, 13290 Aix-en-Provence</p>
                 </div>
               </div>
             </div>

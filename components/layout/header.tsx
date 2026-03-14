@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { Menu, ShoppingCart, Search, User } from "lucide-react";
+import { Menu, ShoppingCart, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CartCount } from "@/components/cart-count";
@@ -13,8 +13,8 @@ const navigation = [
   { name: "Accessoires", href: "/accessoires" },
   { name: "Pieces", href: "/pieces-detachees" },
   { name: "Videos", href: "/videos" },
-  { name: "Infos", href: "/notre-histoire" },
-  { name: "Contactez", href: "/contact" },
+  { name: "Notre histoire", href: "/notre-histoire" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export function Header() {
@@ -54,15 +54,11 @@ export function Header() {
             variant="ghost"
             size="icon"
             className="text-[#0F0F10] hover:text-[#356B0D]"
+            asChild
           >
-            <Search className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-[#0F0F10] hover:text-[#356B0D]"
-          >
-            <User className="h-5 w-5" />
+            <Link href="/connexion">
+              <User className="h-5 w-5" />
+            </Link>
           </Button>
           <Button
             variant="ghost"

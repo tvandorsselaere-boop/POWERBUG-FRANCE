@@ -8,7 +8,6 @@ const footerLinks = {
     { name: "Accessoires", href: "/accessoires" },
     { name: "Batteries", href: "/batteries" },
     { name: "Pieces detachees", href: "/pieces-detachees" },
-    { name: "Configurateur", href: "/configurateur" },
   ],
   informations: [
     { name: "Notre histoire", href: "/notre-histoire" },
@@ -105,7 +104,7 @@ export function Footer() {
         <div className="mt-10 border-t border-[#DBDBDB] pt-6 text-center text-xs text-[#6B7280]">
           <p>&copy; {new Date().getFullYear()} PowerBug France. Tous droits reserves.</p>
           <p className="mt-1">
-            TVA non applicable, article 293 B du CGI | Site realise par{" "}
+            PRO GOLF DISTRIBUTION SAS — SIREN 888 311 610 | Site realise par{" "}
             <a
               href="https://facile-ia.fr"
               target="_blank"

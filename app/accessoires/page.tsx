@@ -1,9 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronRight, Settings, Battery } from "lucide-react";
+import { ChevronRight, Settings, Battery, Phone, Mail } from "lucide-react";
 import { getAccessories, getBatteries } from "@/lib/supabase/queries";
-import { AddToCartSimple } from "@/components/add-to-cart-simple";
 
 export const metadata: Metadata = {
   title: "Accessoires & Batteries PowerBug",
@@ -69,7 +68,6 @@ export default async function AccessoiresPage() {
                     <span className="text-2xl font-bold text-[#0F0F10]">
                       {price}<span className="text-sm text-[#6B7280]">&euro;</span>
                     </span>
-                    <AddToCartSimple slug={item.slug} name={item.name} price={price} />
                   </div>
                 </div>
               );
@@ -136,6 +134,32 @@ export default async function AccessoiresPage() {
           );
         })}
       </div>
+
+      {/* Contact pour commander */}
+      <section className="mt-16 rounded-2xl border border-[#356B0D]/20 bg-[#356B0D]/5 p-8 text-center">
+        <h2 className="text-xl font-bold text-[#0F0F10]">
+          Envie d&apos;un accessoire ou d&apos;une batterie ?
+        </h2>
+        <p className="mx-auto mt-2 max-w-lg text-sm text-[#6B7280]">
+          Contactez-nous pour passer commande. Nous vous repondons sous 24h.
+        </p>
+        <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <a
+            href="tel:+33967876795"
+            className="btn-glass inline-flex items-center gap-2 rounded-[10px] px-6 py-3 text-sm font-semibold text-white"
+          >
+            <Phone className="h-4 w-4" />
+            09 67 87 67 95
+          </a>
+          <a
+            href="mailto:contact@powerbug.fr"
+            className="inline-flex items-center gap-2 rounded-[10px] border border-[#356B0D] px-6 py-3 text-sm font-semibold text-[#356B0D] hover:bg-[#356B0D]/5"
+          >
+            <Mail className="h-4 w-4" />
+            contact@powerbug.fr
+          </a>
+        </div>
+      </section>
 
     </div>
   );

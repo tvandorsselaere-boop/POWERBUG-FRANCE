@@ -8,11 +8,11 @@ Vente de chariots électriques de golf (trolleys), accessoires, batteries et pi�
 - **Base de données** : Supabase (MUTUALISÉE avec GOLF-SHOP — même projet `golf-ecommerce`)
 - **Paiement** : Stripe (CB + Apple Pay + Google Pay)
 - **Panier** : Zustand 5 avec persistance localStorage
-- **Livraison** : Colissimo + Mondial Relay
+- **Livraison** : DPD (via Golf des Marques) — France métropolitaine uniquement
 - **Emails** : Resend
 - **i18n** : FR uniquement au lancement (pas de EN, marché français ciblé)
 - **Déploiement** : Vercel
-- **Domaine** : powerbug-france.vercel.app (prod Vercel, custom domain à configurer)
+- **Domaine** : powerbug.fr → powerbug-france.vercel.app (redirection active)
 - **GitHub** : https://github.com/tvandorsselaere-boop/POWERBUG-FRANCE
 - **Propriétaire** : Tom Van Dorsselaere (Facile-IA) pour un client distributeur PowerBug
 - **Repo local** : `/Users/vandorsselaere/Documents/CURSOR/POWERBUG-FRANCE/`
@@ -142,7 +142,7 @@ Contrairement à Golf-Shop (flex/weight pour les shafts), PowerBug utilise des v
 ### Pages contenu
 ```
 /notre-histoire             → L'histoire PowerBug (20+ ans, qualité UK)
-/garantie                   → Garantie France (3 ans trolley + batterie)
+/garantie                   → Garantie France (2 ans constructeur)
 /faq                        → FAQ complète (SEO + AEO)
 /contact                    → Formulaire + infos distributeur
 /livraison                  → Infos livraison France/EU
@@ -197,43 +197,99 @@ Page interactive `/configurateur` :
 ### Phase 0 — Landing page (FAIT)
 - [x] Init Next.js 16 + Tailwind CSS 4
 - [x] Page "en construction" (dégradé noir/vert, badges, animations CSS)
-- [x] SEO (meta, OG, robots.txt, sitemap.xml, favicon SVG)
+- [x] SEO basique (meta, OG, robots.txt, sitemap.xml, favicon SVG)
 - [x] GitHub repo + Vercel auto-deploy
 - [x] Live sur powerbug-france.vercel.app
+- [x] Logo officiel PowerBug extrait du brand kit UK
 
-### Phase 1 — Structure + Pages produit (Semaine 1-2)
-- [ ] Installer shadcn/ui
-- [ ] Migration Supabase multi-store (004_multi_store.sql)
-- [ ] Layout : Header, Footer, Navigation (branding PowerBug)
-- [ ] Page accueil : Hero, section gamme, arguments ("pourquoi PowerBug")
-- [ ] Fiches produit trolleys (NX, NX DHC)
-- [ ] Fiches accessoires
-- [ ] Page comparateur NX vs NX DHC
-- [ ] Seed data : tous les produits PowerBug en base
+### Phase 1 — Structure + Pages produit (EN COURS — 80% fait)
 
-### Phase 2 — E-commerce + Bundle Builder (Semaine 2-3)
-- [ ] Panier Zustand (copier/adapter de Golf-Shop)
-- [ ] Checkout Stripe (copier/adapter de Golf-Shop)
-- [ ] Webhook Stripe + écriture commande (store='powerbug')
-- [ ] Bundle builder / configurateur
-- [ ] Emails transactionnels (confirmation, expédition)
-- [ ] Page compte client (commandes, adresses)
+#### FAIT
+- [x] Installer shadcn/ui
+- [x] Layout : Header, Footer, Navigation (branding PowerBug)
+- [x] Page accueil : sections gamme, arguments ("pourquoi PowerBug"), CTA
+- [x] Fiches produit trolleys (NX, NX DHC) avec galerie photos + specs
+- [x] Fiches accessoires (/accessoires/[slug]) depuis Supabase
+- [x] Page comparateur NX vs NX DHC (/trolleys)
+- [x] Page accessoires + batteries combinée (/accessoires)
+- [x] Page pièces détachées (/pieces-detachees)
+- [x] Page vidéos (/videos) — présentations + tutos YouTube
+- [x] Pages fonctionnalités (/fonctionnalites/[slug]) — 8 pages
+- [x] Page contact (/contact) — formulaire HTML
+- [x] 50 images officielles + 3 vidéos MP4 intégrées
+
+#### RESTE À FAIRE
+- [ ] **Hero homepage** : ajouter une vraie section hero (image/vidéo lifestyle, pas juste du texte)
+- [ ] **Auth/Login** : page connexion/inscription + icône User header fonctionnelle
+- [ ] **Bannière "en construction"** : retirer ou conditionner pour la démo
+- [ ] **Contact form backend** : ajouter handler submit (envoi email ou stockage)
+- [ ] **Icône recherche header** : implémenter ou retirer
+- [ ] **Téléphone placeholder** : remplacer `01 XX XX XX XX` sur /pieces-detachees et "À venir" sur /contact
+- [ ] **7 pages manquantes** référencées dans le footer (liens cassés) :
+  - [ ] /notre-histoire — histoire PowerBug (established 2003, qualité UK, 8000+ avis)
+  - [ ] /garantie — garantie 2 ans constructeur
+  - [ ] /faq — questions fréquentes
+  - [ ] /livraison — DPD, France métro, 15€ fixe
+  - [ ] /cgv — conditions générales de vente (PRO GOLF DISTRIBUTION)
+  - [ ] /mentions-legales — mentions légales (SIREN 888 311 610, RCS Aix)
+  - [ ] /politique-retour — politique de retour
+- [ ] **Synchro données** : configurateur utilise données hardcodées vs accessoires depuis Supabase
+
+### Phase 2 — E-commerce (EN COURS — 70% fait)
+
+#### FAIT
+- [x] Panier Zustand (/panier) avec persistance localStorage
+- [x] Checkout Stripe (/api/checkout) — crée session, collecte adresse FR
+- [x] Webhook Stripe (/api/webhook) — écrit commandes + items dans Supabase
+- [x] Confirmation commande (/checkout/confirmation)
+- [x] Bundle builder / configurateur (/configurateur) — 3 accessoires OFFERTS (~105€)
+
+#### RESTE À FAIRE
+- [ ] **Frais de livraison 15€ fixe** : ajouter au panier + checkout Stripe
+- [ ] Emails transactionnels Resend (confirmation, expédition) — **BLOQUÉ : besoin email @powerbug.fr**
+- [ ] Page compte client (commandes, adresses) — lié à auth
 - [ ] Admin back-office (filtrage multi-store)
 
-### Phase 3 — Contenu + SEO + AEO (Semaine 3-4)
-- [ ] Pages statiques : Notre histoire, Garantie, FAQ, CGV, etc.
-- [ ] Blog (5-10 articles SEO)
-- [ ] Schema.org : Product, FAQ, Organization, BreadcrumbList
-- [ ] Meta tags, sitemap, robots.txt
-- [ ] Google Search Console
-- [ ] Optimisation AEO (réponses IA)
+### Phase 3 — SEO (score actuel 60/100)
+> Source : Guide Facile-IA SEO v3, audit du 14 mars 2026
 
-### Phase 4 — Go-Live (Semaine 4)
+#### 3A — Quick Wins SEO (~2-3h, score 60→82)
+- [ ] Canonical URLs sur toutes les pages (+4 pts)
+- [ ] Schema.org WebSite + Organization JSON-LD dans layout.tsx (+8 pts)
+- [ ] Schema.org Product JSON-LD sur fiches NX et NX DHC (+3 pts)
+- [ ] Breadcrumb Schema BreadcrumbList JSON-LD (breadcrumbs visuels déjà OK) (+3 pts)
+- [ ] Section FAQ visible + Schema FAQPage sur homepage (+2 pts)
+- [ ] Google Analytics GA4 (= tableau de bord visiteurs Google, gratuit) (+2 pts)
+- [ ] Sitemap dynamique : enrichir de 1 à ~20+ URLs
+
+#### 3B — Contenu SEO (1-2 jours, score 82→90)
+- [ ] Enrichir homepage (cible 1000+ mots, paragraphes 30-60 mots)
+- [ ] Meta tags optimisés + OG images par page
+- [ ] Google Search Console
+
+#### 3C — Blog SEO + AEO (score 90→95+)
+- [ ] Blog SEO (5 articles prioritaires)
+- [ ] Schema.org étendu pour AEO (VideoObject, Review, etc.)
+
+### Phase 4 — Autorité & Local (post-lancement, 1-3 mois)
+- [ ] Google Business Profile
+- [ ] Citations NAP, backlinks golf
+- [ ] Réseaux sociaux : Facebook + Instagram PowerBug France
+
+### Phase 5 — Go-Live
+
+#### À faire côté Tom
+- [ ] Configurer messagerie @powerbug.fr (Zoho Mail Lite ~3€/an) + transmettre records DNS à Jimmy
+- [ ] Basculer Stripe en production (Fred a créé son compte — tests en env Tom pour l'instant)
 - [ ] Tests complets : achat, paiement, emails, mobile
 - [ ] Core Web Vitals optimization
-- [ ] Domaine + DNS
-- [ ] Stripe production
-- [ ] Facebook + Instagram pages
+
+#### En attente tiers
+- [ ] Records DNS : Jimmy (jimmy@powerbug.co.uk) doit ajouter 3x MX Zoho + SPF/DKIM Resend (une seule intervention)
+- [ ] Credentials DPD : en attente Golf des Marques (email relance envoyé)
+- [x] Domaine powerbug.fr → Vercel (FAIT — redirection active)
+- [x] Logo HD PowerBug (FAIT — extrait du brand kit UK)
+- [x] Compte Stripe Fred (FAIT — créé le 14 mars 2026)
 
 ## Réutilisation depuis Golf-Shop
 
@@ -282,6 +338,136 @@ Page interactive `/configurateur` :
 - Prix affichés = prix TTC (pas de mention HT)
 - Mention "Site réalisé par Facile-IA" dans le footer
 - Setup 499€ + 49€/mois + 10% commission sur CA via site
+
+## EN ATTENTE DU CLIENT (Fred) — BLOQUANT POUR GO-LIVE
+
+> **Date** : 7 mars 2026
+> **Statut** : Le site est fonctionnel techniquement (panier, checkout Stripe, pages produit).
+> Les éléments ci-dessous sont nécessaires pour la mise en ligne légale et opérationnelle.
+> Sans ces réponses, on ne peut PAS lancer le site en production.
+
+## Gestion de stock — À CONFIRMER avec Fred
+
+> **Hypothèse de travail** : Fred est distributeur, c'est SON stock (acheté à PowerBug UK),
+> stocké chez Golf des Marques. Le site gère le stock, Golf des Marques ne fait que préparer/expédier.
+> **Cette hypothèse doit être validée par Fred.**
+
+### Fonctionnement prévu (à confirmer)
+```
+Fred commande à PowerBug UK → Livré chez Golf des Marques (entrepôt)
+→ Fred saisit le stock initial dans l'admin du site
+→ Client achète → Stripe webhook décrémente le stock automatiquement
+→ Stock bas → Email alerte à Fred → Fred recommande à PowerBug UK
+→ Réassort livré chez Golf des Marques → Fred met à jour le stock dans l'admin
+```
+
+### Ce qu'on code
+- Page admin stock : Fred voit tous les produits + quantités, modifie en 1 clic
+- Décrémentation automatique à chaque commande payée (webhook Stripe, DÉJÀ FAIT)
+- Alerte email quand stock < seuil configurable (ex: 2 unités)
+- Produit à 0 → affiché "Rupture de stock" ou "Sur commande" (au choix de Fred)
+- Golf des Marques n'ont PAS accès à l'admin stock — c'est Fred qui gère
+
+### Questions à confirmer avec Fred
+- [ ] **C'est bien ton stock** (acheté à PowerBug UK) stocké chez Golf des Marques ?
+- [ ] **Stock initial** : combien de chaque produit aujourd'hui ? (on a besoin des chiffres pour paramétrer)
+- [ ] **Seuil d'alerte** : prévenu à combien d'unités restantes ? (suggestion : 2)
+- [ ] **Produit à 0** : afficher "Sur commande — délai X jours" ou masquer du site ?
+- [ ] **Délai de réassort** depuis PowerBug UK ? (pour afficher un délai réaliste si rupture)
+- [ ] **Fréquence de vérification** : Fred vérifie le stock réel chez Golf des Marques à quelle fréquence ?
+
+## Scénarios automatisation commandes
+
+> Choix à valider avec Fred. Recommandation : **Option 2 au lancement, Option 3 plus tard.**
+
+### Option 1 — Manuel (déconseillé long terme)
+```
+Client paie → Fred reçoit email notification
+→ Fred transmet manuellement à Golf des Marques (email/WhatsApp)
+→ Golf des Marques expédie via DPD
+→ Golf des Marques renvoie ref tracking à Fred
+→ Fred saisit le tracking dans l'admin du site
+→ Email de suivi envoyé au client
+```
+**Avantages** : Rien à coder côté logistique, Fred garde le contrôle total
+**Inconvénients** : Beaucoup de saisie manuelle, risque d'oubli du tracking, délai entre expédition et notification client, ne scale pas au-delà de quelques commandes/jour
+
+### Option 2 — Semi-auto (fallback si pas d'accès DPD API)
+```
+Client paie → webhook Stripe écrit la commande en base (DÉJÀ FAIT)
+→ Email auto au client : confirmation de commande
+→ Email auto à Golf des Marques : bon de préparation PDF
+  (nom, adresse complète, liste produits, quantités)
+→ Golf des Marques créent l'étiquette DPD eux-mêmes, expédient
+→ Quelqu'un saisit le tracking dans l'admin
+→ Email de suivi envoyé automatiquement au client
+```
+**Avantages** : Peu de dev supplémentaire, Golf des Marques reçoivent tout sans intervention de Fred
+**Inconvénients** : Le tracking reste une saisie manuelle, Golf des Marques doivent créer l'étiquette DPD eux-mêmes
+**Ce qu'on doit coder** :
+- Email confirmation client (Resend, template PowerBug)
+- Email bon de préparation PDF à Golf des Marques (Resend + génération PDF)
+- Page admin pour saisir le tracking → déclenche email suivi client
+- Dashboard admin : liste commandes, statuts, filtres
+
+### Option 3 — Full auto (RECOMMANDÉE — si Golf des Marques donnent les codes DPD)
+```
+Client paie → webhook Stripe écrit la commande en base (DÉJÀ FAIT)
+→ Stock vérifié automatiquement en base
+→ Email auto au client : confirmation de commande
+→ API DPD : étiquette générée automatiquement avec numéro de tracking
+→ Email auto à Golf des Marques : bon de préparation + étiquette DPD en pièce jointe
+→ Golf des Marques impriment, collent l'étiquette, déposent le colis
+→ Tracking mis à jour automatiquement via API DPD
+→ Email de suivi envoyé au client à chaque étape
+→ Zéro saisie manuelle pour tout le monde
+```
+**Avantages** : Golf des Marques n'ont qu'à imprimer et coller, tracking instantané, expérience client premium
+**Inconvénients** : Nécessite les credentials DPD de Golf des Marques
+**Prérequis (le seul bloquant)** :
+- Credentials du compte DPD Pro de Golf des Marques (identifiant API, mot de passe, numéro de compte, code dépôt)
+- Adresse exacte de l'entrepôt Golf des Marques (expéditeur sur l'étiquette)
+- Accès API activé sur leur compte DPD (gratuit, demande à DPD si pas encore fait)
+**Ce qu'on doit coder en plus de l'Option 2** :
+- Intégration API DPD : génération étiquette PDF, récupération tracking
+- Polling tracking DPD → mise à jour statut commande + email client automatique
+
+### 9. Images / Contenu
+- [ ] **Logo PowerBug HD** (PNG ou SVG) — on utilise du texte pour l'instant
+- [ ] **Photos produit** : on utilise le CDN powerbug.com.au, est-ce OK définitivement ou Fred veut ses propres photos ?
+- [ ] **Autorisation PowerBug UK** pour utiliser les images/vidéos du site officiel sur powerbug.fr ?
+
+### 10. Après lancement
+- [ ] **Google Analytics** : Fred a-t-il un compte GA4 ? Sinon on le crée
+- [ ] **Réseaux sociaux** : pages Facebook / Instagram PowerBug France existantes ou à créer ?
+
+## Architecture Stripe (encaissement uniquement)
+
+> Stripe ne gère PAS les produits. Notre base Supabase est la source de vérité.
+> Stripe = terminal de paiement, rien d'autre.
+
+### Flow de paiement (DÉJÀ CODÉ)
+```
+1. Client clique "Payer" sur /panier
+2. Notre API /api/checkout lit le panier + prix depuis Supabase
+3. Crée une Stripe Checkout Session à la volée (line items dynamiques, pas de produit Stripe)
+4. Client paie sur la page hébergée par Stripe (CB, Apple Pay, Google Pay)
+5. Stripe envoie webhook "payment_intent.succeeded" → /api/webhook
+6. Notre webhook : écrit la commande en base Supabase, décrémente le stock, envoie emails
+7. Stripe verse l'argent sur le compte bancaire de Fred (J+2 par défaut)
+```
+
+### Ce que Fred doit faire
+- Créer un compte Stripe (10 min) : https://dashboard.stripe.com/register
+- Renseigner son IBAN professionnel + pièce d'identité (KYC obligatoire)
+- Nous transmettre les 3 clés : Publishable Key, Secret Key, Webhook Secret
+- C'est tout — Fred ne touche plus jamais à Stripe, tout est automatique
+
+### Ce qu'on NE fait PAS dans Stripe
+- Pas de création de produits dans Stripe (nos produits sont en Supabase)
+- Pas de gestion de stock dans Stripe
+- Pas de factures Stripe (on génère les nôtres si besoin)
+- Pas de Stripe Billing / abonnements
 
 ## Variables d'environnement
 
