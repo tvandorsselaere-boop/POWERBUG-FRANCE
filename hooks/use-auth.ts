@@ -10,8 +10,8 @@ export function useAuth() {
   const supabase = createBrowserClient();
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
+    supabase.auth.getUser().then(({ data }) => {
+      setUser(data.user);
       setLoading(false);
     });
 
