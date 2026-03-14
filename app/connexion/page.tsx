@@ -5,6 +5,7 @@ import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChevronRight, Loader2, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@supabase/supabase-js";
 import { createBrowserClient } from "@/lib/supabase/browser";
 import { useAuth } from "@/hooks/use-auth";
 
@@ -13,21 +14,18 @@ function GoogleButton() {
 
   const handleGoogleLogin = async () => {
     setLoading(true);
-    const supabase = createBrowserClient();
+    // Use plain client (not SSR) for OAuth to ensure redirectTo is sent correctly
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
-        skipBrowserRedirect: true,
       },
     });
-    if (data?.url) {
-      // DEBUG: voir l'URL generee par Supabase
-      console.log("OAuth URL:", data.url);
-      console.log("redirect_to present:", data.url.includes("redirect_to"));
-      alert("URL Supabase (copie-la) :\n" + data.url.substring(0, 200));
-      window.location.href = data.url;
-    } else {
+    if (error) {
       console.error("OAuth error:", error);
       setLoading(false);
     }
