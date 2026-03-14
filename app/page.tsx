@@ -86,7 +86,7 @@ export default async function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />
 
         {/* Content — full width, title at top, buttons at bottom */}
-        <div className="relative z-10 flex h-full flex-col justify-between py-8 sm:py-12 lg:py-16">
+        <div className="relative z-10 flex h-full flex-col justify-between py-4 sm:py-8 lg:py-10">
           {/* Top — Title centered across full width */}
           <div className="mx-auto w-full max-w-[1600px] px-6 text-center lg:px-10">
             <p className="animate-fade-in mb-3 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]">
@@ -97,9 +97,9 @@ export default async function Home() {
               <Image
                 src="/images/logo/powerbug-logo-full.png"
                 alt="PowerBug"
-                width={280}
-                height={70}
-                className="inline-block h-[1.1em] w-auto brightness-0 invert"
+                width={320}
+                height={80}
+                className="inline-block h-[1.4em] w-auto brightness-0 invert"
                 priority
               />
             </h1>
