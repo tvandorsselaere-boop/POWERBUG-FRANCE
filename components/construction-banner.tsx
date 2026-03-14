@@ -9,9 +9,9 @@ export function ConstructionBanner() {
           <span>Site en cours de lancement — Commandez des maintenant</span>
         </div>
         <div className="flex items-center gap-3">
-          <a href="mailto:contact@powerbug.fr" className="inline-flex items-center gap-1 underline hover:no-underline">
+          <a href="mailto:contact@progolfdistribution.com" className="inline-flex items-center gap-1 underline hover:no-underline">
             <Mail className="h-3.5 w-3.5" />
-            contact@powerbug.fr
+            contact@progolfdistribution.com
           </a>
           <a href="tel:+33967876795" className="inline-flex items-center gap-1 underline hover:no-underline">
             <Phone className="h-3.5 w-3.5" />

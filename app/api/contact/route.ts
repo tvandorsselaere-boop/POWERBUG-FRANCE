@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     // const resend = new Resend(process.env.RESEND_API_KEY);
     // await resend.emails.send({
     //   from: "PowerBug France <noreply@powerbug.fr>",
-    //   to: "contact@powerbug.fr",
+    //   to: "contact@progolfdistribution.com",
     //   replyTo: email,
     //   subject: `[Contact] ${subject} — ${firstname} ${lastname}`,
     //   text: message,

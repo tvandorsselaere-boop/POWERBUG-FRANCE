@@ -132,11 +132,11 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
                     09 67 87 67 95
                   </a>
                   <a
-                    href="mailto:contact@powerbug.fr"
+                    href="mailto:contact@progolfdistribution.com"
                     className="inline-flex items-center justify-center gap-2 rounded-[10px] border border-[#356B0D] px-6 py-3 text-sm font-semibold text-[#356B0D] hover:bg-[#356B0D]/5"
                   >
                     <Mail className="h-4 w-4" />
-                    contact@powerbug.fr
+                    contact@progolfdistribution.com
                   </a>
                 </div>
               </div>

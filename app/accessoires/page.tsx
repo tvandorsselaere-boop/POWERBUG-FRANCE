@@ -69,6 +69,13 @@ export default async function AccessoiresPage() {
                       {price}<span className="text-sm text-[#6B7280]">&euro;</span>
                     </span>
                   </div>
+                  <a
+                    href="tel:+33967876795"
+                    className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-[#356B0D] px-4 py-2 text-sm font-medium text-[#356B0D] hover:bg-[#356B0D]/5"
+                  >
+                    <Phone className="h-3.5 w-3.5" />
+                    Commander : 09 67 87 67 95
+                  </a>
                 </div>
               );
             })}
@@ -152,11 +159,11 @@ export default async function AccessoiresPage() {
             09 67 87 67 95
           </a>
           <a
-            href="mailto:contact@powerbug.fr"
+            href="mailto:contact@progolfdistribution.com"
             className="inline-flex items-center gap-2 rounded-[10px] border border-[#356B0D] px-6 py-3 text-sm font-semibold text-[#356B0D] hover:bg-[#356B0D]/5"
           >
             <Mail className="h-4 w-4" />
-            contact@powerbug.fr
+            contact@progolfdistribution.com
           </a>
         </div>
       </section>

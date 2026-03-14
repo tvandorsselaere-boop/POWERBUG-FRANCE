@@ -69,10 +69,10 @@ export default function MentionsLegalesPage() {
               <p>
                 <strong className="text-[#0F0F10]">Email :</strong>{" "}
                 <a
-                  href="mailto:contact@powerbug.fr"
+                  href="mailto:contact@progolfdistribution.com"
                   className="text-[#356B0D] underline"
                 >
-                  contact@powerbug.fr
+                  contact@progolfdistribution.com
                 </a>
               </p>
               <p>
@@ -234,10 +234,10 @@ export default function MentionsLegalesPage() {
           <p className="mt-2 text-sm leading-relaxed text-[#6B7280]">
             Pour exercer ces droits, vous pouvez nous contacter à l&apos;adresse{" "}
             <a
-              href="mailto:contact@powerbug.fr"
+              href="mailto:contact@progolfdistribution.com"
               className="text-[#356B0D] underline"
             >
-              contact@powerbug.fr
+              contact@progolfdistribution.com
             </a>
             . Vous disposez également du droit d&apos;introduire une
             réclamation auprès de la CNIL (Commission Nationale de
@@ -333,10 +333,10 @@ export default function MentionsLegalesPage() {
             Pour toute question relative aux mentions légales, vous pouvez nous
             contacter à{" "}
             <a
-              href="mailto:contact@powerbug.fr"
+              href="mailto:contact@progolfdistribution.com"
               className="text-[#356B0D] underline"
             >
-              contact@powerbug.fr
+              contact@progolfdistribution.com
             </a>{" "}
             ou par téléphone au{" "}
             <a href="tel:+33967876795" className="text-[#356B0D] underline">

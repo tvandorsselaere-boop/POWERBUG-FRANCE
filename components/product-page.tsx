@@ -117,7 +117,7 @@ export function ProductPage({ product }: { product: Product }) {
 
           {isTrolley && (
             <p className="mt-4 text-sm text-[#6B7280]">
-              Livraison gratuite en France metropolitaine
+              + 15&euro; de frais de livraison (DPD, France metropolitaine)
             </p>
           )}
 

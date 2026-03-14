@@ -74,10 +74,10 @@ export default function CGVPage() {
             <p>
               <strong className="text-[#0F0F10]">Email :</strong>{" "}
               <a
-                href="mailto:contact@powerbug.fr"
+                href="mailto:contact@progolfdistribution.com"
                 className="text-[#356B0D] underline"
               >
-                contact@powerbug.fr
+                contact@progolfdistribution.com
               </a>
             </p>
             <p>
@@ -227,10 +227,10 @@ export default function CGVPage() {
             Pour exercer ce droit, le client doit notifier sa décision par email
             à{" "}
             <a
-              href="mailto:contact@powerbug.fr"
+              href="mailto:contact@progolfdistribution.com"
               className="text-[#356B0D] underline"
             >
-              contact@powerbug.fr
+              contact@progolfdistribution.com
             </a>{" "}
             ou par téléphone au{" "}
             <a href="tel:+33967876795" className="text-[#356B0D] underline">
@@ -326,10 +326,10 @@ export default function CGVPage() {
             droits peuvent être exercés en contactant PRO GOLF DISTRIBUTION à
             l&apos;adresse{" "}
             <a
-              href="mailto:contact@powerbug.fr"
+              href="mailto:contact@progolfdistribution.com"
               className="text-[#356B0D] underline"
             >
-              contact@powerbug.fr
+              contact@progolfdistribution.com
             </a>
             .
           </p>
@@ -410,10 +410,10 @@ export default function CGVPage() {
           <p className="mt-2 text-sm text-[#6B7280]">
             Contactez-nous par email à{" "}
             <a
-              href="mailto:contact@powerbug.fr"
+              href="mailto:contact@progolfdistribution.com"
               className="text-[#356B0D] underline"
             >
-              contact@powerbug.fr
+              contact@progolfdistribution.com
             </a>{" "}
             ou par téléphone au{" "}
             <a href="tel:+33967876795" className="text-[#356B0D] underline">

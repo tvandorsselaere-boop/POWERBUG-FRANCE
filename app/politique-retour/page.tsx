@@ -141,10 +141,10 @@ export default function PolitiqueRetourPage() {
                 <p className="mt-1 text-sm text-[#6B7280]">
                   Envoyez-nous un email à{" "}
                   <a
-                    href="mailto:contact@powerbug.fr"
+                    href="mailto:contact@progolfdistribution.com"
                     className="text-[#356B0D] underline"
                   >
-                    contact@powerbug.fr
+                    contact@progolfdistribution.com
                   </a>{" "}
                   ou appelez-nous au{" "}
                   <a
@@ -280,11 +280,11 @@ export default function PolitiqueRetourPage() {
           </p>
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-6">
             <a
-              href="mailto:contact@powerbug.fr"
+              href="mailto:contact@progolfdistribution.com"
               className="flex items-center gap-2 text-sm text-[#356B0D] hover:underline"
             >
               <Mail className="h-4 w-4" />
-              contact@powerbug.fr
+              contact@progolfdistribution.com
             </a>
             <a
               href="tel:+33967876795"

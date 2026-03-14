@@ -118,7 +118,7 @@ export default function GarantiePage() {
               Contactez-nous
             </h3>
             <p className="mt-2 text-sm text-[#6B7280]">
-              Envoyez-nous un email a contact@powerbug.fr ou appelez le 09 67 87
+              Envoyez-nous un email a contact@progolfdistribution.com ou appelez le 09 67 87
               67 95 en decrivant le probleme rencontre.
             </p>
           </div>
@@ -184,10 +184,10 @@ export default function GarantiePage() {
             <div className="flex items-center gap-3">
               <Mail className="h-5 w-5 shrink-0 text-[#356B0D]" />
               <a
-                href="mailto:contact@powerbug.fr"
+                href="mailto:contact@progolfdistribution.com"
                 className="text-sm text-[#6B7280] hover:text-[#356B0D]"
               >
-                contact@powerbug.fr
+                contact@progolfdistribution.com
               </a>
             </div>
             <div className="flex items-center gap-3">
