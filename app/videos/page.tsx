@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 };
 
 const presentationVideos = [
-  { id: "HDm7eUlzQFc", title: "PowerBug GT Lithium Electric Golf Trolley" },
   { id: "x5cDyT2jT9g", title: "PowerBug GTX1 Lithium Golf Trolley" },
 ];
 

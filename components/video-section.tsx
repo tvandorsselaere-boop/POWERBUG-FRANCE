@@ -8,7 +8,6 @@ type Video = {
 };
 
 const nxVideos: Video[] = [
-  { id: "HDm7eUlzQFc", title: "PowerBug GT Lithium — Presentation" },
   { id: "cL7ygIYda6g", title: "Guide d'utilisation du NX" },
 ];
 
