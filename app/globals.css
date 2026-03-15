@@ -107,6 +107,16 @@ body {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
+/* Hero logo — clip white edge artifacts from PNG, responsive */
+.hero-logo-clip {
+  clip-path: inset(0 8px 0 12px);
+}
+@media (min-width: 1024px) {
+  .hero-logo-clip {
+    clip-path: inset(0 20px 0 40px);
+  }
+}
+
 /* Glassmorphism buttons - iOS style */
 .btn-glass {
   background: linear-gradient(135deg, rgba(53, 107, 13, 0.9), rgba(53, 107, 13, 0.75));

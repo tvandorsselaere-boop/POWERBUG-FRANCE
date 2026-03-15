@@ -99,8 +99,7 @@ export default async function Home() {
                 alt="PowerBug"
                 width={320}
                 height={80}
-                className="inline-block h-[1.6em] w-auto brightness-0 invert"
-                style={{ clipPath: 'inset(0 20px 0 40px)' }}
+                className="inline-block h-[1.6em] w-auto brightness-0 invert hero-logo-clip"
                 priority
               />
             </h1>
