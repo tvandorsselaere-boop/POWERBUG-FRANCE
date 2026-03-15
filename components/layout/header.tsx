@@ -3,10 +3,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { Menu, ShoppingCart, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Menu, ShoppingCart, User, LogOut, Package, Settings, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { CartCount } from "@/components/cart-count";
+import { useAuth } from "@/hooks/use-auth";
 
 const navigation = [
   { name: "Chariots", href: "/trolleys" },
@@ -20,6 +29,18 @@ const navigation = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const { user, loading, signOut } = useAuth();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/");
+    router.refresh();
+  };
+
+  const initials = user?.user_metadata?.full_name
+    ? user.user_metadata.full_name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2)
+    : user?.email?.slice(0, 2).toUpperCase() ?? "?";
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#DBDBDB] bg-white">
@@ -51,22 +72,57 @@ export function Header() {
 
         {/* Right icons */}
         <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-[#0F0F10] hover:text-[#356B0D]"
-            asChild
-          >
-            <Link href="/connexion">
-              <User className="h-5 w-5" />
-            </Link>
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative text-[#0F0F10] hover:text-[#356B0D]"
-            asChild
-          >
+          {/* User icon / dropdown */}
+          {!loading && (
+            user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="gap-1.5 text-[#0F0F10] hover:text-[#356B0D]">
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#356B0D] text-xs font-semibold text-white">
+                      {initials}
+                    </span>
+                    <ChevronDown className="h-3 w-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <div className="px-2 py-1.5 text-xs text-[#6B7280] truncate">{user.email}</div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/compte" className="cursor-pointer">
+                      <User className="mr-2 h-4 w-4" />
+                      Mon compte
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/compte/commandes" className="cursor-pointer">
+                      <Package className="mr-2 h-4 w-4" />
+                      Mes commandes
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/compte/parametres" className="cursor-pointer">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Parametres
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-600 focus:text-red-600">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Deconnexion
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button variant="ghost" size="icon" className="text-[#0F0F10] hover:text-[#356B0D]" asChild>
+                <Link href="/connexion">
+                  <User className="h-5 w-5" />
+                </Link>
+              </Button>
+            )
+          )}
+
+          {/* Cart */}
+          <Button variant="ghost" size="icon" className="relative text-[#0F0F10] hover:text-[#356B0D]" asChild>
             <Link href="/panier">
               <ShoppingCart className="h-5 w-5" />
               <CartCount />
@@ -76,11 +132,7 @@ export function Header() {
           {/* Mobile menu */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="text-[#0F0F10] md:hidden"
-              >
+              <Button variant="ghost" size="icon" className="text-[#0F0F10] md:hidden">
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
@@ -96,6 +148,29 @@ export function Header() {
                     {item.name}
                   </Link>
                 ))}
+
+                <div className="my-2 border-t border-[#DBDBDB]" />
+
+                {user ? (
+                  <>
+                    <Link href="/compte" onClick={() => setOpen(false)} className="rounded-lg px-4 py-3 text-base font-medium text-[#0F0F10] transition-colors hover:bg-[#F5F5F5] hover:text-[#356B0D]">
+                      Mon compte
+                    </Link>
+                    <Link href="/compte/commandes" onClick={() => setOpen(false)} className="rounded-lg px-4 py-3 text-base font-medium text-[#0F0F10] transition-colors hover:bg-[#F5F5F5] hover:text-[#356B0D]">
+                      Mes commandes
+                    </Link>
+                    <button
+                      onClick={() => { setOpen(false); handleSignOut(); }}
+                      className="rounded-lg px-4 py-3 text-left text-base font-medium text-red-600 transition-colors hover:bg-red-50"
+                    >
+                      Deconnexion
+                    </button>
+                  </>
+                ) : (
+                  <Link href="/connexion" onClick={() => setOpen(false)} className="rounded-lg px-4 py-3 text-base font-medium text-[#356B0D] transition-colors hover:bg-[#F5F5F5]">
+                    Connexion
+                  </Link>
+                )}
               </nav>
             </SheetContent>
           </Sheet>
