@@ -69,17 +69,10 @@ export const revalidate = 3600;
 
 export default async function Home() {
   const dbTrolleys = await getTrolleys();
-  // Use high-quality local images for homepage cards
-  const imageMap: Record<string, string> = {
-    'nx-lithium': '/images/produit/nx/PowerBug-NX-Transparent-Main-1.png',
-    'nx-dhc-lithium': '/images/produit/nx-dhc/PowerBug-NX-Main-1-DHC.jpg',
-  };
-  // Fallback to Supabase images if slug not in map
+  const imageMap: Record<string, string> = {};
   for (const t of dbTrolleys) {
-    if (!imageMap[t.slug]) {
-      const img = t.product_images?.find((i) => i.is_primary)?.url ?? t.product_images?.[0]?.url;
-      if (img) imageMap[t.slug] = img;
-    }
+    const img = t.product_images?.find((i) => i.is_primary)?.url ?? t.product_images?.[0]?.url;
+    if (img) imageMap[t.slug] = img;
   }
 
   return (
