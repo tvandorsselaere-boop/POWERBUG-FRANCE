@@ -62,14 +62,11 @@ async function ensureStoreTag(
     .eq("id", userId)
     .single();
 
-  if (!profile) return;
-
-  const stores: string[] = profile.stores ?? [];
+  const stores: string[] = profile?.stores ?? [];
   if (!stores.includes(STORE)) {
     await supabase
       .from("profiles")
-      .update({ stores: [...stores, STORE] })
-      .eq("id", userId);
+      .upsert({ id: userId, stores: [...stores, STORE] }, { onConflict: "id" });
   }
 }
 
