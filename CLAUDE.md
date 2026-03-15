@@ -9,7 +9,7 @@ Vente de chariots électriques de golf (trolleys), accessoires, batteries et pi�
 - **Paiement** : Stripe (CB + Apple Pay + Google Pay)
 - **Panier** : Zustand 5 avec persistance localStorage
 - **Livraison** : DPD (via Golf des Marques) — France métropolitaine uniquement
-- **Emails** : Resend
+- **Emails** : ZeptoMail (transactionnel) + Zoho Mail Lite (boite fred@powerbug.fr)
 - **i18n** : FR uniquement au lancement (pas de EN, marché français ciblé)
 - **Déploiement** : Vercel
 - **Domaine** : powerbug.fr → powerbug-france.vercel.app (redirection active)
@@ -338,6 +338,23 @@ Page interactive `/configurateur` :
 - Prix affichés = prix TTC (pas de mention HT)
 - Mention "Site réalisé par Facile-IA" dans le footer
 - Setup 499€ + 49€/mois + 10% commission sur CA via site
+
+## Budget infra récurrent (confirmé 2026)
+
+Mutualisé entre PowerBug + Golf-Shop — 1 seul compte par service :
+
+| Service | Prix/mois | Couvre |
+|---------|-----------|--------|
+| Vercel Pro | $20 | Les 2 sites (projets illimités) |
+| Supabase Pro | $25 | Les 2 sites (1 projet partagé, no pause) |
+| ZeptoMail | $0 (puis $1.5/10k) | Emails transactionnels PowerBug |
+| Zoho Mail Lite | ~1€ | Boite fred@powerbug.fr |
+| **Total fixe** | **~$46/mois (~43€)** | **Les 2 sites** |
+
+- Soit ~21€/site/mois à partager entre clients
+- Stripe : variable (1.5% + 0.25€/transaction EU)
+- À refaire pour Golf-Shop : ZeptoMail (même compte) + Zoho Mail domaine Golf-Shop
+- Au go-live : créer compte Resend Pro ou rester ZeptoMail selon volume
 
 ## EN ATTENTE DU CLIENT (Fred) — BLOQUANT POUR GO-LIVE
 
