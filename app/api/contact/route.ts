@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendEmail } from "@/lib/email/zepto";
+import { contactFormHtml } from "@/lib/email/templates";
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,22 +31,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Log the message (Resend integration will be added when email is configured)
-    console.log("=== Nouveau message de contact ===");
-    console.log(`De: ${firstname} ${lastname} <${email}>`);
-    console.log(`Sujet: ${subject}`);
-    console.log(`Message: ${message}`);
-    console.log("==================================");
-
-    // TODO: Send email via Resend when email @powerbug.fr is configured
-    // const resend = new Resend(process.env.RESEND_API_KEY);
-    // await resend.emails.send({
-    //   from: "PowerBug France <noreply@powerbug.fr>",
-    //   to: "contact@progolfdistribution.com",
-    //   replyTo: email,
-    //   subject: `[Contact] ${subject} — ${firstname} ${lastname}`,
-    //   text: message,
-    // });
+    const ordersTo = process.env.EMAIL_ORDERS_TO ?? "thomas@facile-ia.fr";
+    await sendEmail({
+      to: ordersTo,
+      subject: `[Contact PowerBug] ${subject} — ${firstname} ${lastname}`,
+      html: contactFormHtml({ firstname, lastname, email, subject, message }),
+      replyTo: email,
+    });
 
     return NextResponse.json({
       success: true,

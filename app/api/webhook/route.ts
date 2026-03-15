@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import Stripe from "stripe";
+import { sendEmail } from "@/lib/email/zepto";
+import { orderConfirmationHtml, preparationOrderHtml, type OrderItem } from "@/lib/email/templates";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -132,6 +134,38 @@ export async function POST(req: NextRequest) {
       }
 
       console.log(`Order ${order.id} created for ${session.customer_details?.email}`);
+
+      // Envoyer les emails
+      const customerEmail = session.customer_details?.email ?? session.customer_email ?? "";
+      const customerName = session.customer_details?.name ?? customerEmail;
+      const emailData = {
+        orderId: order.id,
+        customerEmail,
+        customerName,
+        items: orderItems as OrderItem[],
+        subtotal,
+        shippingCost: 15,
+        total,
+        shippingAddress,
+      };
+
+      // Email confirmation → client
+      await sendEmail({
+        to: customerEmail,
+        toName: customerName,
+        subject: `Confirmation de commande PowerBug — n° ${order.id.slice(0, 8).toUpperCase()}`,
+        html: orderConfirmationHtml(emailData),
+      });
+
+      // Email bon de préparation → Golf des Marques (via Fred pour l'instant)
+      const ordersTo = process.env.EMAIL_ORDERS_TO ?? "thomas@facile-ia.fr";
+      await sendEmail({
+        to: ordersTo,
+        subject: `[PowerBug] Nouvelle commande à préparer — n° ${order.id.slice(0, 8).toUpperCase()}`,
+        html: preparationOrderHtml(emailData),
+        replyTo: customerEmail,
+      });
+
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unknown error";
       console.error("Webhook processing error:", message);
