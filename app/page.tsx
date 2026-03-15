@@ -165,14 +165,14 @@ export default async function Home() {
                 href={trolley.href}
                 className="group card-glass rounded-2xl p-8 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
               >
-                <div className="mb-6 flex h-64 items-center justify-center rounded-xl bg-[#F5F5F5] overflow-hidden">
+                <div className="mb-6 flex h-64 items-center justify-center rounded-xl bg-white overflow-hidden">
                   {imageMap[trolley.slug] ? (
                     <Image
                       src={imageMap[trolley.slug]}
                       alt={trolley.name}
                       width={400}
                       height={400}
-                      className="h-full w-full object-contain p-6"
+                      className="h-full w-full object-contain p-2"
                     />
                   ) : (
                     <Zap className="h-20 w-20 text-[#DBDBDB] transition-colors group-hover:text-[#8DC63F]" />
