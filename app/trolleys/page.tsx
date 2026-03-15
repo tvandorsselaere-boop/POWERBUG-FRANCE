@@ -133,9 +133,9 @@ export default async function TrolleysPage() {
                 </th>
                 <th className="px-6 py-6 text-center">
                   <Link href="/trolleys/nx-lithium" className="group flex flex-col items-center gap-3">
-                    <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-white overflow-hidden">
+                    <div className="flex h-24 w-24 items-center justify-center overflow-hidden">
                       {nxImg ? (
-                        <Image src={nxImg} alt="NX Lithium" width={96} height={96} className="h-full w-full object-contain p-2" />
+                        <Image src={nxImg} alt="NX Lithium" width={96} height={96} className="h-full w-full object-contain" />
                       ) : (
                         <Zap className="h-10 w-10 text-[#DBDBDB]" />
                       )}
@@ -150,9 +150,9 @@ export default async function TrolleysPage() {
                 </th>
                 <th className="px-6 py-6 text-center">
                   <Link href="/trolleys/nx-dhc-lithium" className="group flex flex-col items-center gap-3">
-                    <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-[#356B0D]/10 overflow-hidden">
+                    <div className="flex h-24 w-24 items-center justify-center overflow-hidden">
                       {dhcImg ? (
-                        <Image src={dhcImg} alt="NX DHC Lithium" width={96} height={96} className="h-full w-full object-contain p-2" />
+                        <Image src={dhcImg} alt="NX DHC Lithium" width={96} height={96} className="h-full w-full object-contain" />
                       ) : (
                         <Zap className="h-10 w-10 text-[#8DC63F]" />
                       )}
@@ -207,27 +207,29 @@ export default async function TrolleysPage() {
           </table>
 
           {/* CTA row */}
-          <div className="grid grid-cols-3 border-t border-[#DBDBDB] bg-[#F5F5F5]">
-            <div className="px-6 py-6" />
-            <div className="flex items-center justify-center px-6 py-6">
-              <Link
-                href="/trolleys/nx-lithium"
-                className="inline-flex min-w-[200px] items-center justify-center rounded-[10px] border border-[#356B0D] px-6 py-2.5 text-sm font-medium text-[#356B0D] transition-colors hover:bg-[#356B0D] hover:text-white"
-              >
-                Decouvrir le NX
-                <ChevronRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-            <div className="flex items-center justify-center px-6 py-6">
-              <Link
-                href="/trolleys/nx-dhc-lithium"
-                className="inline-flex min-w-[200px] items-center justify-center rounded-[10px] bg-[#356B0D] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#356B0D]/90"
-              >
-                Decouvrir le NX DHC
-                <ChevronRight className="ml-1 h-4 w-4" />
-              </Link>
-            </div>
-          </div>
+          <tfoot>
+            <tr className="border-t border-[#DBDBDB] bg-[#F5F5F5]">
+              <td className="px-6 py-6" />
+              <td className="px-6 py-6 text-center">
+                <Link
+                  href="/trolleys/nx-lithium"
+                  className="inline-flex min-w-[160px] items-center justify-center rounded-[10px] border border-[#356B0D] px-6 py-2.5 text-sm font-medium text-[#356B0D] transition-colors hover:bg-[#356B0D] hover:text-white"
+                >
+                  Decouvrir le NX
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </Link>
+              </td>
+              <td className="px-6 py-6 text-center">
+                <Link
+                  href="/trolleys/nx-dhc-lithium"
+                  className="inline-flex min-w-[160px] items-center justify-center rounded-[10px] bg-[#356B0D] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#356B0D]/90"
+                >
+                  Decouvrir le NX DHC
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </Link>
+              </td>
+            </tr>
+          </tfoot>
         </div>
       </div>
 
