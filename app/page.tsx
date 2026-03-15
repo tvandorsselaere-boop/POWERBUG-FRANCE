@@ -100,6 +100,7 @@ export default async function Home() {
                 width={320}
                 height={80}
                 className="inline-block h-[1.6em] w-auto brightness-0 invert"
+                style={{ clipPath: 'inset(0 6px)' }}
                 priority
               />
             </h1>
