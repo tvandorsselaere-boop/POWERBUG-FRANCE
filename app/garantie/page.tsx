@@ -37,7 +37,7 @@ export default function GarantiePage() {
           </h2>
           <p className="mt-3 text-sm text-[#6B7280]">
             PowerBug offre une garantie constructeur de 2 ans couvrant le
-            trolley et la batterie. Cette garantie couvre les defauts de
+            chariot et la batterie. Cette garantie couvre les defauts de
             fabrication et de materiaux dans des conditions d&apos;utilisation
             normales.
           </p>

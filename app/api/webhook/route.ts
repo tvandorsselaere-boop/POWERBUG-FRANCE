@@ -84,6 +84,7 @@ export async function POST(req: NextRequest) {
 
       const total = (session.amount_total ?? 0) / 100;
       const subtotal = (session.amount_subtotal ?? 0) / 100;
+      const shippingCost = parseFloat((total - subtotal).toFixed(2));
 
       console.log("Inserting order:", { email: session.customer_details?.email, total, subtotal });
 
@@ -94,7 +95,7 @@ export async function POST(req: NextRequest) {
           email: session.customer_details?.email ?? session.customer_email ?? "",
           status: "confirmed",
           subtotal,
-          shipping_cost: 15,
+          shipping_cost: shippingCost,
           discount: 0,
           total,
           shipping_address: shippingAddress,
@@ -144,7 +145,7 @@ export async function POST(req: NextRequest) {
         customerName,
         items: orderItems as OrderItem[],
         subtotal,
-        shippingCost: 15,
+        shippingCost: shippingCost,
         total,
         shippingAddress,
       };

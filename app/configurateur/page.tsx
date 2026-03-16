@@ -18,9 +18,9 @@ import {
   accessories,
 } from "@/lib/data/products";
 
-// 3 accessoires OFFERTS avec tout achat trolley (source: Fred, mars 2026)
-const BUNDLE_SLUGS = ["housse-transport", "porte-parapluie", "scorecard-holder"];
-const BUNDLE_VALUE = 44.99 + 34.99 + 24.99; // Travel Cover + Umbrella Holder + Score Card Holder
+// 2 accessoires OFFERTS avec tout achat chariot (source: Fred, mars 2026 — aligné Golf des Marques)
+const BUNDLE_SLUGS = ["porte-parapluie", "scorecard-holder"];
+const BUNDLE_VALUE = 30 + 30; // Porte-parapluie + Porte-scorecard
 
 export default function ConfigurateurPage() {
   const [selectedTrolley, setSelectedTrolley] = useState<string | null>(null);
@@ -60,12 +60,12 @@ export default function ConfigurateurPage() {
 
       <div className="mb-14 text-center">
         <h1 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
-          Configurez votre trolley
+          Configurez votre chariot
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-lg text-[#6B7280]">
           Choisissez votre modele et recevez{" "}
           <span className="font-semibold text-[#356B0D]">
-            3 accessoires offerts (~105&euro;)
+            2 accessoires offerts (~60&euro;)
           </span>{" "}
           avec votre achat.
         </p>
@@ -140,10 +140,10 @@ export default function ConfigurateurPage() {
                 <Gift className="h-6 w-6 shrink-0 text-[#356B0D]" />
                 <div>
                   <p className="font-semibold text-[#356B0D]">
-                    3 accessoires offerts avec votre trolley (~{BUNDLE_VALUE.toFixed(0)}&euro; de valeur)
+                    2 accessoires offerts avec votre chariot (~{BUNDLE_VALUE.toFixed(0)}&euro; de valeur)
                   </p>
                   <p className="mt-0.5 text-xs text-[#6B7280]">
-                    Inclus automatiquement avec tout achat de trolley PowerBug NX
+                    Inclus automatiquement avec tout achat de chariot PowerBug NX
                   </p>
                 </div>
               </div>
@@ -285,7 +285,7 @@ export default function ConfigurateurPage() {
                       </div>
                     ))}
                     <p className="text-right text-xs text-[#356B0D]">
-                      Valeur ~{BUNDLE_VALUE.toFixed(0)}&euro; offerts
+                      ~{BUNDLE_VALUE.toFixed(0)}&euro; d&apos;accessoires offerts
                     </p>
                   </div>
                 )}

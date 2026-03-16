@@ -19,7 +19,8 @@ const trolleyMeta = [
   {
     slug: "nx-lithium",
     name: "NX Lithium",
-    price: "899",
+    price: "799",
+    comparePrice: "899",
     description:
       "Systeme 28V, batterie lithium 36 trous, pliage VRAP ultra-compact. Le chariot electrique fiable et performant.",
     specs: ["28V Power System", "Batterie Lithium 36 trous", "Pliage VRAP compact"],
@@ -29,7 +30,8 @@ const trolleyMeta = [
   {
     slug: "nx-dhc-lithium",
     name: "NX DHC Lithium",
-    price: "999",
+    price: "899",
+    comparePrice: "999",
     description:
       "Tous les avantages du NX, plus le Downhill Control et le frein parking electronique. Le controle total.",
     specs: ["Downhill Control (DHC)", "Frein parking electronique", "Toutes les specs du NX"],
@@ -49,7 +51,7 @@ const features = [
     icon: Shield,
     title: "Garantie 2 ans",
     description:
-      "Trolley et batterie couverts par la garantie constructeur de 2 ans. SAV en France.",
+      "Chariot et batterie couverts par la garantie constructeur de 2 ans. SAV en France.",
   },
   {
     icon: Truck,
@@ -138,7 +140,7 @@ export default async function Home() {
         <div className="mx-auto flex max-w-[1600px] items-center justify-center gap-3 px-6 text-white">
           <Gift className="h-5 w-5" />
           <p className="text-sm font-medium sm:text-base">
-            <span className="font-bold">Offre speciale :</span> 3 accessoires offerts (~105&euro;) avec l&apos;achat d&apos;un trolley !
+            <span className="font-bold">Offre speciale :</span> 2 accessoires offerts (~60&euro;) avec l&apos;achat d&apos;un chariot !
           </p>
         </div>
       </section>
@@ -200,9 +202,14 @@ export default async function Home() {
                 </ul>
 
                 <div className="mt-6 flex items-center justify-between">
-                  <span className="text-3xl font-bold text-[#0F0F10]">
-                    {trolley.price}<span className="text-lg text-[#6B7280]">&euro;</span>
-                  </span>
+                  <div>
+                    <span className="text-3xl font-bold text-[#0F0F10]">
+                      {trolley.price}<span className="text-lg text-[#6B7280]">&euro;</span>
+                    </span>
+                    {trolley.comparePrice && (
+                      <span className="ml-2 text-sm text-[#6B7280] line-through">{trolley.comparePrice}&euro;</span>
+                    )}
+                  </div>
                   <span className="text-sm font-medium text-[#356B0D] opacity-0 transition-opacity group-hover:opacity-100">
                     Voir le produit &rarr;
                   </span>
@@ -316,7 +323,7 @@ export default async function Home() {
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-[#6B7280]">
             Comparez nos deux modeles et trouvez celui qui correspond a votre jeu.
-            3 accessoires offerts (~105&euro;) avec chaque trolley.
+            2 accessoires offerts (~60&euro;) avec chaque chariot.
           </p>
           <Button
             asChild

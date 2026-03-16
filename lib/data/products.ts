@@ -3,10 +3,12 @@ export type TrolleySpec = {
   nx: string;
   nxDhc: string;
   highlight?: boolean;
+  compareNx?: string;
+  compareNxDhc?: string;
 };
 
 export const trolleySpecs: TrolleySpec[] = [
-  { label: "Prix", nx: "899 EUR", nxDhc: "999 EUR" },
+  { label: "Prix", nx: "799 EUR", nxDhc: "899 EUR", compareNx: "899 EUR", compareNxDhc: "999 EUR" },
   { label: "Systeme", nx: "28V Power System", nxDhc: "28V Power System" },
   { label: "Batterie", nx: "Lithium 36 trous", nxDhc: "Lithium 36 trous" },
   { label: "Pliage", nx: "Compact VRAP", nxDhc: "Compact VRAP" },
@@ -28,7 +30,7 @@ export const trolleySpecs: TrolleySpec[] = [
   { label: "Garantie", nx: "2 ans", nxDhc: "2 ans" },
 ];
 
-// Bundle offert : Score Card Holder (24,99€) + Umbrella Holder (34,99€) + Travel Cover (44,99€) = ~105€ (source: Fred, mars 2026)
+// Bundle offert : Score Card Holder (30€) + Umbrella Holder (30€) = 60€ (source: Fred, mars 2026 — aligné Golf des Marques)
 // Voir app/configurateur/page.tsx pour la logique bundle
 export const ACCESSORY_DISCOUNT = 0; // Plus utilise — kept for type compatibility
 
@@ -36,6 +38,7 @@ export type Product = {
   slug: string;
   name: string;
   price: number;
+  comparePrice?: number;
   description: string;
   longDescription: string;
   specs: { label: string; value: string }[];
@@ -48,13 +51,14 @@ export const trolleys: Product[] = [
   {
     slug: "nx-lithium",
     name: "PowerBug NX Lithium",
-    price: 899,
+    price: 799,
+    comparePrice: 899,
     badge: "Populaire",
     category: "trolley",
     description:
-      "Qualite premium a un prix imbattable. Le choix intelligent pour votre prochain trolley.",
+      "Qualite premium a un prix imbattable. Le choix intelligent pour votre prochain chariot.",
     longDescription:
-      "Le PowerBug NX Lithium est le chariot electrique de nouvelle generation. Son systeme 28V offre une puissance fiable sur tous les terrains. Le pliage VRAP permet un rangement ultra-compact en quelques secondes. La roue avant anti-colmatage et les pneus hiver garantissent une performance toute l'annee. La station accessoires integree vous permet de personnaliser votre trolley selon vos besoins.",
+      "Le PowerBug NX Lithium est le chariot electrique de nouvelle generation. Son systeme 28V offre une puissance fiable sur tous les terrains. Le pliage VRAP permet un rangement ultra-compact en quelques secondes. La roue avant anti-colmatage et les pneus hiver garantissent une performance toute l'annee. La station accessoires integree vous permet de personnaliser votre chariot selon vos besoins.",
     specs: [
       { label: "Systeme", value: "28V Power System" },
       { label: "Batterie", value: "Lithium 36 trous" },
@@ -77,7 +81,8 @@ export const trolleys: Product[] = [
   {
     slug: "nx-dhc-lithium",
     name: "PowerBug NX DHC Lithium",
-    price: 999,
+    price: 899,
+    comparePrice: 999,
     badge: "Premium",
     category: "trolley",
     description:
@@ -152,8 +157,8 @@ export const accessories: Product[] = [
   },
   {
     slug: "mitaines-electriques",
-    name: "NX Heated Mitt",
-    price: 64.99,
+    name: "Mitaines chauffantes NX",
+    price: 60,
     category: "accessoire",
     description:
       "Mitaines chauffantes alimentees par la batterie du trolley. Ideal pour l'hiver.",
@@ -171,13 +176,13 @@ export const accessories: Product[] = [
   },
   {
     slug: "housse-transport",
-    name: "Travel Cover",
-    price: 44.99,
+    name: "Housse de transport NX",
+    price: 40,
     category: "accessoire",
     description:
-      "Housse de transport robuste pour proteger votre trolley en deplacement.",
+      "Housse de transport robuste pour proteger votre chariot en deplacement.",
     longDescription:
-      "La housse de transport PowerBug protege votre trolley lors de vos deplacements. Tissu resistant, poignees renforcees, fermeture zip integrale.",
+      "La housse de transport PowerBug protege votre chariot lors de vos deplacements. Tissu resistant, poignees renforcees, fermeture zip integrale.",
     specs: [
       { label: "Materiau", value: "Nylon resistant" },
       { label: "Fermeture", value: "Zip integrale" },
@@ -190,11 +195,11 @@ export const accessories: Product[] = [
   },
   {
     slug: "porte-parapluie",
-    name: "NX Umbrella Holder",
-    price: 34.99,
+    name: "Porte-parapluie NX",
+    price: 30,
     category: "accessoire",
     description:
-      "Support pour parapluie, fixation solide sur le mat du trolley.",
+      "Support pour parapluie, fixation solide sur le mat du chariot.",
     longDescription:
       "Le porte-parapluie NX PowerBug maintient solidement votre parapluie pendant le jeu. Compatible avec tous les parapluies golf standard.",
     specs: [
@@ -209,8 +214,8 @@ export const accessories: Product[] = [
   },
   {
     slug: "scorecard-holder",
-    name: "Score Card Holder",
-    price: 24.99,
+    name: "Porte-scorecard NX",
+    price: 30,
     category: "accessoire",
     description:
       "Support pour carte de score avec protection transparente.",
@@ -225,8 +230,8 @@ export const accessories: Product[] = [
   },
   {
     slug: "drinks-holder",
-    name: "Drink Holder",
-    price: 14.99,
+    name: "Porte-gobelet NX",
+    price: 20,
     category: "accessoire",
     description:
       "Porte-boisson pratique, maintien stable pendant toute la partie.",
@@ -240,14 +245,14 @@ export const accessories: Product[] = [
     ],
   },
   {
-    slug: "support-gps",
-    name: "NX GPS / Device Holder",
-    price: 24.99,
+    slug: "support-telephone",
+    name: "Support telephone NX",
+    price: 30,
     category: "accessoire",
     description:
-      "Support universel pour GPS ou telephone, fixation sur le guidon du trolley.",
+      "Support universel pour telephone ou GPS, fixation sur le guidon du chariot.",
     longDescription:
-      "Le support GPS/Device PowerBug se fixe sur le guidon de votre trolley pour garder votre GPS ou telephone a portee de vue pendant le jeu.",
+      "Le support telephone NX PowerBug se fixe sur le guidon de votre chariot pour garder votre telephone ou GPS a portee de vue pendant le jeu.",
     specs: [{ label: "Compatibilite", value: "GPS et smartphones" }],
     features: [
       "Fixation guidon universelle",
@@ -257,7 +262,7 @@ export const accessories: Product[] = [
   },
   {
     slug: "siege-rembourre",
-    name: "Trolley Seat",
+    name: "Siege rembourre NX",
     price: 109,
     category: "accessoire",
     description:
@@ -274,8 +279,8 @@ export const accessories: Product[] = [
   },
   {
     slug: "umbrella-holder-extension",
-    name: "Umbrella Holder Extension",
-    price: 24.99,
+    name: "Extension porte-parapluie NX",
+    price: 25,
     category: "accessoire",
     description:
       "Extension pour porte-parapluie, augmente la hauteur de fixation.",
@@ -286,6 +291,38 @@ export const accessories: Product[] = [
       "Extension de hauteur",
       "Compatible porte-parapluie PowerBug",
       "Installation rapide",
+    ],
+  },
+  {
+    slug: "sac-isotherme",
+    name: "Sac isotherme NX",
+    price: 40,
+    category: "accessoire",
+    description:
+      "Sac isotherme pour maintenir vos boissons a temperature pendant tout le tour.",
+    longDescription:
+      "Le sac isotherme NX PowerBug combine hydratation et organisation pendant vos parcours. Fixation rapide sur le chariot, compartiments multiples.",
+    specs: [{ label: "Compatibilite", value: "Chariots PowerBug NX" }],
+    features: [
+      "Maintien en temperature",
+      "Compartiments multiples",
+      "Fixation rapide sur chariot",
+    ],
+  },
+  {
+    slug: "sac-rangement",
+    name: "Sac de rangement NX",
+    price: 45,
+    category: "accessoire",
+    description:
+      "Sac de rangement pour proteger et transporter votre chariot entre les sorties.",
+    longDescription:
+      "Le sac de rangement NX PowerBug protege votre chariot lors du stockage. Tissu resistant, fermeture integrale, poignees de transport.",
+    specs: [{ label: "Compatibilite", value: "Chariots PowerBug NX" }],
+    features: [
+      "Protection complete du chariot",
+      "Poignees de transport renforcees",
+      "Fermeture integrale",
     ],
   },
 ];

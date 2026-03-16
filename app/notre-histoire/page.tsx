@@ -82,7 +82,7 @@ export default function NotreHistoirePage() {
         <div className="rounded-2xl border border-[#DBDBDB] bg-[#F5F5F5] p-6 text-center">
           <Award className="mx-auto mb-3 h-8 w-8 text-[#356B0D]" />
           <p className="text-3xl font-bold text-[#0F0F10]">N&deg;1</p>
-          <p className="mt-1 text-sm text-[#6B7280]">Satisfaction client trolleys</p>
+          <p className="mt-1 text-sm text-[#6B7280]">Satisfaction client chariots</p>
         </div>
       </div>
 
@@ -330,7 +330,7 @@ export default function NotreHistoirePage() {
             size="lg"
             className="btn-glass rounded-[10px] text-white"
           >
-            <Link href="/trolleys">Voir les trolleys</Link>
+            <Link href="/trolleys">Voir les chariots</Link>
           </Button>
         </div>
       </div>

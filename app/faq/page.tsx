@@ -20,9 +20,9 @@ const faqs = [
       "La batterie lithium PowerBug offre une autonomie de 36 trous, soit 2 tours complets sans recharge. Elle se recharge completement en quelques heures avec le chargeur fourni. La batterie est legere et compacte, concue pour durer dans le temps.",
   },
   {
-    question: "Comment plier le trolley ?",
+    question: "Comment plier le chariot ?",
     answer:
-      "Le systeme de pliage VRAP (brevetee PowerBug) permet de plier le chariot en quelques secondes sans effort. Le trolley plie se range facilement dans un coffre de voiture. Aucun outil n\u2019est necessaire, le mecanisme est intuitif des la premiere utilisation.",
+      "Le systeme de pliage VRAP (brevetee PowerBug) permet de plier le chariot en quelques secondes sans effort. Le chariot plie se range facilement dans un coffre de voiture. Aucun outil n\u2019est necessaire, le mecanisme est intuitif des la premiere utilisation.",
   },
   {
     question: "Livrez-vous dans toute la France ?",
@@ -32,7 +32,7 @@ const faqs = [
   {
     question: "Quelle est la garantie ?",
     answer:
-      "PowerBug offre une garantie constructeur de 2 ans couvrant le trolley et la batterie. Cette garantie couvre les defauts de fabrication et de materiaux dans des conditions d\u2019utilisation normales. Vous beneficiez egalement des garanties legales (conformite et vices caches) prevues par le Code de la consommation et le Code civil. Le SAV est gere en France par Golf des Marques.",
+      "PowerBug offre une garantie constructeur de 2 ans couvrant le chariot et la batterie. Cette garantie couvre les defauts de fabrication et de materiaux dans des conditions d\u2019utilisation normales. Vous beneficiez egalement des garanties legales (conformite et vices caches) prevues par le Code de la consommation et le Code civil. Le SAV est gere en France par Golf des Marques.",
   },
   {
     question: "Comment commander des accessoires ?",
@@ -40,7 +40,7 @@ const faqs = [
       "Vous pouvez consulter tous nos accessoires disponibles sur la page Accessoires du site. Pour toute question ou commande specifique, contactez-nous par email a contact@progolfdistribution.com ou par telephone au 09\u00A067\u00A087\u00A067\u00A095.",
   },
   {
-    question: "Puis-je retourner mon trolley ?",
+    question: "Puis-je retourner mon chariot ?",
     answer:
       "Oui, vous disposez d\u2019un delai de retractation de 14 jours a compter de la reception de votre commande, conformement a la legislation francaise. Le produit doit etre retourne dans son emballage d\u2019origine, non utilise et en parfait etat. Contactez-nous a contact@progolfdistribution.com pour initier une demande de retour.",
   },

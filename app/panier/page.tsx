@@ -31,7 +31,9 @@ export default function PanierPage() {
 
   const subtotal = cartTotal(items);
   const count = cartCount(items);
-  const shipping = count > 0 ? 15 : 0;
+  const TROLLEY_SLUGS = ["nx-lithium", "nx-dhc-lithium"];
+  const hasTrolley = items.some((item) => TROLLEY_SLUGS.includes(item.slug));
+  const shipping = count > 0 ? (hasTrolley ? 14.9 : 3.9) : 0;
   const total = subtotal + shipping;
 
   return (
@@ -157,7 +159,7 @@ export default function PanierPage() {
                 <div className="flex justify-between text-sm">
                   <span className="text-[#6B7280]">Livraison (DPD France)</span>
                   <span className="text-[#0F0F10] font-medium">
-                    15,00&euro;
+                    {shipping.toFixed(2).replace(".", ",")}&euro;
                   </span>
                 </div>
               </div>

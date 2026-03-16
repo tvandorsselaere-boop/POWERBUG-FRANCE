@@ -125,6 +125,23 @@ export async function getAccessories() {
   return ((data ?? []) as unknown as DbProduct[]).filter((p) => p.category);
 }
 
+export async function getPiecesDetachees() {
+  const supabase = createQueryClient();
+  const { data, error } = await supabase
+    .from("products")
+    .select(PRODUCT_SELECT)
+    .eq("store", "powerbug")
+    .eq("is_active", true)
+    .eq("categories.slug", "pieces-detachees")
+    .order("base_price", { ascending: true });
+
+  if (error) {
+    console.error("Error fetching pieces detachees:", error);
+    return [];
+  }
+  return ((data ?? []) as unknown as DbProduct[]).filter((p) => p.category);
+}
+
 export async function getBatteries() {
   const supabase = createQueryClient();
   const { data, error } = await supabase

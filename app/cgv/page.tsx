@@ -99,7 +99,7 @@ export default function CGVPage() {
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#6B7280]">
             Le Site propose à la vente des chariots de golf électriques
-            (trolleys), accessoires, batteries et pièces détachées de la marque
+            (chariots electriques), accessoires, batteries et pièces détachées de la marque
             PowerBug. Les produits sont décrits et présentés avec la plus grande
             exactitude possible. Les photographies des produits ne sont pas
             contractuelles. En cas d&apos;erreur manifeste entre les

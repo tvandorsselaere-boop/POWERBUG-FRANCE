@@ -84,9 +84,12 @@ export default async function TrolleysPage() {
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Pliage VRAP compact</li>
           </ul>
           <div className="mt-4 flex items-center justify-between">
-            <p className="text-3xl font-bold text-[#0F0F10]">
-              899<span className="text-lg text-[#6B7280]">&euro;</span>
-            </p>
+            <div>
+              <p className="text-3xl font-bold text-[#0F0F10]">
+                799<span className="text-lg text-[#6B7280]">&euro;</span>
+              </p>
+              <p className="text-sm text-[#6B7280] line-through">899&euro;</p>
+            </div>
             <span className="text-sm font-medium text-[#356B0D]">
               Decouvrir &rarr;
             </span>
@@ -112,9 +115,12 @@ export default async function TrolleysPage() {
             <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Toutes les specs du NX</li>
           </ul>
           <div className="mt-4 flex items-center justify-between">
-            <p className="text-3xl font-bold text-[#0F0F10]">
-              999<span className="text-lg text-[#6B7280]">&euro;</span>
-            </p>
+            <div>
+              <p className="text-3xl font-bold text-[#0F0F10]">
+                899<span className="text-lg text-[#6B7280]">&euro;</span>
+              </p>
+              <p className="text-sm text-[#6B7280] line-through">999&euro;</p>
+            </div>
             <span className="text-sm font-medium text-[#356B0D]">
               Decouvrir &rarr;
             </span>
@@ -190,6 +196,11 @@ export default async function TrolleysPage() {
                   <td className="px-6 py-4 text-center text-sm text-[#6B7280]">
                     {spec.nx === "Non" ? (
                       <X className="mx-auto h-4 w-4 text-[#DBDBDB]" />
+                    ) : spec.compareNx ? (
+                      <span>
+                        <span className="font-semibold text-[#0F0F10]">{spec.nx}</span>
+                        <span className="ml-1 text-xs line-through text-[#DBDBDB]">{spec.compareNx}</span>
+                      </span>
                     ) : (
                       spec.nx
                     )}
@@ -197,6 +208,11 @@ export default async function TrolleysPage() {
                   <td className="px-6 py-4 text-center text-sm font-medium text-[#0F0F10]">
                     {spec.nxDhc === "Oui" ? (
                       <Check className="mx-auto h-5 w-5 text-[#8DC63F]" />
+                    ) : spec.compareNxDhc ? (
+                      <span>
+                        <span className="font-semibold text-[#0F0F10]">{spec.nxDhc}</span>
+                        <span className="ml-1 text-xs line-through text-[#DBDBDB]">{spec.compareNxDhc}</span>
+                      </span>
                     ) : (
                       spec.nxDhc
                     )}
@@ -236,10 +252,10 @@ export default async function TrolleysPage() {
         <Gift className="h-10 w-10 shrink-0 text-[#356B0D]" />
         <div>
           <h2 className="text-xl font-bold text-[#0F0F10] sm:text-2xl">
-            3 accessoires offerts avec votre trolley (~105&euro;)
+            2 accessoires offerts avec votre chariot (~60&euro;)
           </h2>
           <p className="mt-2 text-sm text-[#6B7280] sm:text-base">
-            Travel Cover, Umbrella Holder et Score Card Holder inclus offerts avec tout achat de trolley PowerBug NX.
+            Porte-scorecard et Porte-parapluie inclus offerts avec tout achat de chariot PowerBug NX.
           </p>
           <Button
             asChild

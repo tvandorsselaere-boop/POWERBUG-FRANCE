@@ -241,15 +241,15 @@ export default function AvisPage() {
           Convaincu ?
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-[#6B7280]">
-          Decouvrez la serie NX et profitez de 3 accessoires offerts (~105&euro;)
-          avec chaque trolley.
+          Decouvrez la serie NX et profitez de 2 accessoires offerts (~60&euro;)
+          avec chaque chariot.
         </p>
         <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
             href="/trolleys"
             className="btn-glass inline-flex items-center gap-2 rounded-[10px] px-8 py-3 text-base font-semibold text-white"
           >
-            Voir les trolleys
+            Voir les chariots
             <ChevronRight className="h-4 w-4" />
           </Link>
           <Link

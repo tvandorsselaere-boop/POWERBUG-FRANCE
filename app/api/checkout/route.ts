@@ -38,17 +38,24 @@ export async function POST(req: NextRequest) {
       quantity: item.quantity,
     }));
 
-    // Frais de livraison fixes 15€ (DPD France métropolitaine)
+    // Livraison DPD France : 14,90€ si chariot, 3,90€ si accessoires uniquement
+    const TROLLEY_SLUGS = ["nx-lithium", "nx-dhc-lithium"];
+    const hasTrolley = items.some((item) => TROLLEY_SLUGS.includes(item.slug));
+    const shippingCents = hasTrolley ? 1490 : 390;
+    const shippingLabel = hasTrolley
+      ? "Livraison DPD France"
+      : "Livraison DPD France (accessoires)";
+
     line_items.push({
       price_data: {
         currency: "eur",
         product_data: {
-          name: "Livraison DPD France",
+          name: shippingLabel,
           metadata: {
             slug: "shipping",
           },
         },
-        unit_amount: 1500,
+        unit_amount: shippingCents,
       },
       quantity: 1,
     });

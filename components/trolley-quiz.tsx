@@ -180,7 +180,7 @@ export function TrolleyQuiz() {
           </ul>
 
           <p className="mt-4 text-sm font-medium text-[#356B0D]">
-            + 3 accessoires offerts (~105&euro;) avec votre trolley !
+            + 2 accessoires offerts (~60&euro;) avec votre chariot !
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">

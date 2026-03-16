@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600;
 
-const BUNDLE_SLUGS = ["porte-scorecard", "porte-parapluie", "housse-transport"];
+const BUNDLE_SLUGS = ["porte-parapluie", "scorecard-holder"];
 
 export default async function AccessoiresPage() {
   const [accessories, batteries] = await Promise.all([
@@ -86,7 +86,7 @@ export default async function AccessoiresPage() {
           Accessoires PowerBug
         </h2>
         <p className="mt-3 text-lg text-[#6B7280]">
-          Personnalisez votre trolley avec nos accessoires officiels.
+          Personnalisez votre chariot avec nos accessoires officiels.
         </p>
       </div>
 
@@ -116,7 +116,7 @@ export default async function AccessoiresPage() {
 
               {isBundle && (
                 <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-[#356B0D]/10 px-2 py-0.5 text-xs font-medium text-[#356B0D]">
-                  Offert avec un trolley
+                  Offert avec un chariot
                 </span>
               )}
 
@@ -149,18 +149,18 @@ export default async function AccessoiresPage() {
         </p>
         <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="tel:+33967876795"
+            href="tel:+33788239784"
             className="btn-glass inline-flex items-center gap-2 rounded-[10px] px-6 py-3 text-sm font-semibold text-white"
           >
             <Phone className="h-4 w-4" />
-            09 67 87 67 95
+            07 88 23 97 84
           </a>
           <a
-            href="mailto:contact@progolfdistribution.com"
+            href="mailto:contact@powerbug.fr"
             className="inline-flex items-center gap-2 rounded-[10px] border border-[#356B0D] px-6 py-3 text-sm font-semibold text-[#356B0D] hover:bg-[#356B0D]/5"
           >
             <Mail className="h-4 w-4" />
-            contact@progolfdistribution.com
+            contact@powerbug.fr
           </a>
         </div>
       </section>

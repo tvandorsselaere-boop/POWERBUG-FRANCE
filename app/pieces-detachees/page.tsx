@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import {
   ChevronRight,
   Hash,
@@ -8,13 +9,17 @@ import {
   Mail,
   Wrench,
   Clock,
+  ShoppingCart,
 } from "lucide-react";
+import { getPiecesDetachees } from "@/lib/supabase/queries";
 
 export const metadata: Metadata = {
   title: "Pieces detachees - PowerBug France",
   description:
-    "Toutes les pieces detachees officielles PowerBug disponibles sur demande. Roues, axes, cables, connecteurs et plus.",
+    "Pieces detachees officielles PowerBug : moteurs, roues, chargeurs. Compatibles NX et NX DHC.",
 };
+
+export const revalidate = 3600;
 
 const steps = [
   {
@@ -22,7 +27,7 @@ const steps = [
     number: "1",
     title: "Localisez le numero de serie",
     description:
-      'Le numero de serie commence par "TPB" et se trouve sur un autocollant colle sur le chassis de votre trolley.',
+      'Le numero de serie commence par "TPB" et se trouve sur un autocollant colle sur le chassis de votre chariot.',
   },
   {
     icon: Hash,
@@ -36,11 +41,13 @@ const steps = [
     number: "3",
     title: "Contactez-nous",
     description:
-      "Appelez-nous ou envoyez-nous un email avec votre numero de serie et la piece dont vous avez besoin. Nous vous repondrons avec un devis.",
+      "Appelez-nous ou envoyez-nous un email avec votre numero de serie et la piece dont vous avez besoin.",
   },
 ];
 
-export default function PiecesDetacheesPage() {
+export default async function PiecesDetacheesPage() {
+  const pieces = await getPiecesDetachees();
+
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-12 sm:py-16 lg:px-10">
       {/* Breadcrumb */}
@@ -58,11 +65,61 @@ export default function PiecesDetacheesPage() {
           Pieces detachees
         </h1>
         <p className="mt-3 max-w-2xl text-lg text-[#6B7280]">
-          Toutes les pieces detachees officielles PowerBug sont disponibles sur
-          demande. Contactez-nous avec votre reference pour obtenir un devis
-          rapide.
+          Pieces detachees officielles PowerBug pour chariots NX et NX DHC.
+          Toutes les pieces sont garanties compatibles avec votre chariot.
         </p>
       </div>
+
+      {/* Catalogue pieces */}
+      {pieces.length > 0 && (
+        <section className="mb-16">
+          <h2 className="mb-8 text-2xl font-bold text-[#0F0F10]">
+            Catalogue pieces
+          </h2>
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {pieces.map((item) => {
+              const price = item.product_variants?.[0]?.price ?? item.base_price;
+              return (
+                <Link
+                  key={item.id}
+                  href={`/accessoires/${item.slug}`}
+                  className="group rounded-2xl border border-[#DBDBDB] bg-white p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
+                >
+                  <div className="mb-4 flex h-40 items-center justify-center rounded-xl bg-[#F5F5F5]">
+                    {item.product_images?.[0] ? (
+                      <Image
+                        src={item.product_images[0].url}
+                        alt={item.product_images[0].alt_text ?? item.name}
+                        width={300}
+                        height={300}
+                        className="h-full w-full rounded-xl object-contain p-4"
+                      />
+                    ) : (
+                      <Wrench className="h-12 w-12 text-[#DBDBDB] group-hover:text-[#8DC63F]" />
+                    )}
+                  </div>
+                  <h3 className="font-semibold text-[#0F0F10] group-hover:text-[#356B0D]">
+                    {item.name}
+                  </h3>
+                  <p className="mt-1 text-sm text-[#6B7280] line-clamp-2">
+                    {item.description}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-2xl font-bold text-[#0F0F10]">
+                      {price}
+                      <span className="text-sm text-[#6B7280]">&euro;</span>
+                    </span>
+                    <span className="flex items-center gap-1 text-sm font-medium text-[#356B0D] opacity-0 transition-opacity group-hover:opacity-100">
+                      <ShoppingCart className="h-4 w-4" />
+                      Commander
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* Comment trouver votre reference */}
       <section className="mb-16">
@@ -101,13 +158,12 @@ export default function PiecesDetacheesPage() {
       {/* Nous contacter */}
       <section className="mb-16">
         <h2 className="mb-8 text-2xl font-bold text-[#0F0F10]">
-          Nous contacter
+          Besoin d&apos;un conseil ou d&apos;une piece non listee ?
         </h2>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {/* Phone card */}
           <a
-            href="tel:+33967876795"
+            href="tel:+33788239784"
             className="card-glass group flex flex-col items-center rounded-2xl p-8 text-center transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
           >
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#356B0D]/10 transition-colors group-hover:bg-[#356B0D]/20">
@@ -117,7 +173,7 @@ export default function PiecesDetacheesPage() {
               Par telephone
             </h3>
             <p className="mb-4 text-2xl font-bold text-[#356B0D]">
-              09 67 87 67 95
+              07 88 23 97 84
             </p>
             <span className="btn-glass inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white">
               <Phone className="h-4 w-4" />
@@ -125,9 +181,8 @@ export default function PiecesDetacheesPage() {
             </span>
           </a>
 
-          {/* Email card */}
           <a
-            href="mailto:contact@progolfdistribution.com"
+            href="mailto:contact@powerbug.fr"
             className="card-glass group flex flex-col items-center rounded-2xl p-8 text-center transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
           >
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#356B0D]/10 transition-colors group-hover:bg-[#356B0D]/20">
@@ -137,7 +192,7 @@ export default function PiecesDetacheesPage() {
               Par email
             </h3>
             <p className="mb-4 text-2xl font-bold text-[#356B0D]">
-              contact@progolfdistribution.com
+              contact@powerbug.fr
             </p>
             <span className="btn-glass inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white">
               <Mail className="h-4 w-4" />
@@ -156,7 +211,7 @@ export default function PiecesDetacheesPage() {
       <section className="rounded-2xl border border-[#356B0D]/20 bg-[#356B0D]/5 p-6 text-center">
         <p className="text-sm leading-relaxed text-[#0F0F10]">
           Toutes nos pieces sont des pieces officielles PowerBug, garanties
-          compatibles avec votre trolley.
+          compatibles avec votre chariot.
         </p>
       </section>
     </div>
