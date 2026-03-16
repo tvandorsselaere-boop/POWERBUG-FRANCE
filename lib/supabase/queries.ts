@@ -115,7 +115,7 @@ export async function getAccessories() {
     .select(PRODUCT_SELECT)
     .eq("store", "powerbug")
     .eq("is_active", true)
-    .in("categories.slug", ["accessoires-trolley", "pieces-detachees", "telemetres"])
+    .eq("categories.slug", "accessoires-trolley")
     .order("base_price", { ascending: true });
 
   if (error) {

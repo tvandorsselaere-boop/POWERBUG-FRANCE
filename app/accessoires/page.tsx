@@ -1,13 +1,13 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ChevronRight, Settings, Battery, Phone, Mail } from "lucide-react";
-import { getAccessories, getBatteries } from "@/lib/supabase/queries";
+import { ChevronRight, Settings, Phone, Mail } from "lucide-react";
+import { getAccessories } from "@/lib/supabase/queries";
 
 export const metadata: Metadata = {
-  title: "Accessoires & Batteries PowerBug",
+  title: "Accessoires PowerBug",
   description:
-    "Tous les accessoires officiels PowerBug : housse, porte-parapluie, siege, roues hiver, telemetre, batteries lithium et chargeurs.",
+    "Tous les accessoires officiels PowerBug : housse de transport, porte-parapluie, support telephone, mitaines chauffantes et plus.",
 };
 
 export const revalidate = 3600;
@@ -15,10 +15,7 @@ export const revalidate = 3600;
 const BUNDLE_SLUGS = ["porte-parapluie", "scorecard-holder"];
 
 export default async function AccessoiresPage() {
-  const [accessories, batteries] = await Promise.all([
-    getAccessories(),
-    getBatteries(),
-  ]);
+  const accessories = await getAccessories();
 
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-12 sm:py-16 lg:px-10">
@@ -29,62 +26,11 @@ export default async function AccessoiresPage() {
         <span className="text-[#0F0F10]">Accessoires</span>
       </nav>
 
-      {/* Batteries & Chargeurs — en premier */}
-      {batteries.length > 0 && (
-        <div className="mb-20">
-          <div className="mb-10">
-            <h1 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
-              Batteries & Chargeurs
-            </h1>
-            <p className="mt-3 text-lg text-[#6B7280]">
-              Batteries lithium et chargeurs officiels PowerBug.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {batteries.map((item) => {
-              const price = item.product_variants?.[0]?.price ?? item.base_price;
-              return (
-                <Link
-                  key={item.id}
-                  href={`/accessoires/${item.slug}`}
-                  className="group rounded-2xl border border-[#DBDBDB] bg-white p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
-                >
-                  <div className="mb-4 flex h-40 items-center justify-center rounded-xl bg-[#F5F5F5]">
-                    {item.product_images?.[0] ? (
-                      <Image
-                        src={item.product_images[0].url}
-                        alt={item.product_images[0].alt_text ?? item.name}
-                        width={300}
-                        height={300}
-                        className="h-full w-full rounded-xl object-contain p-4"
-                      />
-                    ) : (
-                      <Battery className="h-12 w-12 text-[#DBDBDB] group-hover:text-[#8DC63F]" />
-                    )}
-                  </div>
-                  <h3 className="font-semibold text-[#0F0F10] group-hover:text-[#356B0D]">{item.name}</h3>
-                  <p className="mt-1 text-sm text-[#6B7280]">{item.description}</p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="text-2xl font-bold text-[#0F0F10]">
-                      {price}<span className="text-sm text-[#6B7280]">&euro;</span>
-                    </span>
-                    <span className="text-sm font-medium text-[#356B0D] opacity-0 transition-opacity group-hover:opacity-100">
-                      Voir &rarr;
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Accessoires */}
+      {/* Header */}
       <div className="mb-14">
-        <h2 className="text-2xl font-bold tracking-tight text-[#0F0F10] sm:text-3xl">
+        <h1 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
           Accessoires PowerBug
-        </h2>
+        </h1>
         <p className="mt-3 text-lg text-[#6B7280]">
           Personnalisez votre chariot avec nos accessoires officiels.
         </p>
