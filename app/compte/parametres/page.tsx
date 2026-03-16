@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronRight, ArrowLeft, Lock, Trash2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,13 @@ import { createBrowserClient } from "@/lib/supabase/browser";
 export default function ParametresPage() {
   const supabase = createBrowserClient();
   const router = useRouter();
+  const [isGoogleUser, setIsGoogleUser] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (user?.app_metadata?.provider === "google") setIsGoogleUser(true);
+    });
+  }, [supabase]);
 
   // Password change state
   const [currentPassword, setCurrentPassword] = useState("");
@@ -140,8 +147,13 @@ export default function ParametresPage() {
           Gerez la securite de votre compte.
         </p>
 
-        {/* Section 1 -- Change password */}
-        <div className="mt-8">
+        {/* Section 1 -- Change password (masqué pour comptes Google) */}
+        {isGoogleUser && (
+          <div className="mt-8 rounded-[10px] border border-[#DBDBDB] bg-gray-50 p-4 text-sm text-[#6B7280]">
+            Vous êtes connecté via Google. La gestion du mot de passe se fait depuis votre compte Google.
+          </div>
+        )}
+        <div className={`mt-8 ${isGoogleUser ? "hidden" : ""}`}>
           <div className="mb-4 flex items-center gap-2">
             <Lock className="h-5 w-5 text-[#356B0D]" />
             <h2 className="text-lg font-semibold text-[#0F0F10]">
