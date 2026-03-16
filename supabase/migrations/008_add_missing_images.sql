@@ -11,6 +11,24 @@ SELECT id, '/images/accessoires/GPS-Holder-1-min.jpg.webp', 'Support telephone N
 FROM products WHERE slug = 'support-telephone' AND store = 'powerbug'
 ON CONFLICT DO NOTHING;
 
+-- Sac isotherme NX → sac-isotherme-nx.jpg (source: powerbug.co.uk)
+INSERT INTO product_images (product_id, url, alt_text, position, is_primary)
+SELECT id, '/images/accessoires/sac-isotherme-nx.jpg', 'Sac isotherme NX PowerBug', 1, true
+FROM products WHERE slug = 'sac-isotherme' AND store = 'powerbug'
+ON CONFLICT DO NOTHING;
+
+-- Moteur 200W NX → moteur-200w-nx.jpg (source: powerbug.co.uk)
+INSERT INTO product_images (product_id, url, alt_text, position, is_primary)
+SELECT id, '/images/accessoires/moteur-200w-nx.jpg', 'Moteur 200W NX PowerBug', 1, true
+FROM products WHERE slug = 'moteur-200w-nx' AND store = 'powerbug'
+ON CONFLICT DO NOTHING;
+
+-- Moteur NX DHC → moteur-nx-dhc.jpg (source: powerbug.co.uk)
+INSERT INTO product_images (product_id, url, alt_text, position, is_primary)
+SELECT id, '/images/accessoires/moteur-nx-dhc.jpg', 'Moteur NX DHC PowerBug', 1, true
+FROM products WHERE slug = 'moteur-nx-dhc' AND store = 'powerbug'
+ON CONFLICT DO NOTHING;
+
 -- Sac rangement NX → bug-bag.jpg.webp
 INSERT INTO product_images (product_id, url, alt_text, position, is_primary)
 SELECT id, '/images/accessoires/bug-bag.jpg.webp', 'Sac de rangement NX PowerBug', 1, true
