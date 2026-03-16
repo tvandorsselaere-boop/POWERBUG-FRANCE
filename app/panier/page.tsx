@@ -176,7 +176,7 @@ export default function PanierPage() {
               </div>
 
               <p className="mt-3 text-center text-xs text-[#6B7280]">
-                TVA non applicable, art. 293 B du CGI
+                Prix TTC — Livraison en France metropolitaine
               </p>
             </div>
           </div>

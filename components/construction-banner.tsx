@@ -9,13 +9,13 @@ export function ConstructionBanner() {
           <span>Site en cours de lancement — Commandez des maintenant</span>
         </div>
         <div className="flex flex-col items-center gap-1 sm:flex-row sm:gap-3">
-          <a href="mailto:contact@progolfdistribution.com" className="inline-flex items-center gap-1 underline hover:no-underline">
+          <a href="mailto:contact@powerbug.fr" className="inline-flex items-center gap-1 underline hover:no-underline">
             <Mail className="h-3.5 w-3.5" />
-            contact@progolfdistribution.com
+            contact@powerbug.fr
           </a>
-          <a href="tel:+33967876795" className="inline-flex items-center gap-1 underline hover:no-underline">
+          <a href="tel:+33788239784" className="inline-flex items-center gap-1 underline hover:no-underline">
             <Phone className="h-3.5 w-3.5" />
-            09 67 87 67 95
+            07 88 23 97 84
           </a>
         </div>
       </div>

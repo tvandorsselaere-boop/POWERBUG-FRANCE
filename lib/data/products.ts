@@ -114,47 +114,8 @@ export const trolleys: Product[] = [
   },
 ];
 
-// Prix EUR source: powerbug.eu (screenshots mars 2026)
+// Prix EUR source: golfdesmarques.com (vérifié mars 2026 — alignement Fred)
 export const accessories: Product[] = [
-  {
-    slug: "range-finder",
-    name: "PowerBug Range Finder",
-    price: 149,
-    category: "accessoire",
-    description:
-      "Telemetre laser avec compensation de pente, batterie rechargeable et zoom optique 6x.",
-    longDescription:
-      "Le telemetre PowerBug Range Finder combine precision, puissance et performance. Mode pente commutable, batterie rechargeable longue duree, vibration lock et zoom optique 6x. L'outil indispensable pour ameliorer votre jeu.",
-    specs: [
-      { label: "Zoom", value: "6x optique" },
-      { label: "Batterie", value: "Rechargeable" },
-      { label: "Mode pente", value: "Commutable" },
-      { label: "Verrouillage", value: "Vibration lock" },
-    ],
-    features: [
-      "Zoom optique 6x",
-      "Compensation de pente commutable",
-      "Batterie rechargeable",
-      "Vibration lock technology",
-      "Fixation magnetique",
-    ],
-  },
-  {
-    slug: "caddy-pack",
-    name: "Caddy Pack",
-    price: 39.99,
-    category: "accessoire",
-    description:
-      "Sac de rangement compact pour vos accessoires de golf.",
-    longDescription:
-      "Le Caddy Pack PowerBug offre un espace de rangement pratique et accessible pour tous vos accessoires pendant la partie.",
-    specs: [{ label: "Compatibilite", value: "Tous modeles PowerBug" }],
-    features: [
-      "Rangement pratique",
-      "Installation rapide",
-      "Compatible tous modeles PowerBug",
-    ],
-  },
   {
     slug: "mitaines-electriques",
     name: "Mitaines chauffantes NX",
@@ -261,23 +222,6 @@ export const accessories: Product[] = [
     ],
   },
   {
-    slug: "siege-rembourre",
-    name: "Siege rembourre NX",
-    price: 109,
-    category: "accessoire",
-    description:
-      "Siege confortable, se fixe en un clic sur votre trolley PowerBug.",
-    longDescription:
-      "Le siege PowerBug vous offre un confort optimal entre chaque coup. Installation rapide sans outil, compatible avec tous les modeles PowerBug.",
-    specs: [
-      { label: "Compatibilite", value: "Tous modeles PowerBug" },
-    ],
-    features: [
-      "Fixation rapide sans outil",
-      "Compatible tous modeles PowerBug",
-    ],
-  },
-  {
     slug: "umbrella-holder-extension",
     name: "Extension porte-parapluie NX",
     price: 25,
@@ -327,78 +271,78 @@ export const accessories: Product[] = [
   },
 ];
 
-// Prix EUR source: powerbug.eu (screenshots mars 2026)
+// Pièces détachées (source: golfdesmarques.com/3847, vérifié mars 2026)
 export const batteries: Product[] = [
   {
-    slug: "batterie-nx-lithium",
-    name: "NX Lithium Battery & Charger",
-    price: 299,
+    slug: "chargeur-batterie",
+    name: "Chargeur de batterie Lithium NX",
+    price: 60,
     category: "batterie",
-    description:
-      "Batterie lithium NX de remplacement avec chargeur, 36 trous d'autonomie.",
+    description: "Chargeur officiel PowerBug pour recharger votre batterie Lithium NX en toute securite.",
     longDescription:
-      "Batterie lithium NX officielle PowerBug avec chargeur inclus. 36 trous d'autonomie pour 2 tours complets. Compatible NX et NX DHC.",
+      "Le chargeur de batterie Lithium PowerBug est l'equipement officiel concu pour recharger votre batterie en toute securite. Compatible NX et NX DHC.",
     specs: [
-      { label: "Autonomie", value: "36 trous" },
-      { label: "Technologie", value: "Lithium" },
-      { label: "Chargeur", value: "Inclus" },
       { label: "Compatibilite", value: "NX et NX DHC" },
-    ],
-    features: [
-      "36 trous d'autonomie",
-      "Chargeur inclus",
-      "Technologie lithium legere",
-      "Compatible NX et NX DHC",
-    ],
-  },
-  {
-    slug: "batterie-universelle",
-    name: "Universal Lithium Battery & Charger",
-    price: 210,
-    category: "batterie",
-    description:
-      "Batterie lithium universelle de remplacement avec chargeur.",
-    longDescription:
-      "Batterie lithium universelle officielle PowerBug avec chargeur inclus. Compatible avec les anciens modeles PowerBug.",
-    specs: [
-      { label: "Technologie", value: "Lithium" },
-      { label: "Chargeur", value: "Inclus" },
-      { label: "Compatibilite", value: "Modeles PowerBug universels" },
-    ],
-    features: [
-      "Chargeur inclus",
-      "Technologie lithium",
-      "Compatible modeles universels",
-    ],
-  },
-  {
-    slug: "chargeur-mini-lithium",
-    name: "Mini Lithium Battery Charger",
-    price: 55.98,
-    category: "batterie",
-    description: "Chargeur pour batterie Mini Lithium PowerBug.",
-    longDescription:
-      "Chargeur officiel de remplacement pour batteries Mini Lithium PowerBug.",
-    specs: [
-      { label: "Compatibilite", value: "Batteries Mini Lithium PowerBug" },
       { label: "Tension", value: "Standard EU" },
     ],
     features: [
-      "Chargeur officiel",
-      "Charge rapide",
+      "Chargeur officiel PowerBug",
+      "Charge securisee",
       "Prise standard EU",
     ],
   },
   {
-    slug: "extended-battery-lead",
-    name: "Extended Battery Lead Set",
-    price: 14.99,
+    slug: "roue-avant-complete",
+    name: "Roue avant pour chariots NX",
+    price: 50,
     category: "batterie",
-    description: "Jeu de cables rallonges pour batterie PowerBug.",
+    description: "Ensemble de roue avant officiel PowerBug, piece de rechange pour la longevite de votre chariot.",
     longDescription:
-      "Cables rallonges officiels pour batterie PowerBug. Permet une installation plus flexible de la batterie.",
-    specs: [{ label: "Compatibilite", value: "Batteries PowerBug" }],
-    features: ["Cables officiels", "Installation flexible"],
+      "La roue avant officielle PowerBug garantit les meilleures performances sur tous les terrains. Compatible NX et NX DHC.",
+    specs: [
+      { label: "Compatibilite", value: "NX et NX DHC" },
+    ],
+    features: [
+      "Piece officielle PowerBug",
+      "Demontage sans outil",
+      "Compatible NX et NX DHC",
+    ],
+  },
+  {
+    slug: "moteur-200w-nx",
+    name: "Moteur 200W NX",
+    price: 120,
+    category: "batterie",
+    description: "Moteur de remplacement 200W officiel pour chariot de golf PowerBug NX.",
+    longDescription:
+      "Le moteur de remplacement 200W pour chariot PowerBug NX est la piece officielle pour redonner une seconde jeunesse a votre equipement.",
+    specs: [
+      { label: "Puissance", value: "200W" },
+      { label: "Compatibilite", value: "NX Lithium" },
+    ],
+    features: [
+      "Piece officielle PowerBug",
+      "200W de puissance",
+      "Compatible NX Lithium",
+    ],
+  },
+  {
+    slug: "moteur-nx-dhc",
+    name: "Moteur NX DHC",
+    price: 150,
+    category: "batterie",
+    description: "Moteur de remplacement specifique aux chariots NX DHC avec Downhill Control.",
+    longDescription:
+      "Moteur officiel de remplacement pour les chariots NX DHC. Compatible avec le systeme Downhill Control (DHC).",
+    specs: [
+      { label: "Compatibilite", value: "NX DHC Lithium" },
+      { label: "DHC", value: "Compatible" },
+    ],
+    features: [
+      "Piece officielle PowerBug",
+      "Compatible DHC",
+      "Specifique NX DHC",
+    ],
   },
 ];
 
