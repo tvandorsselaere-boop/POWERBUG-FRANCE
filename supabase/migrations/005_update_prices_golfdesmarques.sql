@@ -75,7 +75,7 @@ BEGIN
     SELECT id INTO v_id FROM products
       WHERE store = 'powerbug'
       AND (name ILIKE '%chargeur%' OR slug ILIKE '%chargeur%')
-      AND categories_id IN (SELECT id FROM categories WHERE slug = 'pieces-detachees')
+      AND category_id IN (SELECT id FROM categories WHERE slug = 'pieces-detachees')
       LIMIT 1;
   END IF;
   IF v_id IS NOT NULL THEN
@@ -111,7 +111,7 @@ BEGIN
 
   -- Sac isotherme NX (40€)
   IF NOT EXISTS (SELECT 1 FROM products WHERE slug = 'sac-isotherme' AND store = 'powerbug') THEN
-    INSERT INTO products (name, slug, description, base_price, store, is_active, featured, categories_id, brand_id)
+    INSERT INTO products (name, slug, description, base_price, store, is_active, featured, category_id, brand_id)
     VALUES (
       'Sac isotherme NX',
       'sac-isotherme',
@@ -127,7 +127,7 @@ BEGIN
 
   -- Support telephone NX (30€)
   IF NOT EXISTS (SELECT 1 FROM products WHERE slug = 'support-telephone' AND store = 'powerbug') THEN
-    INSERT INTO products (name, slug, description, base_price, store, is_active, featured, categories_id, brand_id)
+    INSERT INTO products (name, slug, description, base_price, store, is_active, featured, category_id, brand_id)
     VALUES (
       'Support telephone NX',
       'support-telephone',
@@ -143,7 +143,7 @@ BEGIN
 
   -- Sac de rangement NX (45€)
   IF NOT EXISTS (SELECT 1 FROM products WHERE slug = 'sac-rangement' AND store = 'powerbug') THEN
-    INSERT INTO products (name, slug, description, base_price, store, is_active, featured, categories_id, brand_id)
+    INSERT INTO products (name, slug, description, base_price, store, is_active, featured, category_id, brand_id)
     VALUES (
       'Sac de rangement NX',
       'sac-rangement',
@@ -159,7 +159,7 @@ BEGIN
 
   -- Moteur 200W NX (120€)
   IF NOT EXISTS (SELECT 1 FROM products WHERE slug = 'moteur-200w-nx' AND store = 'powerbug') THEN
-    INSERT INTO products (name, slug, description, base_price, store, is_active, featured, categories_id, brand_id)
+    INSERT INTO products (name, slug, description, base_price, store, is_active, featured, category_id, brand_id)
     VALUES (
       'Moteur 200W NX',
       'moteur-200w-nx',
@@ -175,7 +175,7 @@ BEGIN
 
   -- Moteur NX DHC (150€)
   IF NOT EXISTS (SELECT 1 FROM products WHERE slug = 'moteur-nx-dhc' AND store = 'powerbug') THEN
-    INSERT INTO products (name, slug, description, base_price, store, is_active, featured, categories_id, brand_id)
+    INSERT INTO products (name, slug, description, base_price, store, is_active, featured, category_id, brand_id)
     VALUES (
       'Moteur NX DHC',
       'moteur-nx-dhc',
