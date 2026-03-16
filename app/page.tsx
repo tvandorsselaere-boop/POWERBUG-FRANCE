@@ -153,10 +153,34 @@ export default async function Home() {
               Portee 2025
             </p>
           </div>
-          <div className="mb-14 text-center">
+          <div className="mb-8 text-center">
             <h2 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-5xl">
               Serie NX
             </h2>
+          </div>
+
+          {/* Patch promo */}
+          <div className="mb-12 mx-auto max-w-3xl rounded-2xl border-2 border-[#AE1717]/20 bg-[#AE1717]/5 p-6 sm:p-8">
+            <div className="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[#AE1717] text-white">
+                <span className="text-lg font-black leading-none">-100<span className="text-xs">&euro;</span></span>
+              </div>
+              <div className="flex-1">
+                <p className="text-lg font-bold text-[#0F0F10]">
+                  Offre de lancement — 100&euro; de reduction sur les 2 modeles
+                </p>
+                <p className="mt-1 text-sm text-[#6B7280]">
+                  NX Lithium a <span className="font-semibold text-[#0F0F10]">799&euro;</span> au lieu de 899&euro; &bull; NX DHC a <span className="font-semibold text-[#0F0F10]">899&euro;</span> au lieu de 999&euro;
+                </p>
+              </div>
+              <div className="flex items-center gap-2 rounded-xl bg-[#356B0D]/10 px-4 py-3 text-center">
+                <Gift className="h-5 w-5 shrink-0 text-[#356B0D]" />
+                <div>
+                  <p className="text-xs font-bold text-[#356B0D]">+ 2 accessoires</p>
+                  <p className="text-xs text-[#6B7280]">offerts (~60&euro;)</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
