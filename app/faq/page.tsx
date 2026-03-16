@@ -27,7 +27,7 @@ const faqs = [
   {
     question: "Livrez-vous dans toute la France ?",
     answer:
-      "Nous livrons en France metropolitaine uniquement (hors DOM-TOM). La livraison est assuree par DPD au tarif unique de 15\u00A0\u20AC. Vous recevez un numero de suivi par email des l\u2019expedition de votre commande.",
+      "Nous livrons en France metropolitaine (hors Corse, Monaco, Ile de Re et Ile d'Oleron). Chariots : livraison DPD a domicile 14,90\u00A0\u20AC. Accessoires et pieces : livraison DPD Relais 3,90\u00A0\u20AC en point relais (plus de 5 000 commerces de proximite). Vous recevez un numero de suivi par email des l\u2019expedition.",
   },
   {
     question: "Quelle est la garantie ?",

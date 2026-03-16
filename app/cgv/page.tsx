@@ -186,7 +186,7 @@ export default function CGVPage() {
           <ul className="mt-2 list-disc pl-6 text-sm leading-relaxed text-[#6B7280]">
             <li>
               <strong className="text-[#0F0F10]">Frais de livraison :</strong>{" "}
-              15 € TTC (forfait fixe)
+              14,90 € TTC pour les chariots (DPD domicile) — 3,90 € TTC pour les accessoires et pièces (DPD Relais)
             </li>
             <li>
               <strong className="text-[#0F0F10]">Délai de livraison :</strong>{" "}

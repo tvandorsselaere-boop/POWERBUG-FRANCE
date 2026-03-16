@@ -157,7 +157,9 @@ export default function PanierPage() {
                   <span className="text-[#0F0F10]">{subtotal.toFixed(2)}&euro;</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-[#6B7280]">Livraison (DPD France)</span>
+                  <span className="text-[#6B7280]">
+                    {hasTrolley ? "Livraison DPD à domicile" : "Livraison DPD Relais"}
+                  </span>
                   <span className="text-[#0F0F10] font-medium">
                     {shipping.toFixed(2).replace(".", ",")}&euro;
                   </span>

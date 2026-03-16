@@ -129,7 +129,9 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
             <div className="mt-4">
               <AddToCartButton product={cartProduct} className="px-8 text-base font-semibold" />
               <p className="mt-3 text-sm text-[#6B7280]">
-                + {isTrolley ? "14,90" : "3,90"}&euro; de frais de livraison (DPD, France metropolitaine)
+                {isTrolley
+                  ? "+ 14,90\u00A0\u20AC — Livraison DPD à domicile, France métropolitaine"
+                  : "+ 3,90\u00A0\u20AC — Livraison DPD Relais, France métropolitaine (hors Corse, Monaco)"}
               </p>
             </div>
           </div>
