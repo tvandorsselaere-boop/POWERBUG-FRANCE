@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
-import { ChevronRight, Settings, Phone, Mail } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { getAccessories } from "@/lib/supabase/queries";
+import { AccessoireCard } from "@/components/accessoire-card";
 
 export const metadata: Metadata = {
   title: "Accessoires PowerBug",
@@ -11,8 +11,6 @@ export const metadata: Metadata = {
 };
 
 export const revalidate = 3600;
-
-const BUNDLE_SLUGS = ["porte-parapluie", "scorecard-holder"];
 
 export default async function AccessoiresPage() {
   const accessories = await getAccessories();
@@ -39,78 +37,20 @@ export default async function AccessoiresPage() {
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {accessories.map((acc) => {
           const price = acc.product_variants?.[0]?.price ?? acc.base_price;
-          const isBundle = BUNDLE_SLUGS.includes(acc.slug);
+          const image = acc.product_images?.[0] ?? null;
           return (
-            <Link
+            <AccessoireCard
               key={acc.id}
-              href={`/accessoires/${acc.slug}`}
-              className="group card-glass rounded-2xl p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
-            >
-              <div className="mb-4 flex h-40 items-center justify-center rounded-xl bg-[#F5F5F5]">
-                {acc.product_images?.[0] ? (
-                  <Image
-                    src={acc.product_images[0].url}
-                    alt={acc.product_images[0].alt_text ?? acc.name}
-                    width={300}
-                    height={300}
-                    className="h-full w-full rounded-xl object-contain p-4"
-                  />
-                ) : (
-                  <Settings className="h-12 w-12 text-[#DBDBDB] transition-colors group-hover:text-[#8DC63F]" />
-                )}
-              </div>
-
-              {isBundle && (
-                <span className="mb-2 inline-flex items-center gap-1 rounded-full bg-[#356B0D]/10 px-2 py-0.5 text-xs font-medium text-[#356B0D]">
-                  Offert avec un chariot
-                </span>
-              )}
-
-              <h2 className="text-lg font-semibold text-[#0F0F10] group-hover:text-[#356B0D]">
-                {acc.name}
-              </h2>
-              <p className="mt-1 text-sm text-[#6B7280] line-clamp-2">
-                {acc.description}
-              </p>
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-2xl font-bold text-[#0F0F10]">
-                  {price}<span className="text-sm text-[#6B7280]">&euro;</span>
-                </span>
-                <span className="text-sm font-medium text-[#356B0D] opacity-0 transition-opacity group-hover:opacity-100">
-                  Voir &rarr;
-                </span>
-              </div>
-            </Link>
+              id={acc.id}
+              slug={acc.slug}
+              name={acc.name}
+              description={acc.description}
+              price={price}
+              image={image}
+            />
           );
         })}
       </div>
-
-      {/* Contact pour commander */}
-      <section className="mt-16 rounded-2xl border border-[#356B0D]/20 bg-[#356B0D]/5 p-8 text-center">
-        <h2 className="text-xl font-bold text-[#0F0F10]">
-          Envie d&apos;un accessoire ou d&apos;une batterie ?
-        </h2>
-        <p className="mx-auto mt-2 max-w-lg text-sm text-[#6B7280]">
-          Contactez-nous pour passer commande. Nous vous repondons sous 24h.
-        </p>
-        <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a
-            href="tel:+33788239784"
-            className="btn-glass inline-flex items-center gap-2 rounded-[10px] px-6 py-3 text-sm font-semibold text-white"
-          >
-            <Phone className="h-4 w-4" />
-            07 88 23 97 84
-          </a>
-          <a
-            href="mailto:contact@powerbug.fr"
-            className="inline-flex items-center gap-2 rounded-[10px] border border-[#356B0D] px-6 py-3 text-sm font-semibold text-[#356B0D] hover:bg-[#356B0D]/5"
-          >
-            <Mail className="h-4 w-4" />
-            contact@powerbug.fr
-          </a>
-        </div>
-      </section>
-
     </div>
   );
 }

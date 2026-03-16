@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight, Check, Gift, Phone, Mail } from "lucide-react";
+import { ChevronRight, Check, Gift } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { ProductGallery } from "@/components/product-gallery";
@@ -126,40 +126,18 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
               )}
             </div>
 
-            {isTrolley ? (
-              <div className="mt-4">
-                <AddToCartButton product={cartProduct} className="px-8 text-base font-semibold" />
-                <p className="mt-3 text-sm text-[#6B7280]">
-                  + 14,90&euro; de frais de livraison (DPD, France metropolitaine)
-                </p>
-              </div>
-            ) : (
-              <div className="mt-6 space-y-3">
-                <p className="text-sm font-medium text-[#0F0F10]">Contactez-nous pour commander :</p>
-                <div className="flex flex-col gap-2 sm:flex-row">
-                  <a
-                    href="tel:+33788239784"
-                    className="btn-glass inline-flex items-center justify-center gap-2 rounded-[10px] px-6 py-3 text-sm font-semibold text-white"
-                  >
-                    <Phone className="h-4 w-4" />
-                    07 88 23 97 84
-                  </a>
-                  <a
-                    href="mailto:contact@powerbug.fr"
-                    className="inline-flex items-center justify-center gap-2 rounded-[10px] border border-[#356B0D] px-6 py-3 text-sm font-semibold text-[#356B0D] hover:bg-[#356B0D]/5"
-                  >
-                    <Mail className="h-4 w-4" />
-                    contact@powerbug.fr
-                  </a>
-                </div>
-              </div>
-            )}
+            <div className="mt-4">
+              <AddToCartButton product={cartProduct} className="px-8 text-base font-semibold" />
+              <p className="mt-3 text-sm text-[#6B7280]">
+                + {isTrolley ? "14,90" : "3,90"}&euro; de frais de livraison (DPD, France metropolitaine)
+              </p>
+            </div>
           </div>
 
           {isAccessoire && (
             <p className="mt-4 flex items-center gap-1 text-sm text-[#356B0D]">
               <Gift className="h-4 w-4" />
-              Certains accessoires offerts avec l&apos;achat d&apos;un chariot
+              Certains accessoires sont offerts avec l&apos;achat d&apos;un chariot
             </p>
           )}
         </div>

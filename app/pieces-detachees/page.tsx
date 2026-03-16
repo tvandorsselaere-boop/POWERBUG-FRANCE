@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import {
   ChevronRight,
   Hash,
@@ -9,9 +8,9 @@ import {
   Mail,
   Wrench,
   Clock,
-  ShoppingCart,
 } from "lucide-react";
 import { getPiecesDetachees } from "@/lib/supabase/queries";
+import { AccessoireCard } from "@/components/accessoire-card";
 
 export const metadata: Metadata = {
   title: "Pieces detachees - PowerBug France",
@@ -79,42 +78,17 @@ export default async function PiecesDetacheesPage() {
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {pieces.map((item) => {
               const price = item.product_variants?.[0]?.price ?? item.base_price;
+              const image = item.product_images?.[0] ?? null;
               return (
-                <Link
+                <AccessoireCard
                   key={item.id}
-                  href={`/accessoires/${item.slug}`}
-                  className="group rounded-2xl border border-[#DBDBDB] bg-white p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
-                >
-                  <div className="mb-4 flex h-40 items-center justify-center rounded-xl bg-[#F5F5F5]">
-                    {item.product_images?.[0] ? (
-                      <Image
-                        src={item.product_images[0].url}
-                        alt={item.product_images[0].alt_text ?? item.name}
-                        width={300}
-                        height={300}
-                        className="h-full w-full rounded-xl object-contain p-4"
-                      />
-                    ) : (
-                      <Wrench className="h-12 w-12 text-[#DBDBDB] group-hover:text-[#8DC63F]" />
-                    )}
-                  </div>
-                  <h3 className="font-semibold text-[#0F0F10] group-hover:text-[#356B0D]">
-                    {item.name}
-                  </h3>
-                  <p className="mt-1 text-sm text-[#6B7280] line-clamp-2">
-                    {item.description}
-                  </p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="text-2xl font-bold text-[#0F0F10]">
-                      {price}
-                      <span className="text-sm text-[#6B7280]">&euro;</span>
-                    </span>
-                    <span className="flex items-center gap-1 text-sm font-medium text-[#356B0D] opacity-0 transition-opacity group-hover:opacity-100">
-                      <ShoppingCart className="h-4 w-4" />
-                      Commander
-                    </span>
-                  </div>
-                </Link>
+                  id={item.id}
+                  slug={item.slug}
+                  name={item.name}
+                  description={item.description}
+                  price={price}
+                  image={image}
+                />
               );
             })}
           </div>
