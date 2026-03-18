@@ -165,7 +165,7 @@ export default async function Home() {
             alt="PowerBug NX sur le parcours"
             fill
             className="object-cover"
-            style={{ objectPosition: "center 60%" }}
+            style={{ objectPosition: "65% 60%" }}
             priority
           />
         </div>
@@ -185,7 +185,15 @@ export default async function Home() {
               className="animate-fade-in-delay-1 text-balance text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
               style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}
             >
-              Chariots Électriques de Golf Premium
+              <span className="sm:hidden">Chariots Électriques</span>
+              <Image
+                src="/images/powerbug-logo.png"
+                alt="PowerBug"
+                width={280}
+                height={70}
+                className="inline-block h-[1.4em] w-auto brightness-0 invert hero-logo-clip sm:hidden"
+              />
+              <span className="hidden sm:inline">Chariots Électriques de Golf Premium</span>
             </h1>
             <p
               className="animate-fade-in-delay-2 mx-auto mt-5 max-w-3xl text-lg text-white/85"
