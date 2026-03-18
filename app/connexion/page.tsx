@@ -40,8 +40,7 @@ function LoginForm() {
       return;
     }
 
-    router.push(redirect);
-    router.refresh();
+    window.location.href = redirect;
   };
 
   const handleResetPassword = async (e: React.FormEvent) => {
