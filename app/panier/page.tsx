@@ -14,7 +14,7 @@ import { useCartStore, cartTotal, cartCount } from "@/store/cart-store";
 import { useAuth } from "@/hooks/use-auth";
 import { createBrowserClient } from "@/lib/supabase/browser";
 import { useEffect, useState } from "react";
-import { MapPin, Pencil } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 export default function PanierPage() {
   const { items, removeItem, updateQuantity, clearCart } = useCartStore();
@@ -128,7 +128,7 @@ export default function PanierPage() {
                   <p className="text-sm text-[#6B7280]">
                     {item.compare_at_price && item.compare_at_price > item.price ? (
                       <>
-                        <span className="line-through text-[#DBDBDB]">{item.compare_at_price.toFixed(2)}&euro;</span>
+                        <span className="line-through text-[#9CA3AF]">{item.compare_at_price.toFixed(2)}&euro;</span>
                         {" "}
                         <span className="font-semibold text-[#AE1717]">{item.price.toFixed(2)}&euro;</span>
                         {" "}/ unite
@@ -162,7 +162,7 @@ export default function PanierPage() {
                 <div className="w-24 text-right">
                   {item.compare_at_price && item.compare_at_price > item.price ? (
                     <>
-                      <span className="block text-xs text-[#DBDBDB] line-through">
+                      <span className="block text-xs text-[#9CA3AF] line-through">
                         {(item.compare_at_price * item.quantity).toFixed(2)}&euro;
                       </span>
                       <span className="font-bold text-[#0F0F10]">
@@ -190,6 +190,41 @@ export default function PanierPage() {
             >
               Vider le panier
             </button>
+
+            {/* Shipping address under cart items */}
+            {!authLoading && user && address && (
+              <div className="mt-6 rounded-[10px] border border-[#DBDBDB] bg-[#F9F9F9] px-5 py-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex gap-3">
+                    <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
+                    <div>
+                      <p className="text-sm font-semibold text-[#0F0F10]">Adresse de livraison</p>
+                      <p className="mt-1 text-sm text-[#0F0F10]">{address.full_name}</p>
+                      <p className="text-sm text-[#6B7280]">{address.street}</p>
+                      <p className="text-sm text-[#6B7280]">{address.zip} {address.city}</p>
+                      {address.phone && <p className="text-sm text-[#6B7280]">{address.phone}</p>}
+                    </div>
+                  </div>
+                  <Link href="/compte/adresses" className="rounded-lg border border-[#DBDBDB] px-3 py-1.5 text-xs font-medium text-[#356B0D] hover:bg-[#F5F5F5]">
+                    Modifier
+                  </Link>
+                </div>
+              </div>
+            )}
+
+            {!authLoading && user && !address && (
+              <div className="mt-6 rounded-[10px] border border-dashed border-[#DBDBDB] bg-[#F9F9F9] px-5 py-4">
+                <div className="flex items-center gap-3">
+                  <MapPin className="h-5 w-5 shrink-0 text-[#9CA3AF]" />
+                  <p className="text-sm text-[#6B7280]">
+                    <Link href="/compte/adresses" className="font-medium text-[#356B0D] hover:underline">
+                      Ajouter une adresse de livraison
+                    </Link>{" "}
+                    pour accelerer le paiement.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Summary */}
@@ -228,37 +263,6 @@ export default function PanierPage() {
                   {total.toFixed(2)}&euro;
                 </span>
               </div>
-
-              {/* Shipping address */}
-              {!authLoading && user && address && (
-                <div className="mt-4 rounded-[10px] border border-[#DBDBDB] bg-[#F9F9F9] px-4 py-3 text-sm">
-                  <div className="flex items-start justify-between">
-                    <div className="flex gap-2">
-                      <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#356B0D]" />
-                      <div className="text-[#0F0F10]">
-                        <p className="font-medium">{address.full_name}</p>
-                        <p className="text-[#6B7280]">{address.street}</p>
-                        <p className="text-[#6B7280]">{address.zip} {address.city}</p>
-                        {address.phone && <p className="text-[#6B7280]">{address.phone}</p>}
-                      </div>
-                    </div>
-                    <Link href="/compte/adresses" className="text-[#356B0D] hover:text-[#2a5409]">
-                      <Pencil className="h-3.5 w-3.5" />
-                    </Link>
-                  </div>
-                </div>
-              )}
-
-              {!authLoading && user && !address && (
-                <div className="mt-4 rounded-[10px] border border-[#DBDBDB] bg-[#F9F9F9] px-4 py-3 text-sm">
-                  <p className="text-[#6B7280]">
-                    <Link href="/compte/adresses" className="font-medium text-[#356B0D] hover:underline">
-                      Ajouter une adresse de livraison
-                    </Link>{" "}
-                    pour accelerer le paiement.
-                  </p>
-                </div>
-              )}
 
               {!authLoading && !user && (
                 <div className="mt-4 rounded-[10px] border border-[#DBDBDB] bg-[#F9F9F9] px-4 py-3 text-sm">

@@ -88,7 +88,8 @@ export default async function TrolleysPage() {
               <p className="text-3xl font-bold text-[#0F0F10]">
                 799<span className="text-lg text-[#6B7280]">&euro;</span>
               </p>
-              <p className="text-sm text-[#6B7280] line-through">899&euro;</p>
+              <p className="text-sm text-[#9CA3AF] line-through">899&euro;</p>
+              <span className="ml-2 inline-block rounded-full bg-[#AE1717] px-2 py-0.5 text-xs font-semibold text-white">-100&euro;</span>
             </div>
             <span className="text-sm font-medium text-[#356B0D]">
               Decouvrir &rarr;
@@ -119,7 +120,8 @@ export default async function TrolleysPage() {
               <p className="text-3xl font-bold text-[#0F0F10]">
                 899<span className="text-lg text-[#6B7280]">&euro;</span>
               </p>
-              <p className="text-sm text-[#6B7280] line-through">999&euro;</p>
+              <p className="text-sm text-[#9CA3AF] line-through">999&euro;</p>
+              <span className="ml-2 inline-block rounded-full bg-[#AE1717] px-2 py-0.5 text-xs font-semibold text-white">-100&euro;</span>
             </div>
             <span className="text-sm font-medium text-[#356B0D]">
               Decouvrir &rarr;
@@ -199,7 +201,7 @@ export default async function TrolleysPage() {
                     ) : spec.compareNx ? (
                       <span>
                         <span className="font-semibold text-[#0F0F10]">{spec.nx}</span>
-                        <span className="ml-1 text-xs line-through text-[#DBDBDB]">{spec.compareNx}</span>
+                        <span className="ml-1 text-xs line-through text-[#9CA3AF]">{spec.compareNx}</span>
                       </span>
                     ) : (
                       spec.nx
@@ -211,7 +213,7 @@ export default async function TrolleysPage() {
                     ) : spec.compareNxDhc ? (
                       <span>
                         <span className="font-semibold text-[#0F0F10]">{spec.nxDhc}</span>
-                        <span className="ml-1 text-xs line-through text-[#DBDBDB]">{spec.compareNxDhc}</span>
+                        <span className="ml-1 text-xs line-through text-[#9CA3AF]">{spec.compareNxDhc}</span>
                       </span>
                     ) : (
                       spec.nxDhc
