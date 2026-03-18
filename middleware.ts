@@ -4,6 +4,19 @@ import { NextResponse, type NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
+  // If a Supabase auth code arrives on any page (e.g. password reset link),
+  // redirect to /auth/callback so it gets exchanged for a session
+  const code = request.nextUrl.searchParams.get('code');
+  if (code && pathname !== '/auth/callback') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/auth/callback';
+    // Preserve next param if present, otherwise default based on context
+    if (!url.searchParams.has('next')) {
+      url.searchParams.set('next', '/compte/nouveau-mot-de-passe');
+    }
+    return NextResponse.redirect(url);
+  }
+
   // Determine if we need auth checks
   const needsAuth = pathname.startsWith('/compte') || pathname.startsWith('/admin');
   const isAuthPage = pathname === '/connexion' || pathname === '/inscription';
