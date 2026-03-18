@@ -18,7 +18,7 @@ export default function InscriptionPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState("");
-
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -51,12 +51,41 @@ export default function InscriptionPage() {
       return;
     }
 
-    // Redirection directe — pas de confirmation email
-    router.push("/compte");
+    setSuccess(true);
   };
 
   const inputClass =
     "w-full rounded-[10px] border border-[#DBDBDB] bg-white px-4 py-2.5 text-sm text-[#0F0F10] placeholder-[#9CA3AF] focus:border-[#356B0D] focus:outline-none focus:ring-1 focus:ring-[#356B0D]";
+
+  if (success) {
+    return (
+      <div className="mx-auto max-w-[1600px] px-6 py-12 sm:py-16 lg:px-10">
+        <nav className="mb-8 flex items-center gap-2 text-sm text-[#6B7280]">
+          <Link href="/" className="hover:text-[#356B0D]">
+            Accueil
+          </Link>
+          <ChevronRight className="h-3 w-3" />
+          <span className="text-[#0F0F10]">Inscription</span>
+        </nav>
+
+        <div className="mx-auto max-w-md text-center">
+          <h1 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
+            Verifiez votre email
+          </h1>
+          <p className="mt-4 text-[#6B7280]">
+            Un email de confirmation a ete envoye a{" "}
+            <span className="font-medium text-[#0F0F10]">{email}</span>.
+            Cliquez sur le lien pour activer votre compte.
+          </p>
+          <Link href="/connexion">
+            <Button className="mt-8 btn-glass rounded-[10px] text-white">
+              Retour a la connexion
+            </Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-12 sm:py-16 lg:px-10">
