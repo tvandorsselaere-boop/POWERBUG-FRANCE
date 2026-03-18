@@ -44,9 +44,13 @@ export default function InscriptionPage() {
       return;
     }
 
-    const { error } = await signUp(email, password, fullName);
+    const { error, existingUser } = await signUp(email, password, fullName);
     if (error) {
-      setError(error.message);
+      if (existingUser) {
+        setError("Un compte existe déjà avec cet email. Connectez-vous directement avec votre mot de passe.");
+      } else {
+        setError(error.message);
+      }
       setLoading(false);
       return;
     }
@@ -121,6 +125,11 @@ export default function InscriptionPage() {
             {error && (
               <div className="rounded-[10px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
                 {error}
+                {error.includes("existe déjà") && (
+                  <Link href="/connexion" className="mt-2 block font-medium text-[#356B0D] hover:underline">
+                    → Se connecter
+                  </Link>
+                )}
               </div>
             )}
 

@@ -66,12 +66,21 @@ export function useAuth() {
         password,
         options: { data: { full_name: fullName, store: STORE } },
       });
-      // Trigger handles initial store tag via metadata,
-      // but also ensure it in case trigger didn't fire (e.g. user already existed)
-      if (!error && data.user) {
+      if (error) return { error, existingUser: false };
+
+      // Supabase returns a user with empty identities when the email already exists
+      // (security: no email enumeration). Detect this and inform the caller.
+      if (data.user && (!data.user.identities || data.user.identities.length === 0)) {
+        return {
+          error: { message: "Un compte existe déjà avec cet email. Connectez-vous directement avec votre mot de passe." } as { message: string },
+          existingUser: true,
+        };
+      }
+
+      if (data.user) {
         await ensureStoreTag(supabase, data.user.id);
       }
-      return { error };
+      return { error: null, existingUser: false };
     },
     [supabase]
   );
