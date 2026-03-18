@@ -9,16 +9,18 @@ export function AddToCartSimple({
   slug,
   name,
   price,
+  compare_at_price,
 }: {
   slug: string;
   name: string;
   price: number;
+  compare_at_price?: number;
 }) {
   const [added, setAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
 
   const handleClick = () => {
-    addItem({ slug, name, price });
+    addItem({ slug, name, price, compare_at_price });
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   };

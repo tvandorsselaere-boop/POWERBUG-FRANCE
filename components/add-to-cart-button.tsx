@@ -23,6 +23,7 @@ export function AddToCartButton({
       slug: product.slug,
       name: product.name,
       price: product.price,
+      compare_at_price: product.comparePrice,
     });
 
     setAdded(true);

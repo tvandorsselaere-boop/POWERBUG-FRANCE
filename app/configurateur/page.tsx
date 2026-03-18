@@ -323,7 +323,7 @@ export default function ConfigurateurPage() {
                   disabled={!trolley}
                   onClick={() => {
                     if (!trolley) return;
-                    addItem({ slug: trolley.slug, name: trolley.name, price: trolley.price });
+                    addItem({ slug: trolley.slug, name: trolley.name, price: trolley.price, compare_at_price: trolley.comparePrice });
                     // Accessoires bundle à 0€
                     bundleAccessories.forEach((acc) => {
                       addItem({ slug: acc.slug, name: acc.name, price: 0 });

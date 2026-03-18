@@ -55,6 +55,12 @@ export default function PanierPage() {
   const hasTrolley = items.some((item) => TROLLEY_SLUGS.includes(item.slug));
   const shipping = count > 0 ? (hasTrolley ? 14.9 : 3.9) : 0;
   const total = subtotal + shipping;
+  const savings = items.reduce((sum, item) => {
+    if (item.compare_at_price && item.compare_at_price > item.price) {
+      return sum + (item.compare_at_price - item.price) * item.quantity;
+    }
+    return sum;
+  }, 0);
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12 sm:py-16 lg:px-10">
@@ -120,7 +126,16 @@ export default function PanierPage() {
                     {item.name}
                   </h3>
                   <p className="text-sm text-[#6B7280]">
-                    {item.price.toFixed(2)}&euro; / unite
+                    {item.compare_at_price && item.compare_at_price > item.price ? (
+                      <>
+                        <span className="line-through text-[#DBDBDB]">{item.compare_at_price.toFixed(2)}&euro;</span>
+                        {" "}
+                        <span className="font-semibold text-[#AE1717]">{item.price.toFixed(2)}&euro;</span>
+                        {" "}/ unite
+                      </>
+                    ) : (
+                      <>{item.price.toFixed(2)}&euro; / unite</>
+                    )}
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
@@ -144,9 +159,22 @@ export default function PanierPage() {
                     <Plus className="h-3 w-3" />
                   </button>
                 </div>
-                <span className="w-20 text-right font-bold text-[#0F0F10]">
-                  {(item.price * item.quantity).toFixed(2)}&euro;
-                </span>
+                <div className="w-24 text-right">
+                  {item.compare_at_price && item.compare_at_price > item.price ? (
+                    <>
+                      <span className="block text-xs text-[#DBDBDB] line-through">
+                        {(item.compare_at_price * item.quantity).toFixed(2)}&euro;
+                      </span>
+                      <span className="font-bold text-[#0F0F10]">
+                        {(item.price * item.quantity).toFixed(2)}&euro;
+                      </span>
+                    </>
+                  ) : (
+                    <span className="font-bold text-[#0F0F10]">
+                      {(item.price * item.quantity).toFixed(2)}&euro;
+                    </span>
+                  )}
+                </div>
                 <button
                   onClick={() => removeItem(item.slug)}
                   className="text-[#DBDBDB] hover:text-[#AE1717]"
@@ -184,6 +212,14 @@ export default function PanierPage() {
                     {shipping.toFixed(2).replace(".", ",")}&euro;
                   </span>
                 </div>
+                {savings > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-[#356B0D] font-medium">Economie</span>
+                    <span className="text-[#356B0D] font-semibold">
+                      -{savings.toFixed(2)}&euro;
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="mt-4 flex justify-between">

@@ -35,6 +35,7 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
     slug: product.slug,
     name: product.name,
     price,
+    comparePrice: comparePrice ?? undefined,
     description: product.description,
     longDescription: product.description,
     specs: Object.entries(specs).map(([label, value]) => ({ label, value: String(value) })),

@@ -5,6 +5,7 @@ export type CartItem = {
   slug: string;
   name: string;
   price: number;
+  compare_at_price?: number;
   quantity: number;
 };
 
@@ -27,7 +28,7 @@ export const useCartStore = create<CartStore>()(
           set({
             items: get().items.map((i) =>
               i.slug === item.slug
-                ? { ...i, quantity: i.quantity + 1 }
+                ? { ...i, quantity: i.quantity + 1, compare_at_price: item.compare_at_price ?? i.compare_at_price }
                 : i
             ),
           });
