@@ -188,7 +188,7 @@ export default async function Home() {
               Chariots Électriques de Golf Premium
             </h1>
             <p
-              className="animate-fade-in-delay-2 mx-auto mt-5 max-w-xl text-lg text-white/85"
+              className="animate-fade-in-delay-2 mx-auto mt-5 max-w-3xl text-lg text-white/85"
               style={{ textShadow: "0 1px 8px rgba(0,0,0,0.4)" }}
             >
               La série NX — technologie lithium 28V, pliage VRAP breveté, 36 trous d&apos;autonomie.
