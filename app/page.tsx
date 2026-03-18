@@ -185,7 +185,7 @@ export default async function Home() {
               className="animate-fade-in-delay-1 text-balance text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
               style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}
             >
-              Chariots Électriques<br className="hidden sm:block" /> de Golf Premium
+              Chariots Électriques de Golf Premium
             </h1>
             <p
               className="animate-fade-in-delay-2 mx-auto mt-5 max-w-xl text-lg text-white/85"
