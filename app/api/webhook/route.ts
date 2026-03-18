@@ -69,6 +69,19 @@ export async function POST(req: NextRequest) {
       console.log("Shipping details from Stripe:", JSON.stringify(shippingDetails));
 
       const addr = shippingDetails?.address;
+      // Detect shipping method from metadata or fallback to shipping line item description
+      const shippingMethod: "dpd_home" | "dpd_relay" =
+        (session.metadata?.shipping_method as "dpd_home" | "dpd_relay") ?? "dpd_home";
+
+      // Relay point info (for dpd_relay orders)
+      const relayInfo = session.metadata?.relay_id
+        ? {
+            relay_id: session.metadata.relay_id,
+            relay_name: session.metadata.relay_name,
+            relay_address: session.metadata.relay_address,
+          }
+        : {};
+
       const shippingAddress = shippingDetails
         ? {
             name: shippingDetails.name ?? undefined,
@@ -77,8 +90,10 @@ export async function POST(req: NextRequest) {
             city: addr?.city ?? undefined,
             postal_code: addr?.postal_code ?? undefined,
             country: addr?.country ?? undefined,
+            shipping_method: shippingMethod,
+            ...relayInfo,
           }
-        : {};
+        : { shipping_method: shippingMethod, ...relayInfo };
 
       const total = (session.amount_total ?? 0) / 100;
 
@@ -160,6 +175,7 @@ export async function POST(req: NextRequest) {
         shippingCost: shippingCost,
         total,
         shippingAddress,
+        shippingMethod,
       };
 
       // Email confirmation → client

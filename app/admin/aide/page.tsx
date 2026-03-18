@@ -35,8 +35,48 @@ export default function AdminAidePage() {
         </InfoBox>
       </Section>
 
-      {/* 2. Flow commande */}
-      <Section title="2. Le flow complet d'une commande">
+      {/* 2. Types de livraison */}
+      <Section title="2. Les 2 types de livraison DPD">
+        <p>
+          Le site choisit automatiquement le type de livraison selon le contenu du panier :
+        </p>
+        <div className="overflow-x-auto my-3">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-gray-100 text-left">
+                <th className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Type</th>
+                <th className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Prix</th>
+                <th className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Quand</th>
+                <th className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Badge admin</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              <tr>
+                <td className="px-3 py-2 font-medium">DPD Domicile</td>
+                <td className="px-3 py-2">14,90 &euro;</td>
+                <td className="px-3 py-2">Commande contient un chariot (NX ou NX DHC)</td>
+                <td className="px-3 py-2"><span className="inline-block rounded-full bg-blue-100 text-blue-800 px-2 py-0.5 text-xs font-medium">Domicile</span></td>
+              </tr>
+              <tr>
+                <td className="px-3 py-2 font-medium">DPD Relais Pickup</td>
+                <td className="px-3 py-2">3,90 &euro;</td>
+                <td className="px-3 py-2">Commande accessoires/pieces uniquement (pas de chariot)</td>
+                <td className="px-3 py-2"><span className="inline-block rounded-full bg-violet-100 text-violet-800 px-2 py-0.5 text-xs font-medium">Relais</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <InfoBox color="blue">
+          <strong>Pour Golf des Marques</strong>
+          <ul className="mt-2 ml-5 list-disc space-y-1">
+            <li><b>DPD Domicile</b> : creer une etiquette DPD classique a l&apos;adresse du client</li>
+            <li><b>DPD Relais</b> : creer une etiquette DPD Pickup — choisir le relais le plus proche de l&apos;adresse du client. Le bon de preparation indique l&apos;adresse du client pour vous aider a choisir.</li>
+          </ul>
+        </InfoBox>
+      </Section>
+
+      {/* 3. Flow commande */}
+      <Section title="3. Le flow complet d'une commande">
         <p>
           Voici ce qui se passe de A a Z quand un client passe commande.
           Les etapes vertes sont <b>100% automatiques</b>, la violette est ta seule action.
@@ -75,9 +115,9 @@ export default function AdminAidePage() {
         </InfoBox>
       </Section>
 
-      {/* 3. Pages admin */}
-      <Section title="3. Les pages de l'admin">
-        <h3 className="text-base font-semibold mt-4 mb-2">3.1 — Dashboard</h3>
+      {/* 4. Pages admin */}
+      <Section title="4. Les pages de l'admin">
+        <h3 className="text-base font-semibold mt-4 mb-2">4.1 — Dashboard</h3>
         <p>La page d&apos;accueil affiche les <b>actions urgentes</b> :</p>
         <ul className="ml-5 list-disc space-y-1 mb-3">
           <li><b>Nouvelles commandes</b> — a traiter (passer en preparation)</li>
@@ -88,7 +128,7 @@ export default function AdminAidePage() {
         <p>Plus les stats : total commandes, CA du jour, CA du mois.</p>
         <p className="mt-2">Si tout est en ordre, un message vert &quot;Tout est en ordre&quot; s&apos;affiche.</p>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">3.2 — Commandes</h3>
+        <h3 className="text-base font-semibold mt-6 mb-2">4.2 — Commandes</h3>
         <p>Toutes les commandes avec des <b>filtres rapides</b> et des <b>actions directes</b> :</p>
         <div className="overflow-x-auto my-3">
           <table className="w-full text-sm border-collapse">
@@ -113,7 +153,7 @@ export default function AdminAidePage() {
           Tu n&apos;as qu&apos;a saisir le tracking quand tu le recois. Les commandes sans tracking depuis 2+ jours s&apos;affichent en rouge.
         </InfoBox>
 
-        <h3 className="text-base font-semibold mt-6 mb-2">3.3 — Stock</h3>
+        <h3 className="text-base font-semibold mt-6 mb-2">4.3 — Stock</h3>
         <p>Le stock est <b>gere manuellement par toi</b>. Le site ne decremente pas automatiquement — c&apos;est toi qui mets a jour quand tu as l&apos;info de Golf des Marques.</p>
         <ul className="ml-5 list-disc space-y-1 mb-3">
           <li><b>En stock</b> (par defaut) — le client peut commander</li>
@@ -127,8 +167,8 @@ export default function AdminAidePage() {
         </InfoBox>
       </Section>
 
-      {/* 4. Emails */}
-      <Section title="4. Les emails automatiques">
+      {/* 5. Emails */}
+      <Section title="5. Les emails automatiques">
         <p>Le site envoie <b>3 types d&apos;emails</b>, tous automatiques :</p>
         <div className="overflow-x-auto my-3">
           <table className="w-full text-sm border-collapse">
@@ -149,8 +189,8 @@ export default function AdminAidePage() {
         <p>Tous envoyes depuis <b>commandes@powerbug.fr</b> avec le branding PowerBug.</p>
       </Section>
 
-      {/* 5. Test */}
-      <Section title="5. Comment tester (mode test Stripe)">
+      {/* 6. Test */}
+      <Section title="6. Comment tester (mode test Stripe)">
         <InfoBox color="amber">
           <strong>Mode test</strong>
           Le site est en mode test Stripe. Aucun vrai paiement ne sera debite. On utilise des cartes fictives.
@@ -178,8 +218,8 @@ export default function AdminAidePage() {
         </div>
       </Section>
 
-      {/* 6. Go-live */}
-      <Section title="6. Pour la mise en production">
+      {/* 7. Go-live */}
+      <Section title="7. Pour la mise en production">
         <p>Quand on est prets a lancer, 3 choses a changer :</p>
         <div className="overflow-x-auto my-3">
           <table className="w-full text-sm border-collapse">
@@ -203,8 +243,8 @@ export default function AdminAidePage() {
         </InfoBox>
       </Section>
 
-      {/* 7. FAQ */}
-      <Section title="7. Questions frequentes">
+      {/* 8. FAQ */}
+      <Section title="8. Questions frequentes">
         <FaqItem q="Golf des Marques n'a pas recu l'email de preparation ?">
           Dans la liste des commandes, clique &quot;Renvoyer bon preparation&quot; a cote de la commande concernee. L&apos;email est renvoye immediatement.
         </FaqItem>

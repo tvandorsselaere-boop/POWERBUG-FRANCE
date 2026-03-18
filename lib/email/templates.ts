@@ -27,7 +27,12 @@ export interface OrderConfirmationData {
     city?: string;
     postal_code?: string;
     country?: string;
+    shipping_method?: string;
+    relay_id?: string;
+    relay_name?: string;
+    relay_address?: string;
   };
+  shippingMethod?: "dpd_home" | "dpd_relay";
 }
 
 export function orderConfirmationHtml(data: OrderConfirmationData): string {
@@ -97,7 +102,7 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
                 <td style="padding:6px 0;font-size:14px;text-align:right;">${data.subtotal.toFixed(2)} €</td>
               </tr>
               <tr>
-                <td style="padding:6px 0;font-size:14px;color:#6B7280;">Livraison DPD</td>
+                <td style="padding:6px 0;font-size:14px;color:#6B7280;">${(data.shippingMethod ?? data.shippingAddress?.shipping_method) === "dpd_relay" ? "Livraison DPD Relais" : "Livraison DPD à domicile"}</td>
                 <td style="padding:6px 0;font-size:14px;text-align:right;">${data.shippingCost.toFixed(2)} €</td>
               </tr>
               <tr style="border-top:2px solid #0F0F10;">
@@ -106,9 +111,16 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
               </tr>
             </table>
 
-            <!-- Adresse -->
+            <!-- Adresse / Relais -->
+            ${addr.relay_name ? `
+            <div style="background:#f3e8ff;border-radius:8px;padding:20px;margin-bottom:16px;">
+              <div style="font-size:13px;font-weight:600;color:#7C3AED;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Point relais DPD Pickup</div>
+              <div style="font-size:15px;font-weight:600;line-height:1.6;">${addr.relay_name}</div>
+              <div style="font-size:14px;line-height:1.6;color:#6B7280;">${addr.relay_address ?? ""}</div>
+            </div>
+            ` : ""}
             <div style="background:#f9f9f9;border-radius:8px;padding:20px;margin-bottom:32px;">
-              <div style="font-size:13px;font-weight:600;color:#6B7280;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Adresse de livraison</div>
+              <div style="font-size:13px;font-weight:600;color:#6B7280;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">${addr.relay_name ? "Votre adresse" : "Adresse de livraison"}</div>
               <div style="font-size:14px;line-height:1.8;">${addrHtml}</div>
             </div>
 
@@ -156,6 +168,11 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
     .filter(Boolean)
     .join("<br>");
 
+  const method = data.shippingMethod ?? (data.shippingAddress?.shipping_method as string | undefined);
+  const isRelay = method === "dpd_relay";
+  const shippingBannerBg = isRelay ? "#7C3AED" : "#2563EB";
+  const shippingBannerText = isRelay ? "LIVRAISON DPD RELAIS PICKUP" : "LIVRAISON DPD DOMICILE";
+
   return `
 <!DOCTYPE html>
 <html lang="fr">
@@ -174,9 +191,27 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
           </td>
         </tr>
 
+        <!-- Shipping method banner -->
+        <tr>
+          <td style="background:${shippingBannerBg};padding:16px 40px;text-align:center;">
+            <div style="font-size:18px;font-weight:800;color:#ffffff;letter-spacing:1px;">${shippingBannerText}</div>
+            ${isRelay && !addr.relay_name ? '<div style="font-size:13px;color:#E9D5FF;margin-top:6px;font-weight:500;">Choisir le relais le plus proche de l\'adresse du client</div>' : ""}
+          </td>
+        </tr>
+
         <!-- Body -->
         <tr>
           <td style="padding:40px;">
+
+            ${isRelay && addr.relay_name ? `
+            <!-- Relais choisi par le client -->
+            <div style="background:#f3e8ff;border:2px solid #7C3AED;border-radius:8px;padding:20px;margin-bottom:32px;">
+              <div style="font-size:13px;font-weight:700;color:#7C3AED;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">RELAIS CHOISI PAR LE CLIENT</div>
+              <div style="font-size:18px;font-weight:700;line-height:1.4;">${addr.relay_name}</div>
+              <div style="font-size:15px;color:#6B7280;margin-top:4px;">${addr.relay_address ?? ""}</div>
+              <div style="font-size:12px;color:#7C3AED;margin-top:8px;font-weight:600;">ID Relais : ${addr.relay_id ?? ""}</div>
+            </div>
+            ` : ""}
 
             <!-- Articles à préparer -->
             <h2 style="margin:0 0 16px;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B7280;">Articles à préparer</h2>
@@ -191,8 +226,8 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
             </table>
 
             <!-- Adresse de livraison -->
-            <h2 style="margin:0 0 16px;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B7280;">Adresse de livraison (DPD)</h2>
-            <div style="background:#f9f9f9;border-left:4px solid #356B0D;border-radius:4px;padding:20px;margin-bottom:32px;">
+            <h2 style="margin:0 0 16px;font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#6B7280;">${isRelay ? "Adresse du client" : "Adresse de livraison (DPD Domicile)"}</h2>
+            <div style="background:#f9f9f9;border-left:4px solid ${isRelay ? "#7C3AED" : "#356B0D"};border-radius:4px;padding:20px;margin-bottom:32px;">
               <div style="font-size:16px;line-height:2;font-weight:500;">${addrHtml}</div>
             </div>
 
@@ -203,7 +238,7 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
             </div>
 
             <p style="font-size:13px;color:#6B7280;margin:0;">
-              Merci de préparer et expédier cette commande via DPD.<br>
+              Merci de préparer et expédier cette commande via DPD${isRelay ? " Relais Pickup" : ""}.<br>
               Une fois expédiée, merci de transmettre le numéro de tracking à PowerBug France.
             </p>
           </td>

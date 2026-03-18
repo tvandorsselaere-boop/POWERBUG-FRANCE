@@ -10,7 +10,7 @@ type CartItem = {
 
 export async function POST(req: NextRequest) {
   try {
-    const { items, email, shippingAddress } = (await req.json()) as {
+    const { items, email, shippingAddress, relay } = (await req.json()) as {
       items: CartItem[];
       email?: string;
       shippingAddress?: {
@@ -20,6 +20,13 @@ export async function POST(req: NextRequest) {
         zip?: string;
         country?: string;
         phone?: string;
+      };
+      relay?: {
+        id: string;
+        name: string;
+        address: string;
+        zipCode: string;
+        city: string;
       };
     };
 
@@ -130,6 +137,12 @@ export async function POST(req: NextRequest) {
       },
       metadata: {
         store: "powerbug",
+        shipping_method: hasTrolley ? "dpd_home" : "dpd_relay",
+        ...(relay ? {
+          relay_id: relay.id,
+          relay_name: relay.name,
+          relay_address: `${relay.address}, ${relay.zipCode} ${relay.city}`,
+        } : {}),
       },
       success_url: `${origin}/checkout/confirmation?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/panier`,

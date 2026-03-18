@@ -69,10 +69,11 @@ export async function PATCH(
       .select("*")
       .eq("order_id", id);
 
+    const shippingAddr = order.shipping_address ?? {};
     const emailData: OrderConfirmationData = {
       orderId: order.id,
       customerEmail: order.email,
-      customerName: order.shipping_address?.name ?? order.email,
+      customerName: shippingAddr.name ?? order.email,
       items: (items ?? []).map((i: Record<string, unknown>) => ({
         product_name: i.product_name as string,
         variant_label: i.variant_label as string,
@@ -82,7 +83,8 @@ export async function PATCH(
       subtotal: order.subtotal,
       shippingCost: order.shipping_cost,
       total: order.total,
-      shippingAddress: order.shipping_address ?? {},
+      shippingAddress: shippingAddr,
+      shippingMethod: shippingAddr.shipping_method as "dpd_home" | "dpd_relay" | undefined,
     };
 
     const ordersTo = process.env.EMAIL_ORDERS_TO ?? "thomas@facile-ia.fr";

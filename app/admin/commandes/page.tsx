@@ -13,7 +13,7 @@ interface Order {
   shipping_cost: number;
   tracking_number: string | null;
   created_at: string;
-  shipping_address: { name?: string; city?: string } | null;
+  shipping_address: { name?: string; city?: string; shipping_method?: string; relay_name?: string } | null;
 }
 
 const STATUSES = [
@@ -172,7 +172,12 @@ function AdminOrders() {
                       Depuis {age} jours !
                     </span>
                   )}
-                  <span className={`ml-auto inline-block px-2.5 py-1 rounded-full text-xs font-medium ${STATUS_COLORS[order.status] ?? "bg-gray-100 text-gray-800"}`}>
+                  {order.shipping_address?.shipping_method === "dpd_relay" ? (
+                    <span className="ml-auto inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-violet-100 text-violet-800">Relais</span>
+                  ) : order.shipping_address?.shipping_method === "dpd_home" ? (
+                    <span className="ml-auto inline-block px-2.5 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Domicile</span>
+                  ) : null}
+                  <span className={`${!order.shipping_address?.shipping_method ? "ml-auto " : ""}inline-block px-2.5 py-1 rounded-full text-xs font-medium ${STATUS_COLORS[order.status] ?? "bg-gray-100 text-gray-800"}`}>
                     {STATUS_LABELS[order.status] ?? order.status}
                   </span>
                   <span className="text-base font-bold text-[#0F0F10]">{order.total?.toFixed(2)}&nbsp;&euro;</span>
@@ -187,6 +192,12 @@ function AdminOrders() {
                     <>
                       <span className="text-gray-400">|</span>
                       <span>{order.shipping_address.city}</span>
+                    </>
+                  )}
+                  {order.shipping_address?.relay_name && (
+                    <>
+                      <span className="text-gray-400">|</span>
+                      <span className="text-violet-600 font-medium">{order.shipping_address.relay_name}</span>
                     </>
                   )}
                 </div>

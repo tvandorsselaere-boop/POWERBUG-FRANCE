@@ -3,14 +3,16 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useCartStore } from "@/store/cart-store";
+import { useCartStore, cartNeedsRelay } from "@/store/cart-store";
 import { useAuth } from "@/hooks/use-auth";
 import { createBrowserClient } from "@/lib/supabase/browser";
 
 export function CheckoutButton() {
   const [loading, setLoading] = useState(false);
   const items = useCartStore((s) => s.items);
+  const selectedRelay = useCartStore((s) => s.selectedRelay);
   const { user } = useAuth();
+  const needsRelay = cartNeedsRelay(items);
 
   const handleCheckout = async () => {
     setLoading(true);
@@ -34,7 +36,7 @@ export function CheckoutButton() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, email, shippingAddress }),
+        body: JSON.stringify({ items, email, shippingAddress, relay: selectedRelay }),
       });
 
       const data = await res.json();
@@ -54,7 +56,7 @@ export function CheckoutButton() {
   return (
     <Button
       onClick={handleCheckout}
-      disabled={loading || items.length === 0}
+      disabled={loading || items.length === 0 || (needsRelay && !selectedRelay)}
       className="w-full btn-glass rounded-[10px] text-white"
       size="lg"
     >
@@ -63,6 +65,8 @@ export function CheckoutButton() {
           <Loader2 className="mr-2 h-5 w-5 animate-spin" />
           Redirection...
         </>
+      ) : needsRelay && !selectedRelay ? (
+        "Choisir un point relais"
       ) : (
         "Passer la commande"
       )}

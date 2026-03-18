@@ -10,11 +10,12 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CheckoutButton } from "@/components/checkout-button";
-import { useCartStore, cartTotal, cartCount } from "@/store/cart-store";
+import { useCartStore, cartTotal, cartCount, cartNeedsRelay } from "@/store/cart-store";
 import { useAuth } from "@/hooks/use-auth";
 import { createBrowserClient } from "@/lib/supabase/browser";
 import { useEffect, useState } from "react";
 import { MapPin } from "lucide-react";
+import { RelayPicker } from "@/components/relay-picker";
 
 export default function PanierPage() {
   const { items, removeItem, updateQuantity, clearCart } = useCartStore();
@@ -53,6 +54,7 @@ export default function PanierPage() {
   const count = cartCount(items);
   const TROLLEY_SLUGS = ["nx-lithium", "nx-dhc-lithium"];
   const hasTrolley = items.some((item) => TROLLEY_SLUGS.includes(item.slug));
+  const needsRelay = cartNeedsRelay(items);
   const shipping = count > 0 ? (hasTrolley ? 14.9 : 3.9) : 0;
   const total = subtotal + shipping;
   const savings = items.reduce((sum, item) => {
@@ -223,6 +225,13 @@ export default function PanierPage() {
                     pour accelerer le paiement.
                   </p>
                 </div>
+              </div>
+            )}
+
+            {/* Relay picker for accessory-only orders */}
+            {needsRelay && (
+              <div className="mt-6">
+                <RelayPicker />
               </div>
             )}
           </div>
