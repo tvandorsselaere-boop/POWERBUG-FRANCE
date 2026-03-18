@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     siteName: "PowerBug France",
     url: "https://www.powerbug.fr",
   },
+  verification: {
+    google: "jysyw4S7gFnMSHyidOa5uAsCTRQM8z-BnQ-G4lDFZKc",
+  },
   robots: {
     index: true,
     follow: true,
