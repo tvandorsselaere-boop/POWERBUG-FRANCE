@@ -105,7 +105,7 @@ export default function PanierPage() {
               variant="outline"
               className="btn-glass-outline rounded-[10px] text-[#0F0F10]"
             >
-              <Link href="/configurateur">Configurateur</Link>
+              <Link href="/accessoires">Voir les accessoires</Link>
             </Button>
           </div>
         </div>

@@ -198,10 +198,10 @@ export default async function FeatureDetailPage({
             <ChevronRight className="h-4 w-4" />
           </Link>
           <Link
-            href="/configurateur"
+            href="/accessoires"
             className="btn-glass-outline inline-flex items-center gap-2 rounded-xl px-8 py-3 text-sm font-semibold text-[#0F0F10]"
           >
-            Configurer mon trolley
+            Voir les accessoires
             <ChevronRight className="h-4 w-4" />
           </Link>
         </div>

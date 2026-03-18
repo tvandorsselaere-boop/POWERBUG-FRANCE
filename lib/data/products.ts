@@ -31,7 +31,6 @@ export const trolleySpecs: TrolleySpec[] = [
 ];
 
 // Bundle offert : Score Card Holder (30€) + Umbrella Holder (30€) = 60€ (source: Fred, mars 2026 — aligné Golf des Marques)
-// Voir app/configurateur/page.tsx pour la logique bundle
 export const ACCESSORY_DISCOUNT = 0; // Plus utilise — kept for type compatibility
 
 export type Product = {

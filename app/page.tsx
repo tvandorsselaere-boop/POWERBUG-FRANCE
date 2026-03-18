@@ -13,6 +13,7 @@ import { HeroVideo } from "@/components/hero-video";
 import { HomeTrustBar } from "@/components/home-trust-bar";
 import { HomeFaq } from "@/components/home-faq";
 import { HomeReviews } from "@/components/home-reviews";
+import { AddToCartRedirect } from "@/components/add-to-cart-redirect";
 
 const trolleyMeta = [
   {
@@ -286,13 +287,14 @@ export default async function Home() {
                     >
                       Voir le détail
                     </Link>
-                    <Link
-                      href={trolley.href}
+                    <AddToCartRedirect
+                      slug={trolley.slug}
+                      name={trolley.name}
+                      price={Number(trolley.price)}
+                      compare_at_price={trolley.comparePrice ? Number(trolley.comparePrice) : undefined}
                       className="flex-1 rounded-[10px] py-2.5 text-center text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_4px_16px_rgba(53,107,13,0.35)] active:scale-[0.98]"
                       style={{ background: "linear-gradient(90deg,#356B0D,#5a9e1f)" }}
-                    >
-                      Ajouter au panier
-                    </Link>
+                    />
                   </div>
                 </div>
               </div>
@@ -379,11 +381,11 @@ export default async function Home() {
                   Porte-parapluie et porte-scorecard offerts avec l&apos;achat de votre chariot PowerBug NX. Valeur cumulée de ~60&euro; entièrement offerte.
                 </p>
                 <Link
-                  href="/configurateur"
+                  href="/trolleys"
                   className="mt-6 inline-flex items-center gap-2 rounded-[10px] px-7 py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_6px_24px_rgba(53,107,13,0.4)] active:scale-[0.98]"
                   style={{ background: "linear-gradient(90deg,#356B0D,#8DC63F)" }}
                 >
-                  Configurer mon chariot
+                  Decouvrir nos chariots
                   <ChevronRight className="h-4 w-4" />
                 </Link>
               </div>
