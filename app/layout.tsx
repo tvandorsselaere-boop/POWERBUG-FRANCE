@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ConstructionBanner } from "@/components/construction-banner";
@@ -88,6 +89,7 @@ export default function RootLayout({
         <Footer />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaWebsite) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrganization) }} />
+        <GoogleAnalytics gaId="G-VEKW0YYE2L" />
       </body>
     </html>
   );
