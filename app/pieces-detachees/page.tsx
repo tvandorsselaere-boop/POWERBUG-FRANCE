@@ -10,7 +10,7 @@ import {
   Clock,
 } from "lucide-react";
 import { getPiecesDetachees } from "@/lib/supabase/queries";
-import { AccessoireCard } from "@/components/accessoire-card";
+import { SortableGrid } from "@/components/sortable-grid";
 
 export const metadata: Metadata = {
   title: "Pieces detachees - PowerBug France",
@@ -75,23 +75,14 @@ export default async function PiecesDetacheesPage() {
           <h2 className="mb-8 text-2xl font-bold text-[#0F0F10]">
             Catalogue pieces
           </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {pieces.map((item) => {
-              const price = item.product_variants?.[0]?.price ?? item.base_price;
-              const image = item.product_images?.[0] ?? null;
-              return (
-                <AccessoireCard
-                  key={item.id}
-                  id={item.id}
-                  slug={item.slug}
-                  name={item.name}
-                  description={item.description}
-                  price={price}
-                  image={image}
-                />
-              );
-            })}
-          </div>
+          <SortableGrid products={pieces.map((item) => ({
+            id: item.id,
+            slug: item.slug,
+            name: item.name,
+            description: item.description,
+            price: item.product_variants?.[0]?.price ?? item.base_price,
+            image: item.product_images?.[0] ?? null,
+          }))} />
         </section>
       )}
 
