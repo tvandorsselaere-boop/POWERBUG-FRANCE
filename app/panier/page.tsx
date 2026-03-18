@@ -12,14 +12,32 @@ import { Button } from "@/components/ui/button";
 import { CheckoutButton } from "@/components/checkout-button";
 import { useCartStore, cartTotal, cartCount } from "@/store/cart-store";
 import { useAuth } from "@/hooks/use-auth";
+import { createBrowserClient } from "@/lib/supabase/browser";
 import { useEffect, useState } from "react";
+import { MapPin, Pencil } from "lucide-react";
 
 export default function PanierPage() {
   const { items, removeItem, updateQuantity, clearCart } = useCartStore();
   const { user, loading: authLoading } = useAuth();
   const [mounted, setMounted] = useState(false);
+  const [address, setAddress] = useState<{ full_name: string; street: string; city: string; zip: string; phone: string } | null>(null);
 
   useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (!user) { setAddress(null); return; }
+    const supabase = createBrowserClient();
+    supabase
+      .from("profiles")
+      .select("default_shipping_address")
+      .eq("id", user.id)
+      .single()
+      .then(({ data }) => {
+        if (data?.default_shipping_address) {
+          setAddress(data.default_shipping_address as typeof address);
+        }
+      });
+  }, [user]);
 
   if (!mounted) {
     return (
@@ -174,6 +192,37 @@ export default function PanierPage() {
                   {total.toFixed(2)}&euro;
                 </span>
               </div>
+
+              {/* Shipping address */}
+              {!authLoading && user && address && (
+                <div className="mt-4 rounded-[10px] border border-[#DBDBDB] bg-[#F9F9F9] px-4 py-3 text-sm">
+                  <div className="flex items-start justify-between">
+                    <div className="flex gap-2">
+                      <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#356B0D]" />
+                      <div className="text-[#0F0F10]">
+                        <p className="font-medium">{address.full_name}</p>
+                        <p className="text-[#6B7280]">{address.street}</p>
+                        <p className="text-[#6B7280]">{address.zip} {address.city}</p>
+                        {address.phone && <p className="text-[#6B7280]">{address.phone}</p>}
+                      </div>
+                    </div>
+                    <Link href="/compte/adresses" className="text-[#356B0D] hover:text-[#2a5409]">
+                      <Pencil className="h-3.5 w-3.5" />
+                    </Link>
+                  </div>
+                </div>
+              )}
+
+              {!authLoading && user && !address && (
+                <div className="mt-4 rounded-[10px] border border-[#DBDBDB] bg-[#F9F9F9] px-4 py-3 text-sm">
+                  <p className="text-[#6B7280]">
+                    <Link href="/compte/adresses" className="font-medium text-[#356B0D] hover:underline">
+                      Ajouter une adresse de livraison
+                    </Link>{" "}
+                    pour accelerer le paiement.
+                  </p>
+                </div>
+              )}
 
               {!authLoading && !user && (
                 <div className="mt-4 rounded-[10px] border border-[#DBDBDB] bg-[#F9F9F9] px-4 py-3 text-sm">
