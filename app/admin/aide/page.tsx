@@ -21,7 +21,7 @@ export default function AdminAidePage() {
         <InfoBox color="green">
           <strong>Ce que tu peux faire</strong>
           <ul className="mt-2 ml-5 list-disc space-y-1">
-            <li><b>Dashboard</b> — voir en un coup d&apos;oeil ce qu&apos;il y a a faire (commandes a traiter, tracking a saisir, alertes stock)</li>
+            <li><b>Dashboard</b> — voir en un coup d&apos;oeil ce qu&apos;il y a a faire (commandes en attente de tracking, etat du stock)</li>
             <li><b>Commandes</b> — changer le statut, ajouter le tracking DPD, notifier le client — directement depuis la liste sans ouvrir chaque commande</li>
             <li><b>Stock</b> — modifier les quantites, marquer un produit en rupture en 1 clic</li>
             <li><b>Renvoyer le bon de preparation</b> — si Golf des Marques n&apos;a pas recu l&apos;email</li>
@@ -50,8 +50,8 @@ export default function AdminAidePage() {
           <FlowStep num={1} auto label="Le client passe commande et paie" tag="auto">
             Le client ajoute ses produits au panier, va au checkout, et paie par carte (Visa, Mastercard, Apple Pay, Google Pay) via Stripe.
           </FlowStep>
-          <FlowStep num={2} auto label="Commande enregistree + stock decremente" tag="auto">
-            La commande est enregistree en base de donnees. Le stock est decremente automatiquement.
+          <FlowStep num={2} auto label="La commande est enregistree" tag="auto">
+            La commande est enregistree en base de donnees avec tous les details (client, adresse, produits, montant).
           </FlowStep>
           <FlowStep num={3} auto label="Email de confirmation → client" tag="email">
             Le client recoit un email de confirmation avec le recapitulatif de sa commande.
@@ -59,16 +59,13 @@ export default function AdminAidePage() {
           <FlowStep num={4} auto label="Bon de preparation → Golf des Marques" tag="email">
             Un email est envoye <b>immediatement</b> a Golf des Marques avec la liste des articles a preparer et l&apos;adresse de livraison.
           </FlowStep>
-          <FlowStep num={5} auto label="Alerte stock (si necessaire)" tag="email">
-            Si le stock d&apos;un produit descend en dessous de 3 unites, tu recois un email d&apos;alerte.
-          </FlowStep>
-          <FlowStep num={6} auto label="Golf des Marques prepare et expedie" tag="auto">
+          <FlowStep num={5} auto label="Golf des Marques prepare et expedie" tag="auto">
             Ils recoivent le bon, preparent le colis, creent l&apos;etiquette DPD, et t&apos;envoient le numero de tracking.
           </FlowStep>
-          <FlowStep num={7} label="Tu saisis le tracking dans l'admin" tag="manual">
+          <FlowStep num={6} label="Tu saisis le tracking dans l'admin" tag="manual">
             Sur la page Commandes, entre le numero de tracking dans le champ et clique &quot;Marquer expediee&quot;. C&apos;est ta <b>seule action</b>.
           </FlowStep>
-          <FlowStep num={8} auto label="Email d'expedition → client" tag="email">
+          <FlowStep num={7} auto label="Email d'expedition → client" tag="email">
             Le client recoit automatiquement un email avec son numero de suivi DPD.
           </FlowStep>
         </div>
@@ -117,18 +114,22 @@ export default function AdminAidePage() {
         </InfoBox>
 
         <h3 className="text-base font-semibold mt-6 mb-2">3.3 — Stock</h3>
-        <p>Tu peux maintenant <b>modifier les quantites directement</b> :</p>
+        <p>Le stock est <b>gere manuellement par toi</b>. Le site ne decremente pas automatiquement — c&apos;est toi qui mets a jour quand tu as l&apos;info de Golf des Marques.</p>
         <ul className="ml-5 list-disc space-y-1 mb-3">
-          <li>Change la quantite dans le champ, clique &quot;Enregistrer&quot;</li>
-          <li>Bouton &quot;Rupture&quot; pour mettre a 0 en 1 clic</li>
+          <li><b>En stock</b> (par defaut) — le client peut commander</li>
+          <li><b>Stock faible</b> — mets un chiffre bas (ex: 2) pour te rappeler de checker avec Golf des Marques</li>
+          <li><b>Rupture</b> (bouton 1 clic) — le site affiche &quot;Sur commande&quot; et le client ne peut pas commander</li>
           <li>Filtres : Tous / Rupture / Faible / OK</li>
-          <li>Quand un produit est a 0, le site affiche automatiquement &quot;Sur commande&quot; au client</li>
         </ul>
+        <InfoBox color="blue">
+          <strong>Quand mettre a jour le stock ?</strong>
+          Quand Golf des Marques te dit qu&apos;il reste peu d&apos;un produit, ou quand un produit est epuise. Tu n&apos;as pas besoin de le faire a chaque vente.
+        </InfoBox>
       </Section>
 
       {/* 4. Emails */}
       <Section title="4. Les emails automatiques">
-        <p>Le site envoie <b>4 types d&apos;emails</b>, tous automatiques :</p>
+        <p>Le site envoie <b>3 types d&apos;emails</b>, tous automatiques :</p>
         <div className="overflow-x-auto my-3">
           <table className="w-full text-sm border-collapse">
             <thead>
@@ -142,7 +143,6 @@ export default function AdminAidePage() {
               <tr><td className="px-3 py-2 font-medium">Confirmation commande</td><td className="px-3 py-2">Client</td><td className="px-3 py-2">Au paiement</td></tr>
               <tr><td className="px-3 py-2 font-medium">Bon de preparation</td><td className="px-3 py-2">Golf des Marques</td><td className="px-3 py-2">Au paiement (automatique)</td></tr>
               <tr><td className="px-3 py-2 font-medium">Notification expedition</td><td className="px-3 py-2">Client</td><td className="px-3 py-2">Quand tu ajoutes le tracking</td></tr>
-              <tr><td className="px-3 py-2 font-medium">Alerte stock</td><td className="px-3 py-2">Toi (Fred)</td><td className="px-3 py-2">Stock &le; 3 apres une vente</td></tr>
             </tbody>
           </table>
         </div>
@@ -212,7 +212,7 @@ export default function AdminAidePage() {
           Change le statut en &quot;Annulee&quot; dans le detail. Le remboursement se fait directement depuis le dashboard Stripe (dashboard.stripe.com).
         </FaqItem>
         <FaqItem q="Le stock est a 0 ?">
-          Le produit reste visible mais affiche &quot;Sur commande&quot; au client. Le bouton d&apos;achat est desactive. Tu recois un email d&apos;alerte quand le stock passe sous 3 unites. Pour le remettre en vente, modifie la quantite dans la page Stock.
+          Le produit reste visible mais affiche &quot;Sur commande&quot; au client. Le bouton d&apos;achat est desactive. Pour le remettre en vente, modifie la quantite dans la page Stock.
         </FaqItem>
         <FaqItem q="Qui a acces a l'admin ?">
           Uniquement les emails configures comme admin : <b>thomas@facile-ia.fr</b> et <b>fred@golfdesmarques.com</b>. Le lien apparait automatiquement dans le menu quand on est connecte avec un de ces comptes.
