@@ -52,6 +52,9 @@ export async function POST(req: NextRequest) {
     }
 
     try {
+      // Retrieve full session from Stripe API (webhook payload may lack shipping_details)
+      const fullSession = await stripe.checkout.sessions.retrieve(session.id);
+
       // Retrieve line items from Stripe
       const lineItems = await stripe.checkout.sessions.listLineItems(
         session.id,
@@ -61,7 +64,7 @@ export async function POST(req: NextRequest) {
       const supabase = createServiceClient();
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const shippingDetails = (session as any).shipping_details as {
+      const shippingDetails = (fullSession as any).shipping_details as {
         name?: string;
         address?: {
           line1?: string;
@@ -71,6 +74,9 @@ export async function POST(req: NextRequest) {
           country?: string;
         };
       } | null;
+
+      console.log("Shipping details from Stripe:", JSON.stringify(shippingDetails));
+
       const shippingAddress = shippingDetails
         ? {
             name: shippingDetails.name,
@@ -83,10 +89,16 @@ export async function POST(req: NextRequest) {
         : {};
 
       const total = (session.amount_total ?? 0) / 100;
-      const subtotal = (session.amount_subtotal ?? 0) / 100;
-      const shippingCost = parseFloat((total - subtotal).toFixed(2));
 
-      console.log("Inserting order:", { email: session.customer_details?.email, total, subtotal });
+      // Shipping is a line item (not Stripe shipping_options), so extract it
+      const shippingLineItem = lineItems.data.find((item) => {
+        const product = item.price?.product as Stripe.Product | undefined;
+        return product?.metadata?.slug === "shipping";
+      });
+      const shippingCost = shippingLineItem ? (shippingLineItem.price?.unit_amount ?? 0) / 100 : 0;
+      const subtotal = total - shippingCost;
+
+      console.log("Inserting order:", { email: session.customer_details?.email, total, subtotal, shippingCost });
 
       // Insert order
       const { data: order, error: orderError } = await supabase
@@ -114,17 +126,22 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      // Insert order items
-      const orderItems = lineItems.data.map((item) => {
-        const product = item.price?.product as Stripe.Product | undefined;
-        return {
-          order_id: order.id,
-          product_name: item.description ?? "Produit",
-          variant_label: product?.metadata?.slug ?? "standard",
-          quantity: item.quantity ?? 1,
-          unit_price: (item.price?.unit_amount ?? 0) / 100,
-        };
-      });
+      // Insert order items (exclude shipping line item)
+      const orderItems = lineItems.data
+        .filter((item) => {
+          const product = item.price?.product as Stripe.Product | undefined;
+          return product?.metadata?.slug !== "shipping";
+        })
+        .map((item) => {
+          const product = item.price?.product as Stripe.Product | undefined;
+          return {
+            order_id: order.id,
+            product_name: item.description ?? "Produit",
+            variant_label: product?.metadata?.slug ?? "standard",
+            quantity: item.quantity ?? 1,
+            unit_price: (item.price?.unit_amount ?? 0) / 100,
+          };
+        });
 
       const { error: itemsError } = await supabase
         .from("order_items")
