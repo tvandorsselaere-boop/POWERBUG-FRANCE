@@ -32,9 +32,9 @@ export default function PanierPage() {
       .select("default_shipping_address")
       .eq("id", user.id)
       .single()
-      .then(({ data }) => {
+      .then(({ data }: { data: { default_shipping_address: typeof address } | null }) => {
         if (data?.default_shipping_address) {
-          setAddress(data.default_shipping_address as typeof address);
+          setAddress(data.default_shipping_address);
         }
       });
   }, [user]);
