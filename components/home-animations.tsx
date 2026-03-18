@@ -1,36 +1,20 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import React from "react";
+import { useScrollReveal } from '@/hooks/use-scroll-reveal';
+import React from 'react';
 
 // ── Hero animated wrapper ─────────────────────────────────────────────────────
 function Hero({ children }: { children: React.ReactNode }) {
-  return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: {},
-        visible: { transition: { staggerChildren: 0.2 } },
-      }}
-      className="contents"
-    >
-      {children}
-    </motion.div>
-  );
+  return <div className="contents">{children}</div>;
 }
 
 // ── Generic section fade-in ───────────────────────────────────────────────────
 function Section({ children }: { children: React.ReactNode }) {
+  const ref = useScrollReveal();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, ease: "easeOut" }}
-    >
+    <div ref={ref}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -40,19 +24,19 @@ function ProductCard({
   index,
 }: {
   children: React.ReactNode;
-  index: number;
+  index?: number;
 }) {
+  const ref = useScrollReveal();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      whileHover={{ scale: 1.02, y: -4 }}
-      transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
-      className="group card-glass rounded-2xl p-8 transition-shadow hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]"
+    <div
+      ref={ref}
+      style={{
+        animationDelay: index ? `${index * 0.1}s` : undefined,
+      }}
+      className="group card-glass rounded-2xl p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)]"
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
@@ -62,31 +46,29 @@ function FeatureCard({
   index,
 }: {
   children: React.ReactNode;
-  index: number;
+  index?: number;
 }) {
+  const ref = useScrollReveal();
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
+    <div
+      ref={ref}
+      style={{
+        animationDelay: index ? `${index * 0.1}s` : undefined,
+      }}
+      className="transition-all duration-300 hover:-translate-y-1"
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 // ── Bundle banner slide-in ────────────────────────────────────────────────────
 function BundleBanner({ children }: { children: React.ReactNode }) {
+  const ref = useScrollReveal();
   return (
-    <motion.div
-      initial={{ opacity: 0, x: -40 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.55, ease: "easeOut" }}
-    >
+    <div ref={ref} className="animate-slide-left">
       {children}
-    </motion.div>
+    </div>
   );
 }
 

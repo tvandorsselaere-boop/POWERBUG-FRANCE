@@ -15,7 +15,7 @@ import { HeroVideo } from "@/components/hero-video";
 import { HomeTrustBar } from "@/components/home-trust-bar";
 import { HomeFaq } from "@/components/home-faq";
 import { HomeReviews } from "@/components/home-reviews";
-import { HomeAnimations } from "@/components/home-animations";
+import { HomeAnimations } from "@/components/animation-wrappers";
 const trolleyMeta = [
   {
     slug: "nx-lithium",

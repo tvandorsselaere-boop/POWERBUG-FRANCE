@@ -1,8 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Minus } from "lucide-react";
+import { useState } from 'react';
+import { Plus, Minus } from 'lucide-react';
 
 const FAQ_ITEMS = [
   {
@@ -56,22 +55,13 @@ export function HomeFaq() {
                 )}
               </span>
             </button>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  key="answer"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="overflow-hidden"
-                >
-                  <p className="pb-5 pr-10 text-sm leading-relaxed text-[#6B7280]">
-                    {item.answer}
-                  </p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {isOpen && (
+              <div className="overflow-hidden transition-all duration-300">
+                <p className="pb-5 pr-10 text-sm leading-relaxed text-[#6B7280]">
+                  {item.answer}
+                </p>
+              </div>
+            )}
           </div>
         );
       })}

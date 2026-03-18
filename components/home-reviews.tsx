@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { Star, ExternalLink } from "lucide-react";
+import { useScrollReveal } from '@/hooks/use-scroll-reveal';
+import { Star, ExternalLink } from 'lucide-react';
 
 const REVIEWS = [
   {
@@ -37,18 +37,11 @@ function Stars({ count }: { count: number }) {
   );
 }
 
-export function HomeReviews() {
+function ReviewsHeader() {
+  const ref = useScrollReveal();
+
   return (
-    <section className="border-t border-[#DBDBDB] bg-[#F5F5F5] py-20 sm:py-28">
-      <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="mb-12 text-center"
-        >
+    <div ref={ref} className="mb-12 text-center">
           <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#6B7280]">
             Avis vérifiés
           </p>
@@ -90,19 +83,21 @@ export function HomeReviews() {
               <ExternalLink className="h-4 w-4 shrink-0 text-[#DBDBDB] transition-colors group-hover:text-[#356B0D]" />
             </a>
           </div>
-        </motion.div>
+    </div>
+  );
+}
 
-        {/* Review cards */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
-          {REVIEWS.map((review, i) => (
-            <motion.div
-              key={review.name}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.1 }}
-              className="card-glass rounded-2xl p-6"
-            >
+function ReviewCard({ review, index }: { review: typeof REVIEWS[0]; index: number }) {
+  const ref = useScrollReveal();
+
+  return (
+    <div
+      ref={ref}
+      style={{
+        animationDelay: `${index * 0.1}s`,
+      }}
+      className="card-glass rounded-2xl p-6"
+    >
               <Stars count={review.rating} />
               <p className="mt-3 text-sm leading-relaxed text-[#0F0F10]">
                 &ldquo;{review.text}&rdquo;
@@ -116,7 +111,20 @@ export function HomeReviews() {
                   {review.source}
                 </span>
               </div>
-            </motion.div>
+    </div>
+  );
+}
+
+export function HomeReviews() {
+  return (
+    <section className="border-t border-[#DBDBDB] bg-[#F5F5F5] py-20 sm:py-28">
+      <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
+        <ReviewsHeader />
+
+        {/* Review cards */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {REVIEWS.map((review, i) => (
+            <ReviewCard key={review.name} review={review} index={i} />
           ))}
         </div>
       </div>
