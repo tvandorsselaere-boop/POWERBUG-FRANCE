@@ -41,11 +41,11 @@ const STATUS_LABEL: Record<string, string> = {
   refunded: "Remboursee",
 };
 
-function formatPrice(cents: number): string {
+function formatPrice(euros: number): string {
   return new Intl.NumberFormat("fr-FR", {
     style: "currency",
     currency: "EUR",
-  }).format(cents / 100);
+  }).format(euros);
 }
 
 export default async function CommandesPage() {
@@ -58,7 +58,7 @@ export default async function CommandesPage() {
   const { data: orders } = (await supabase
     .from("orders")
     .select("*, items:order_items(*)")
-    .eq("user_id", user.id)
+    .eq("email", user.email ?? "")
     .eq("store", "powerbug")
     .order("created_at", { ascending: false })) as {
     data: Order[] | null;
