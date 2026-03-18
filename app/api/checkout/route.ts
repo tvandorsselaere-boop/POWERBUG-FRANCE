@@ -68,11 +68,63 @@ export async function POST(req: NextRequest) {
       quantity: 1,
     });
 
-    const sessionParams: Parameters<typeof stripe.checkout.sessions.create>[0] = {
+    // Create or reuse a Stripe Customer to pre-fill email + address in Checkout
+    let customerId: string | undefined;
+
+    if (email && shippingAddress?.full_name && shippingAddress?.street) {
+      // Check if customer already exists
+      const existing = await stripe.customers.list({ email, limit: 1 });
+      if (existing.data.length > 0) {
+        // Update existing customer with latest address
+        const customer = await stripe.customers.update(existing.data[0].id, {
+          name: shippingAddress.full_name,
+          phone: shippingAddress.phone || undefined,
+          shipping: {
+            name: shippingAddress.full_name,
+            phone: shippingAddress.phone || undefined,
+            address: {
+              line1: shippingAddress.street,
+              city: shippingAddress.city || undefined,
+              postal_code: shippingAddress.zip || undefined,
+              country: "FR",
+            },
+          },
+        });
+        customerId = customer.id;
+      } else {
+        // Create new customer
+        const customer = await stripe.customers.create({
+          email,
+          name: shippingAddress.full_name,
+          phone: shippingAddress.phone || undefined,
+          shipping: {
+            name: shippingAddress.full_name,
+            phone: shippingAddress.phone || undefined,
+            address: {
+              line1: shippingAddress.street,
+              city: shippingAddress.city || undefined,
+              postal_code: shippingAddress.zip || undefined,
+              country: "FR",
+            },
+          },
+        });
+        customerId = customer.id;
+      }
+    } else if (email) {
+      const existing = await stripe.customers.list({ email, limit: 1 });
+      if (existing.data.length > 0) {
+        customerId = existing.data[0].id;
+      } else {
+        const customer = await stripe.customers.create({ email });
+        customerId = customer.id;
+      }
+    }
+
+    const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
       line_items,
-      customer_email: email || undefined,
+      ...(customerId ? { customer: customerId } : { customer_email: email || undefined }),
       shipping_address_collection: {
         allowed_countries: ["FR"],
       },
@@ -81,25 +133,7 @@ export async function POST(req: NextRequest) {
       },
       success_url: `${origin}/checkout/confirmation?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/panier`,
-    };
-
-    // Pre-fill shipping address from user profile
-    if (shippingAddress?.full_name && shippingAddress?.street) {
-      sessionParams.payment_intent_data = {
-        shipping: {
-          name: shippingAddress.full_name,
-          phone: shippingAddress.phone || undefined,
-          address: {
-            line1: shippingAddress.street,
-            city: shippingAddress.city || undefined,
-            postal_code: shippingAddress.zip || undefined,
-            country: "FR",
-          },
-        },
-      };
-    }
-
-    const session = await stripe.checkout.sessions.create(sessionParams);
+    });
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
