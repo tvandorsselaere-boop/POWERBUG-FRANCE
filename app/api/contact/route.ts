@@ -31,15 +31,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const ordersTo = process.env.EMAIL_ORDERS_TO ?? "thomas@facile-ia.fr";
-    console.log("[contact] Sending to:", ordersTo, "ZEPTO_API_KEY present:", !!process.env.ZEPTO_API_KEY);
-    const result = await sendEmail({
+    const ordersTo = process.env.EMAIL_ORDERS_TO ?? "contact@powerbug.fr";
+    await sendEmail({
       to: ordersTo,
       subject: `[Contact PowerBug] ${subject} — ${firstname} ${lastname}`,
       html: contactFormHtml({ firstname, lastname, email, subject, message }),
       replyTo: email,
     });
-    console.log("[contact] sendEmail result:", JSON.stringify(result));
 
     return NextResponse.json({
       success: true,
