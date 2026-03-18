@@ -10,9 +10,17 @@ type CartItem = {
 
 export async function POST(req: NextRequest) {
   try {
-    const { items, email } = (await req.json()) as {
+    const { items, email, shippingAddress } = (await req.json()) as {
       items: CartItem[];
       email?: string;
+      shippingAddress?: {
+        full_name?: string;
+        street?: string;
+        city?: string;
+        zip?: string;
+        country?: string;
+        phone?: string;
+      };
     };
 
     if (!items || items.length === 0) {
@@ -60,7 +68,7 @@ export async function POST(req: NextRequest) {
       quantity: 1,
     });
 
-    const session = await stripe.checkout.sessions.create({
+    const sessionParams: Parameters<typeof stripe.checkout.sessions.create>[0] = {
       mode: "payment",
       payment_method_types: ["card"],
       line_items,
@@ -73,7 +81,25 @@ export async function POST(req: NextRequest) {
       },
       success_url: `${origin}/checkout/confirmation?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/panier`,
-    });
+    };
+
+    // Pre-fill shipping address from user profile
+    if (shippingAddress?.full_name && shippingAddress?.street) {
+      sessionParams.payment_intent_data = {
+        shipping: {
+          name: shippingAddress.full_name,
+          phone: shippingAddress.phone || undefined,
+          address: {
+            line1: shippingAddress.street,
+            city: shippingAddress.city || undefined,
+            postal_code: shippingAddress.zip || undefined,
+            country: "FR",
+          },
+        },
+      };
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
