@@ -1,3 +1,8 @@
+// ─── Helpers ───────────────────────────────────────────────────────────────
+
+const COUNTRY_NAMES: Record<string, string> = { FR: "France", BE: "Belgique", CH: "Suisse", LU: "Luxembourg", DE: "Allemagne" };
+function countryName(code?: string) { return code ? (COUNTRY_NAMES[code.toUpperCase()] ?? code) : ""; }
+
 // ─── Confirmation commande → client ────────────────────────────────────────
 
 export interface OrderItem {
@@ -31,7 +36,7 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
       (item) => `
       <tr>
         <td style="padding:8px 0;border-bottom:1px solid #DBDBDB;">
-          ${item.product_name}${item.variant_label && item.variant_label !== "standard" ? ` — ${item.variant_label}` : ""}
+          ${item.product_name}
         </td>
         <td style="padding:8px 0;border-bottom:1px solid #DBDBDB;text-align:center;">${item.quantity}</td>
         <td style="padding:8px 0;border-bottom:1px solid #DBDBDB;text-align:right;">${item.unit_price.toFixed(2)} €</td>
@@ -40,7 +45,7 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
     .join("");
 
   const addr = data.shippingAddress;
-  const addrHtml = [addr.name, addr.line1, addr.line2, `${addr.postal_code ?? ""} ${addr.city ?? ""}`.trim(), addr.country]
+  const addrHtml = [addr.name, addr.line1, addr.line2, `${addr.postal_code ?? ""} ${addr.city ?? ""}`.trim(), countryName(addr.country)]
     .filter(Boolean)
     .join("<br>");
 
@@ -147,7 +152,7 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
     .join("");
 
   const addr = data.shippingAddress;
-  const addrHtml = [addr.name, addr.line1, addr.line2, `${addr.postal_code ?? ""} ${addr.city ?? ""}`.trim(), addr.country]
+  const addrHtml = [addr.name, addr.line1, addr.line2, `${addr.postal_code ?? ""} ${addr.city ?? ""}`.trim(), countryName(addr.country)]
     .filter(Boolean)
     .join("<br>");
 
