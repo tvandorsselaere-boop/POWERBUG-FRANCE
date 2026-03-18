@@ -172,26 +172,31 @@ export default async function Home() {
 
         <div className="absolute inset-0 bg-black/50" />
 
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center lg:px-10">
-          <p
-            className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]"
-            style={{ textShadow: "0 1px 8px rgba(0,0,0,0.4)" }}
-          >
-            Distributeur exclusif France — Qualité britannique depuis 2003
-          </p>
-          <h1
-            className="animate-fade-in-delay-1 text-balance text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
-            style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}
-          >
-            Chariots Électriques<br className="hidden sm:block" /> de Golf Premium
-          </h1>
-          <p
-            className="animate-fade-in-delay-2 mx-auto mt-5 max-w-xl text-lg text-white/85"
-            style={{ textShadow: "0 1px 8px rgba(0,0,0,0.4)" }}
-          >
-            La série NX — technologie lithium 28V, pliage VRAP breveté, 36 trous d&apos;autonomie.
-          </p>
-          <div className="animate-fade-in-delay-3 mt-8 inline-flex flex-col gap-4 sm:flex-row">
+        <div className="relative z-10 flex h-full flex-col justify-between px-6 py-12 text-center sm:py-16 lg:px-10 lg:py-20">
+          {/* Texte en haut */}
+          <div>
+            <p
+              className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]"
+              style={{ textShadow: "0 1px 8px rgba(0,0,0,0.4)" }}
+            >
+              Distributeur exclusif France — Qualité britannique depuis 2003
+            </p>
+            <h1
+              className="animate-fade-in-delay-1 text-balance text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
+              style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}
+            >
+              Chariots Électriques<br className="hidden sm:block" /> de Golf Premium
+            </h1>
+            <p
+              className="animate-fade-in-delay-2 mx-auto mt-5 max-w-xl text-lg text-white/85"
+              style={{ textShadow: "0 1px 8px rgba(0,0,0,0.4)" }}
+            >
+              La série NX — technologie lithium 28V, pliage VRAP breveté, 36 trous d&apos;autonomie.
+            </p>
+          </div>
+
+          {/* Boutons en bas */}
+          <div className="animate-fade-in-delay-3 inline-flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link
               href="/trolleys"
               className="inline-flex items-center justify-center gap-1 rounded-[10px] px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_6px_24px_rgba(53,107,13,0.45)] active:scale-[0.98]"
