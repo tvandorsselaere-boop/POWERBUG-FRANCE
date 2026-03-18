@@ -63,38 +63,35 @@ export async function POST(req: NextRequest) {
 
       const supabase = createServiceClient();
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const shippingDetails = (fullSession as any).shipping_details as {
-        name?: string;
-        address?: {
-          line1?: string;
-          line2?: string;
-          city?: string;
-          postal_code?: string;
-          country?: string;
-        };
-      } | null;
+      // Stripe SDK v20+: shipping is under collected_information.shipping_details
+      const shippingDetails = fullSession.collected_information?.shipping_details ?? null;
 
       console.log("Shipping details from Stripe:", JSON.stringify(shippingDetails));
 
+      const addr = shippingDetails?.address;
       const shippingAddress = shippingDetails
         ? {
-            name: shippingDetails.name,
-            line1: shippingDetails.address?.line1,
-            line2: shippingDetails.address?.line2,
-            city: shippingDetails.address?.city,
-            postal_code: shippingDetails.address?.postal_code,
-            country: shippingDetails.address?.country,
+            name: shippingDetails.name ?? undefined,
+            line1: addr?.line1 ?? undefined,
+            line2: addr?.line2 ?? undefined,
+            city: addr?.city ?? undefined,
+            postal_code: addr?.postal_code ?? undefined,
+            country: addr?.country ?? undefined,
           }
         : {};
 
       const total = (session.amount_total ?? 0) / 100;
 
       // Shipping is a line item (not Stripe shipping_options), so extract it
-      const shippingLineItem = lineItems.data.find((item) => {
-        const product = item.price?.product as Stripe.Product | undefined;
-        return product?.metadata?.slug === "shipping";
-      });
+      // Check both metadata slug and description as fallback
+      function isShippingItem(item: Stripe.LineItem) {
+        const product = item.price?.product;
+        const meta = (typeof product === "object" && product !== null) ? (product as Stripe.Product).metadata : null;
+        if (meta?.slug === "shipping") return true;
+        if (item.description?.toLowerCase().includes("livraison dpd")) return true;
+        return false;
+      }
+      const shippingLineItem = lineItems.data.find(isShippingItem);
       const shippingCost = shippingLineItem ? (shippingLineItem.price?.unit_amount ?? 0) / 100 : 0;
       const subtotal = total - shippingCost;
 
@@ -128,16 +125,14 @@ export async function POST(req: NextRequest) {
 
       // Insert order items (exclude shipping line item)
       const orderItems = lineItems.data
-        .filter((item) => {
-          const product = item.price?.product as Stripe.Product | undefined;
-          return product?.metadata?.slug !== "shipping";
-        })
+        .filter((item) => !isShippingItem(item))
         .map((item) => {
-          const product = item.price?.product as Stripe.Product | undefined;
+          const product = item.price?.product;
+          const meta = (typeof product === "object" && product !== null) ? (product as Stripe.Product).metadata : null;
           return {
             order_id: order.id,
             product_name: item.description ?? "Produit",
-            variant_label: product?.metadata?.slug ?? "standard",
+            variant_label: meta?.slug ?? "standard",
             quantity: item.quantity ?? 1,
             unit_price: (item.price?.unit_amount ?? 0) / 100,
           };
