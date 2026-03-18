@@ -20,16 +20,15 @@ const STATUSES = [
   { value: "all", label: "Toutes" },
   { value: "action_needed", label: "A traiter" },
   { value: "needs_tracking", label: "Sans tracking" },
-  { value: "confirmed", label: "Confirmees" },
-  { value: "processing", label: "En preparation" },
+  { value: "confirmed", label: "En attente tracking" },
   { value: "shipped", label: "Expediees" },
   { value: "delivered", label: "Livrees" },
   { value: "cancelled", label: "Annulees" },
 ];
 
 const STATUS_LABELS: Record<string, string> = {
-  confirmed: "Confirmee",
-  processing: "En preparation",
+  confirmed: "En attente tracking",
+  processing: "En attente tracking",
   shipped: "Expediee",
   delivered: "Livree",
   cancelled: "Annulee",
@@ -37,8 +36,8 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 const STATUS_COLORS: Record<string, string> = {
-  confirmed: "bg-blue-100 text-blue-800",
-  processing: "bg-indigo-100 text-indigo-800",
+  confirmed: "bg-amber-100 text-amber-800",
+  processing: "bg-amber-100 text-amber-800",
   shipped: "bg-purple-100 text-purple-800",
   delivered: "bg-green-100 text-green-800",
   cancelled: "bg-red-100 text-red-800",
@@ -156,7 +155,7 @@ function AdminOrders() {
         <div className="space-y-4">
           {orders.map((order) => {
             const age = orderAge(order.created_at);
-            const isOld = (order.status === "confirmed" || order.status === "processing") && age >= 2;
+            const isOld = (order.status === "confirmed" || order.status === "processing") && !order.tracking_number && age >= 2;
             const msg = messages[order.id];
             const isLoading = actionLoading[order.id];
 
@@ -203,28 +202,8 @@ function AdminOrders() {
 
                 {/* Inline actions */}
                 <div className="flex flex-wrap items-center gap-3 px-5 py-3 bg-gray-50/50">
-                  {/* Confirmed: pass to processing */}
-                  {order.status === "confirmed" && (
-                    <>
-                      <button
-                        onClick={() => handleAction(order.id, { status: "processing" })}
-                        disabled={isLoading}
-                        className="px-4 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
-                      >
-                        Passer en preparation
-                      </button>
-                      <button
-                        onClick={() => handleAction(order.id, { action: "resend_preparation" })}
-                        disabled={isLoading}
-                        className="px-4 py-2 bg-white text-gray-600 text-xs font-medium rounded-lg border border-[#DBDBDB] hover:bg-gray-50 transition-colors disabled:opacity-50"
-                      >
-                        Envoyer bon de preparation
-                      </button>
-                    </>
-                  )}
-
-                  {/* Processing: tracking input + ship */}
-                  {order.status === "processing" && (
+                  {/* Confirmed/Processing: tracking input + ship */}
+                  {(order.status === "confirmed" || order.status === "processing") && (
                     <>
                       <input
                         type="text"
@@ -239,6 +218,13 @@ function AdminOrders() {
                         className="px-4 py-2 bg-purple-600 text-white text-xs font-medium rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 whitespace-nowrap"
                       >
                         Marquer expediee
+                      </button>
+                      <button
+                        onClick={() => handleAction(order.id, { action: "resend_preparation" })}
+                        disabled={isLoading}
+                        className="px-4 py-2 bg-white text-gray-600 text-xs font-medium rounded-lg border border-[#DBDBDB] hover:bg-gray-50 transition-colors disabled:opacity-50"
+                      >
+                        Renvoyer bon preparation
                       </button>
                     </>
                   )}

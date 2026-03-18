@@ -17,8 +17,10 @@ export async function GET(req: NextRequest) {
     .limit(100);
 
   if (status === "needs_tracking") {
-    query = query.eq("status", "processing").is("tracking_number", null);
+    query = query.in("status", ["confirmed", "processing"]).is("tracking_number", null);
   } else if (status === "action_needed") {
+    query = query.in("status", ["confirmed", "processing"]).is("tracking_number", null);
+  } else if (status === "confirmed") {
     query = query.in("status", ["confirmed", "processing"]);
   } else if (status && status !== "all") {
     query = query.eq("status", status);

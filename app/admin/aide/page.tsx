@@ -39,7 +39,7 @@ export default function AdminAidePage() {
       <Section title="2. Le flow complet d'une commande">
         <p>
           Voici ce qui se passe de A a Z quand un client passe commande.
-          Les etapes vertes sont <b>100% automatiques</b>, les violettes necessitent ton action.
+          Les etapes vertes sont <b>100% automatiques</b>, la violette est ta seule action.
         </p>
         <div className="flex flex-wrap gap-4 my-4 text-xs">
           <span className="flex items-center gap-2"><span className="h-3 w-3 rounded-full bg-[#8DC63F]" /> Automatique</span>
@@ -50,23 +50,23 @@ export default function AdminAidePage() {
           <FlowStep num={1} auto label="Le client passe commande et paie" tag="auto">
             Le client ajoute ses produits au panier, va au checkout, et paie par carte (Visa, Mastercard, Apple Pay, Google Pay) via Stripe.
           </FlowStep>
-          <FlowStep num={2} auto label="La commande est enregistree" tag="auto">
-            La commande est enregistree en base de donnees avec tous les details. Le stock est decremente automatiquement.
+          <FlowStep num={2} auto label="Commande enregistree + stock decremente" tag="auto">
+            La commande est enregistree en base de donnees. Le stock est decremente automatiquement.
           </FlowStep>
           <FlowStep num={3} auto label="Email de confirmation → client" tag="email">
             Le client recoit un email de confirmation avec le recapitulatif de sa commande.
           </FlowStep>
           <FlowStep num={4} auto label="Bon de preparation → Golf des Marques" tag="email">
-            Un email est envoye a Golf des Marques avec la liste des articles a preparer et l&apos;adresse de livraison.
+            Un email est envoye <b>immediatement</b> a Golf des Marques avec la liste des articles a preparer et l&apos;adresse de livraison.
           </FlowStep>
           <FlowStep num={5} auto label="Alerte stock (si necessaire)" tag="email">
             Si le stock d&apos;un produit descend en dessous de 3 unites, tu recois un email d&apos;alerte.
           </FlowStep>
-          <FlowStep num={6} label="Golf des Marques prepare et expedie" tag="manual">
-            Ils preparent le colis, creent l&apos;etiquette DPD, et t&apos;envoient le numero de tracking.
+          <FlowStep num={6} auto label="Golf des Marques prepare et expedie" tag="auto">
+            Ils recoivent le bon, preparent le colis, creent l&apos;etiquette DPD, et t&apos;envoient le numero de tracking.
           </FlowStep>
           <FlowStep num={7} label="Tu saisis le tracking dans l'admin" tag="manual">
-            Sur la page Commandes, entre le numero de tracking directement dans le champ a cote de la commande et clique &quot;Marquer expediee&quot;. Pas besoin d&apos;ouvrir le detail.
+            Sur la page Commandes, entre le numero de tracking dans le champ et clique &quot;Marquer expediee&quot;. C&apos;est ta <b>seule action</b>.
           </FlowStep>
           <FlowStep num={8} auto label="Email d'expedition → client" tag="email">
             Le client recoit automatiquement un email avec son numero de suivi DPD.
@@ -74,7 +74,7 @@ export default function AdminAidePage() {
         </div>
         <InfoBox color="blue">
           <strong>En resume, tu n&apos;as qu&apos;une seule action a faire :</strong>{" "}
-          saisir le numero de tracking dans l&apos;admin quand Golf des Marques te le donne. Tout le reste est automatique.
+          saisir le numero de tracking dans l&apos;admin quand Golf des Marques te le donne. Tout le reste est 100% automatique.
         </InfoBox>
       </Section>
 
@@ -99,22 +99,21 @@ export default function AdminAidePage() {
               <tr className="bg-gray-100 text-left">
                 <th className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Statut</th>
                 <th className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Couleur</th>
-                <th className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Action possible</th>
+                <th className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase">Ce que tu fais</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              <tr><td className="px-3 py-2 font-medium">Confirmee</td><td className="px-3 py-2 text-blue-700">● Bleu</td><td className="px-3 py-2">Bouton &quot;Passer en preparation&quot;</td></tr>
-              <tr><td className="px-3 py-2 font-medium">En preparation</td><td className="px-3 py-2 text-indigo-700">● Indigo</td><td className="px-3 py-2">Champ tracking + &quot;Marquer expediee&quot;</td></tr>
-              <tr><td className="px-3 py-2 font-medium">Expediee</td><td className="px-3 py-2 text-purple-700">● Violet</td><td className="px-3 py-2">Lien suivi DPD</td></tr>
+              <tr><td className="px-3 py-2 font-medium">En attente tracking</td><td className="px-3 py-2 text-amber-700">● Orange</td><td className="px-3 py-2">Saisir le tracking + &quot;Marquer expediee&quot;</td></tr>
+              <tr><td className="px-3 py-2 font-medium">Expediee</td><td className="px-3 py-2 text-purple-700">● Violet</td><td className="px-3 py-2">Lien suivi DPD (rien a faire)</td></tr>
               <tr><td className="px-3 py-2 font-medium">Livree</td><td className="px-3 py-2 text-green-700">● Vert</td><td className="px-3 py-2">—</td></tr>
               <tr><td className="px-3 py-2 font-medium">Annulee</td><td className="px-3 py-2 text-red-700">● Rouge</td><td className="px-3 py-2">—</td></tr>
             </tbody>
           </table>
         </div>
         <InfoBox color="green">
-          <strong>Nouveau : actions sans quitter la liste</strong>
-          Tu peux saisir le tracking et marquer une commande comme expediee directement depuis la liste, sans ouvrir le detail.
-          Les commandes en attente depuis plus de 2 jours s&apos;affichent en rouge.
+          <strong>Tout est direct</strong>
+          Le bon de preparation part automatiquement a Golf des Marques au moment du paiement.
+          Tu n&apos;as qu&apos;a saisir le tracking quand tu le recois. Les commandes sans tracking depuis 2+ jours s&apos;affichent en rouge.
         </InfoBox>
 
         <h3 className="text-base font-semibold mt-6 mb-2">3.3 — Stock</h3>
@@ -141,7 +140,7 @@ export default function AdminAidePage() {
             </thead>
             <tbody className="divide-y divide-gray-100">
               <tr><td className="px-3 py-2 font-medium">Confirmation commande</td><td className="px-3 py-2">Client</td><td className="px-3 py-2">Au paiement</td></tr>
-              <tr><td className="px-3 py-2 font-medium">Bon de preparation</td><td className="px-3 py-2">Golf des Marques</td><td className="px-3 py-2">Au paiement</td></tr>
+              <tr><td className="px-3 py-2 font-medium">Bon de preparation</td><td className="px-3 py-2">Golf des Marques</td><td className="px-3 py-2">Au paiement (automatique)</td></tr>
               <tr><td className="px-3 py-2 font-medium">Notification expedition</td><td className="px-3 py-2">Client</td><td className="px-3 py-2">Quand tu ajoutes le tracking</td></tr>
               <tr><td className="px-3 py-2 font-medium">Alerte stock</td><td className="px-3 py-2">Toi (Fred)</td><td className="px-3 py-2">Stock &le; 3 apres une vente</td></tr>
             </tbody>
@@ -168,10 +167,10 @@ export default function AdminAidePage() {
             Apres le paiement, verifie ta boite : confirmation commande + bon de preparation. Si rien, verifie les spams.
           </TestStep>
           <TestStep num={4} title="Voir la commande dans l'admin">
-            Va sur le Dashboard. Ta commande test apparait dans les &quot;Nouvelles commandes&quot;.
+            Va sur le Dashboard. Ta commande test apparait dans &quot;En attente tracking&quot;. Le bon de preparation a deja ete envoye automatiquement.
           </TestStep>
           <TestStep num={5} title="Ajouter un tracking">
-            Dans la liste des commandes, saisis un numero test (ex: <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">09981234567890</code>) et clique &quot;Marquer expediee&quot;. Le client recoit l&apos;email.
+            Dans la liste des commandes, saisis un numero test (ex: <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">09981234567890</code>) et clique &quot;Marquer expediee&quot;. Le client recoit l&apos;email d&apos;expedition.
           </TestStep>
           <TestStep num={6} title="Tester le stock">
             Va sur Stock, modifie une quantite, teste le bouton &quot;Rupture&quot;. Verifie que le site affiche &quot;Sur commande&quot; sur la fiche produit.
@@ -207,7 +206,7 @@ export default function AdminAidePage() {
       {/* 7. FAQ */}
       <Section title="7. Questions frequentes">
         <FaqItem q="Golf des Marques n'a pas recu l'email de preparation ?">
-          Dans le detail de la commande, clique &quot;Renvoyer le bon de preparation&quot;. L&apos;email est renvoye immediatement.
+          Dans la liste des commandes, clique &quot;Renvoyer bon preparation&quot; a cote de la commande concernee. L&apos;email est renvoye immediatement.
         </FaqItem>
         <FaqItem q="Je veux annuler une commande ?">
           Change le statut en &quot;Annulee&quot; dans le detail. Le remboursement se fait directement depuis le dashboard Stripe (dashboard.stripe.com).
