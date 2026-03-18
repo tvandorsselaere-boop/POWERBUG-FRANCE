@@ -161,6 +161,18 @@ export default async function Home() {
 
         <div className="absolute inset-0 bg-black/50" />
 
+        {/* Logo PowerBug — mobile only (pas de logo dans la vidéo mobile) */}
+        <div className="absolute inset-0 z-[5] flex items-center justify-center sm:hidden">
+          <Image
+            src="/images/powerbug-logo.png"
+            alt=""
+            width={320}
+            height={80}
+            className="w-[80%] max-w-[340px] opacity-30 brightness-0 invert"
+            aria-hidden="true"
+          />
+        </div>
+
         <div className="relative z-10 flex h-full flex-col justify-between px-6 py-12 text-center sm:py-16 lg:px-10 lg:py-20">
           {/* Texte en haut */}
           <div>

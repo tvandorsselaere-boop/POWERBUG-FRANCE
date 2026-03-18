@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 
 const VIDEOS_DESKTOP = ["/videos/nx-showcase.mp4", "/videos/nx-action.mp4"];
-const VIDEOS_MOBILE = ["/videos/nx-showcase.mp4"];
+const VIDEOS_MOBILE = ["/videos/mobile.mp4"];
 
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
