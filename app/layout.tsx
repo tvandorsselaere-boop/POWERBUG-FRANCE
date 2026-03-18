@@ -39,8 +39,14 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "PowerBug France | Chariots Électriques de Golf Premium",
+    description: "Distributeur exclusif France des chariots électriques de golf PowerBug. Qualité britannique, livraison France entière.",
+  },
   icons: {
-    icon: "/favicon.svg",
+    icon: "/images/logo/powerbug-logo-hd.png",
+    apple: "/images/logo/powerbug-logo-hd.png",
   },
 };
 
