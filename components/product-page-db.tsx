@@ -148,7 +148,7 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
             </div>
 
             <div className="mt-4">
-              <AddToCartButton product={cartProduct} className="px-8 text-base font-semibold" />
+              <AddToCartButton product={cartProduct} className="px-8 text-base font-semibold" outOfStock={variant?.stock_status === "out_of_stock"} />
               <p className="mt-3 text-sm text-[#6B7280]">
                 {isTrolley
                   ? "+ 14,90\u00A0\u20AC — Livraison DPD à domicile, France métropolitaine"

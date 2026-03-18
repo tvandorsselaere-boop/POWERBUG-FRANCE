@@ -10,10 +10,12 @@ export function AddToCartButton({
   product,
   size = "lg",
   className = "",
+  outOfStock = false,
 }: {
   product: Product;
   size?: "default" | "sm" | "lg";
   className?: string;
+  outOfStock?: boolean;
 }) {
   const [added, setAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
@@ -29,6 +31,18 @@ export function AddToCartButton({
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };
+
+  if (outOfStock) {
+    return (
+      <Button
+        size={size}
+        disabled
+        className={`rounded-[10px] bg-gray-200 text-gray-500 cursor-not-allowed ${className}`}
+      >
+        Sur commande
+      </Button>
+    );
+  }
 
   return (
     <Button

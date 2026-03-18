@@ -29,6 +29,21 @@ const FAQ_ITEMS = [
     answer:
       "Pour maximiser la durée de vie de votre batterie lithium (estimée à 5–7 ans), rechargez-la après chaque utilisation, même partiellement déchargée. Stockez-la à température ambiante (entre 10 °C et 25 °C), à l'abri de l'humidité. Évitez la décharge complète et ne la laissez pas branchée sur le chargeur plusieurs jours consécutifs. En hiver, si le chariot est rangé plusieurs semaines, maintenez la batterie à 50 % de charge.",
   },
+  {
+    question: "Combien coûte un chariot PowerBug ?",
+    answer:
+      "Le NX Lithium est à 799\u00A0€ et le NX DHC Lithium à 899\u00A0€. Chaque achat de chariot inclut 2 accessoires offerts d'une valeur de ~60\u00A0€ : le porte-parapluie NX et le porte-scorecard. Des accessoires supplémentaires sont disponibles à partir de 20\u00A0€ dans notre catalogue.",
+  },
+  {
+    question: "Quelle est la différence entre une batterie lithium et une batterie plomb ?",
+    answer:
+      "La batterie lithium PowerBug pèse environ 2 kg contre 8 à 10 kg pour une batterie plomb équivalente. Elle offre une durée de vie 3 à 5 fois supérieure (5–7 ans contre 1–2 ans pour le plomb), se recharge plus rapidement et maintient une puissance constante du début à la fin de la charge. C'est un investissement durable qui allège considérablement le poids total du chariot.",
+  },
+  {
+    question: "Peut-on retourner un chariot PowerBug ?",
+    answer:
+      "Oui, nous proposons une politique de retour sous 30 jours. Si le chariot ne vous convient pas, vous pouvez le retourner dans son emballage d'origine pour un remboursement. Contactez notre service client pour organiser le retour.",
+  },
 ];
 
 export function HomeFaq() {

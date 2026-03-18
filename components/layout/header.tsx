@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Menu, ShoppingCart, User, LogOut, Package, Settings, ChevronDown } from "lucide-react";
+import { Menu, ShoppingCart, User, LogOut, Package, Settings, ChevronDown, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -29,8 +29,14 @@ const navigation = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const { user, loading, signOut } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!user) { setIsAdmin(false); return; }
+    fetch("/api/admin/check").then((r) => r.json()).then((d) => setIsAdmin(d.isAdmin === true)).catch(() => setIsAdmin(false));
+  }, [user]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -105,6 +111,17 @@ export function Header() {
                       Parametres
                     </Link>
                   </DropdownMenuItem>
+                  {isAdmin && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem asChild>
+                        <Link href="/admin" className="cursor-pointer">
+                          <Shield className="mr-2 h-4 w-4" />
+                          Administration
+                        </Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-600 focus:text-red-600">
                     <LogOut className="mr-2 h-4 w-4" />
@@ -159,6 +176,11 @@ export function Header() {
                     <Link href="/compte/commandes" onClick={() => setOpen(false)} className="rounded-lg px-4 py-3 text-base font-medium text-[#0F0F10] transition-colors hover:bg-[#F5F5F5] hover:text-[#356B0D]">
                       Mes commandes
                     </Link>
+                    {isAdmin && (
+                      <Link href="/admin" onClick={() => setOpen(false)} className="rounded-lg px-4 py-3 text-base font-medium text-[#356B0D] transition-colors hover:bg-[#F5F5F5]">
+                        Administration
+                      </Link>
+                    )}
                     <button
                       onClick={() => { setOpen(false); handleSignOut(); }}
                       className="rounded-lg px-4 py-3 text-left text-base font-medium text-red-600 transition-colors hover:bg-red-50"

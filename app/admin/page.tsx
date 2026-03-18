@@ -3,163 +3,246 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-const STATUS_LABELS: Record<string, string> = {
-  confirmed: "Confirmée",
-  processing: "En préparation",
-  shipped: "Expédiée",
-  delivered: "Livrée",
-  cancelled: "Annulée",
-  refunded: "Remboursée",
-};
-
-const STATUS_COLORS: Record<string, string> = {
-  confirmed: "bg-blue-100 text-blue-800",
-  processing: "bg-indigo-100 text-indigo-800",
-  shipped: "bg-purple-100 text-purple-800",
-  delivered: "bg-green-100 text-green-800",
-  cancelled: "bg-red-100 text-red-800",
-  refunded: "bg-gray-100 text-gray-800",
-};
-
 export default async function AdminDashboard() {
   const supabase = createServiceClient();
+  const today = new Date().toISOString().split("T")[0];
 
-  // Fetch recent orders
-  const { data: orders } = await supabase
-    .from("orders")
-    .select("id, order_number, email, status, total, tracking_number, created_at, shipping_address")
-    .eq("store", "powerbug")
-    .order("created_at", { ascending: false })
-    .limit(10);
+  const [
+    confirmedRes,
+    needsTrackingRes,
+    shippedTodayRes,
+    allOrdersRes,
+    lowStockData,
+    todayRevenueRes,
+    monthRevenueRes,
+  ] = await Promise.all([
+    supabase
+      .from("orders")
+      .select("*", { count: "exact", head: true })
+      .eq("store", "powerbug")
+      .eq("status", "confirmed"),
+    supabase
+      .from("orders")
+      .select("*", { count: "exact", head: true })
+      .eq("store", "powerbug")
+      .eq("status", "processing")
+      .is("tracking_number", null),
+    supabase
+      .from("orders")
+      .select("*", { count: "exact", head: true })
+      .eq("store", "powerbug")
+      .eq("status", "shipped")
+      .gte("updated_at", today),
+    supabase
+      .from("orders")
+      .select("*", { count: "exact", head: true })
+      .eq("store", "powerbug"),
+    supabase
+      .from("products")
+      .select("id, name, slug, product_variants(stock_quantity, sku)")
+      .eq("store", "powerbug")
+      .eq("is_active", true),
+    supabase
+      .from("orders")
+      .select("total")
+      .eq("store", "powerbug")
+      .gte("created_at", today),
+    supabase
+      .from("orders")
+      .select("total")
+      .eq("store", "powerbug")
+      .gte("created_at", new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString()),
+  ]);
 
-  // Fetch order counts by status
-  const { count: totalOrders } = await supabase
-    .from("orders")
-    .select("*", { count: "exact", head: true })
-    .eq("store", "powerbug");
+  const confirmedCount = confirmedRes.count ?? 0;
+  const needsTrackingCount = needsTrackingRes.count ?? 0;
+  const shippedTodayCount = shippedTodayRes.count ?? 0;
+  const totalOrders = allOrdersRes.count ?? 0;
+  const todayRevenue = (todayRevenueRes.data ?? []).reduce((s, o) => s + (o.total ?? 0), 0);
+  const monthRevenue = (monthRevenueRes.data ?? []).reduce((s, o) => s + (o.total ?? 0), 0);
 
-  const { count: pendingOrders } = await supabase
-    .from("orders")
-    .select("*", { count: "exact", head: true })
-    .eq("store", "powerbug")
-    .in("status", ["confirmed", "processing"]);
+  type StockProduct = { id: string; name: string; slug: string; product_variants: { stock_quantity: number; sku: string | null }[] };
+  const products = (lowStockData.data ?? []) as unknown as StockProduct[];
+  const stockAlerts: { name: string; slug: string; stock: number; sku: string | null }[] = [];
+  let outOfStockCount = 0;
+  let lowStockCount = 0;
+  for (const p of products) {
+    for (const v of p.product_variants ?? []) {
+      if (v.stock_quantity === 0) {
+        outOfStockCount++;
+        stockAlerts.push({ name: p.name, slug: p.slug, stock: 0, sku: v.sku });
+      } else if (v.stock_quantity <= 3) {
+        lowStockCount++;
+        stockAlerts.push({ name: p.name, slug: p.slug, stock: v.stock_quantity, sku: v.sku });
+      }
+    }
+  }
 
-  const { count: shippedOrders } = await supabase
-    .from("orders")
-    .select("*", { count: "exact", head: true })
-    .eq("store", "powerbug")
-    .eq("status", "shipped");
-
-  // Fetch low stock products
-  const { data: lowStockProducts } = await supabase
-    .from("products")
-    .select("id, name, slug, product_variants(stock_quantity, stock_status, sku)")
-    .eq("store", "powerbug")
-    .eq("is_active", true);
-
-  const stockAlerts = (lowStockProducts ?? [])
-    .filter((p) => {
-      const variants = p.product_variants as { stock_quantity: number }[];
-      return variants?.some((v) => v.stock_quantity <= 3);
-    })
-    .map((p) => {
-      const variant = (p.product_variants as { stock_quantity: number; sku: string | null }[])?.[0];
-      return { name: p.name, slug: p.slug, stock: variant?.stock_quantity ?? 0, sku: variant?.sku };
-    });
+  const hasUrgent = confirmedCount > 0 || needsTrackingCount > 0 || outOfStockCount > 0;
+  const dateStr = new Date().toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-[#0F0F10] mb-6">Dashboard</h1>
-
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Total commandes" value={totalOrders ?? 0} />
-        <StatCard label="En attente" value={pendingOrders ?? 0} color="text-blue-600" />
-        <StatCard label="Expédiées" value={shippedOrders ?? 0} color="text-purple-600" />
-        <StatCard label="Alertes stock" value={stockAlerts.length} color={stockAlerts.length > 0 ? "text-red-600" : "text-green-600"} />
+      <div className="mb-8">
+        <h1 className="text-2xl font-semibold text-[#0F0F10]">Tableau de bord</h1>
+        <p className="text-sm text-gray-500 capitalize">{dateStr}</p>
       </div>
 
-      {/* Stock Alerts */}
+      {/* Action cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <ActionCard
+          href="/admin/commandes?status=confirmed"
+          count={confirmedCount}
+          label="Nouvelles commandes"
+          sublabel="A traiter"
+          icon="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+          urgent={confirmedCount > 0}
+          color="blue"
+        />
+        <ActionCard
+          href="/admin/commandes?status=needs_tracking"
+          count={needsTrackingCount}
+          label="En attente de tracking"
+          sublabel="Saisir le n° DPD"
+          icon="M21 12a9 9 0 11-18 0 9 9 0 0118 0zM12 8v4l3 3"
+          urgent={needsTrackingCount > 0}
+          color="amber"
+        />
+        <ActionCard
+          href="/admin/stock"
+          count={outOfStockCount + lowStockCount}
+          label="Alertes stock"
+          sublabel={outOfStockCount > 0 ? `${outOfStockCount} rupture${outOfStockCount > 1 ? "s" : ""}` : "Stock faible"}
+          icon="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+          urgent={outOfStockCount > 0}
+          color={outOfStockCount > 0 ? "red" : "amber"}
+        />
+        <ActionCard
+          href="/admin/commandes?status=shipped"
+          count={shippedTodayCount}
+          label="Expeditions du jour"
+          sublabel="Aujourd'hui"
+          icon="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"
+          urgent={false}
+          color="green"
+        />
+      </div>
+
+      {/* All good message */}
+      {!hasUrgent && (
+        <div className="rounded-xl bg-green-50 border border-green-200 p-6 mb-8 text-center">
+          <svg className="w-8 h-8 text-green-600 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          <p className="text-green-800 font-medium">Tout est en ordre — aucune action urgente</p>
+        </div>
+      )}
+
+      {/* Quick stats */}
+      <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="bg-white rounded-xl border border-[#DBDBDB] p-5">
+          <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Total commandes</p>
+          <p className="text-3xl font-bold text-[#0F0F10]">{totalOrders}</p>
+        </div>
+        <div className="bg-white rounded-xl border border-[#DBDBDB] p-5">
+          <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">CA aujourd&apos;hui</p>
+          <p className="text-3xl font-bold text-[#356B0D]">{todayRevenue.toFixed(0)}&nbsp;&euro;</p>
+        </div>
+        <div className="bg-white rounded-xl border border-[#DBDBDB] p-5">
+          <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">CA ce mois</p>
+          <p className="text-3xl font-bold text-[#0F0F10]">{monthRevenue.toFixed(0)}&nbsp;&euro;</p>
+        </div>
+      </div>
+
+      {/* Stock alerts detail */}
       {stockAlerts.length > 0 && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-5 mb-8">
-          <h2 className="text-sm font-semibold text-red-800 uppercase tracking-wide mb-3">Alertes stock</h2>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-sm font-semibold text-red-800 uppercase tracking-wide">Alertes stock</h2>
+            <Link href="/admin/stock" className="text-sm text-red-700 font-medium hover:underline">
+              Gerer le stock &rarr;
+            </Link>
+          </div>
           <div className="space-y-2">
-            {stockAlerts.map((alert) => (
-              <div key={alert.slug} className="flex items-center justify-between bg-white rounded-lg px-4 py-2.5 border border-red-100">
+            {stockAlerts.slice(0, 6).map((alert) => (
+              <div key={alert.slug + alert.sku} className="flex items-center justify-between bg-white rounded-lg px-4 py-2.5 border border-red-100">
                 <span className="text-sm font-medium">{alert.name}</span>
                 <span className={`text-sm font-bold ${alert.stock === 0 ? "text-red-600" : "text-amber-600"}`}>
-                  {alert.stock === 0 ? "Rupture" : `${alert.stock} restant${alert.stock > 1 ? "s" : ""}`}
+                  {alert.stock === 0 ? "RUPTURE" : `${alert.stock} restant${alert.stock > 1 ? "s" : ""}`}
                 </span>
               </div>
             ))}
           </div>
-          <Link href="/admin/stock" className="text-sm text-red-700 font-medium hover:underline mt-3 inline-block">
-            Voir tout le stock →
-          </Link>
         </div>
       )}
 
-      {/* Recent Orders */}
-      <div className="bg-white rounded-xl border border-[#DBDBDB] overflow-hidden">
-        <div className="px-5 py-4 border-b border-[#DBDBDB] flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-[#0F0F10] uppercase tracking-wide">Dernières commandes</h2>
-          <Link href="/admin/commandes" className="text-sm text-[#356B0D] font-medium hover:underline">
-            Voir tout →
-          </Link>
-        </div>
-        {(!orders || orders.length === 0) ? (
-          <div className="p-8 text-center text-gray-400 text-sm">Aucune commande pour le moment</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-gray-50 text-left">
-                  <th className="px-5 py-3 font-medium text-gray-500">N°</th>
-                  <th className="px-5 py-3 font-medium text-gray-500">Client</th>
-                  <th className="px-5 py-3 font-medium text-gray-500">Total</th>
-                  <th className="px-5 py-3 font-medium text-gray-500">Statut</th>
-                  <th className="px-5 py-3 font-medium text-gray-500">Date</th>
-                  <th className="px-5 py-3"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order) => (
-                  <tr key={order.id} className="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td className="px-5 py-3 font-mono text-xs">{order.id.slice(0, 8).toUpperCase()}</td>
-                    <td className="px-5 py-3">
-                      <div className="font-medium">{(order.shipping_address as Record<string, string>)?.name ?? "—"}</div>
-                      <div className="text-xs text-gray-400">{order.email}</div>
-                    </td>
-                    <td className="px-5 py-3 font-medium">{order.total?.toFixed(2)} €</td>
-                    <td className="px-5 py-3">
-                      <span className={`inline-block px-2.5 py-1 rounded-full text-xs font-medium ${STATUS_COLORS[order.status] ?? "bg-gray-100 text-gray-800"}`}>
-                        {STATUS_LABELS[order.status] ?? order.status}
-                      </span>
-                    </td>
-                    <td className="px-5 py-3 text-gray-500">
-                      {new Date(order.created_at).toLocaleDateString("fr-FR", { day: "2-digit", month: "short" })}
-                    </td>
-                    <td className="px-5 py-3">
-                      <Link href={`/admin/commandes/${order.id}`} className="text-[#356B0D] font-medium hover:underline text-xs">
-                        Détail
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+      {/* Quick links */}
+      <div className="flex flex-wrap gap-3">
+        <Link
+          href="/admin/commandes"
+          className="px-5 py-2.5 bg-[#356B0D] text-white text-sm font-medium rounded-[10px] hover:bg-[#2d5a0b] transition-colors"
+        >
+          Toutes les commandes
+        </Link>
+        <Link
+          href="/admin/stock"
+          className="px-5 py-2.5 bg-white text-[#0F0F10] text-sm font-medium rounded-[10px] border border-[#DBDBDB] hover:bg-gray-50 transition-colors"
+        >
+          Gerer le stock
+        </Link>
+        <Link
+          href="/"
+          className="px-5 py-2.5 bg-white text-gray-500 text-sm font-medium rounded-[10px] border border-[#DBDBDB] hover:bg-gray-50 transition-colors"
+        >
+          Voir le site &rarr;
+        </Link>
       </div>
     </div>
   );
 }
 
-function StatCard({ label, value, color = "text-[#0F0F10]" }: { label: string; value: number; color?: string }) {
+function ActionCard({
+  href,
+  count,
+  label,
+  sublabel,
+  icon,
+  urgent,
+  color,
+}: {
+  href: string;
+  count: number;
+  label: string;
+  sublabel: string;
+  icon: string;
+  urgent: boolean;
+  color: "blue" | "amber" | "red" | "green";
+}) {
+  const bg = urgent
+    ? { blue: "bg-blue-50 border-blue-200", amber: "bg-amber-50 border-amber-200", red: "bg-red-50 border-red-200", green: "bg-green-50 border-green-200" }[color]
+    : "bg-white border-[#DBDBDB]";
+  const textColor = urgent
+    ? { blue: "text-blue-700", amber: "text-amber-700", red: "text-red-700", green: "text-green-700" }[color]
+    : "text-gray-400";
+  const countColor = urgent
+    ? { blue: "text-blue-800", amber: "text-amber-800", red: "text-red-800", green: "text-green-800" }[color]
+    : "text-[#0F0F10]";
+
   return (
-    <div className="bg-white rounded-xl border border-[#DBDBDB] p-5">
-      <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">{label}</p>
-      <p className={`text-3xl font-bold ${color}`}>{value}</p>
-    </div>
+    <Link href={href} className={`rounded-xl border p-5 transition-all hover:shadow-md ${bg}`}>
+      <div className="flex items-start justify-between mb-3">
+        <svg className={`w-6 h-6 ${textColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <path strokeLinecap="round" strokeLinejoin="round" d={icon} />
+        </svg>
+        {urgent && (
+          <span className={`inline-flex h-2.5 w-2.5 rounded-full ${
+            { blue: "bg-blue-500", amber: "bg-amber-500", red: "bg-red-500", green: "bg-green-500" }[color]
+          } animate-pulse`} />
+        )}
+      </div>
+      <p className={`text-3xl font-bold ${countColor}`}>{count}</p>
+      <p className="text-sm font-medium text-[#0F0F10] mt-1">{label}</p>
+      <p className={`text-xs mt-0.5 ${textColor}`}>{sublabel}</p>
+    </Link>
   );
 }

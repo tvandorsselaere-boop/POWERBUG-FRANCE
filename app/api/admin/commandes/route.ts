@@ -16,7 +16,11 @@ export async function GET(req: NextRequest) {
     .order("created_at", { ascending: false })
     .limit(100);
 
-  if (status && status !== "all") {
+  if (status === "needs_tracking") {
+    query = query.eq("status", "processing").is("tracking_number", null);
+  } else if (status === "action_needed") {
+    query = query.in("status", ["confirmed", "processing"]);
+  } else if (status && status !== "all") {
     query = query.eq("status", status);
   }
 

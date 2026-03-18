@@ -7,9 +7,10 @@ import { trolleySpecs } from "@/lib/data/products";
 import { getTrolleys } from "@/lib/supabase/queries";
 
 export const metadata: Metadata = {
-  title: "Comparateur NX vs NX DHC - Chariots PowerBug",
+  title: "Comparateur NX vs NX DHC - Chariots Électriques PowerBug",
   description:
-    "Comparez les chariots electriques PowerBug NX Lithium et NX DHC Lithium. Specs, prix, fonctionnalites cote a cote.",
+    "Comparez les chariots électriques PowerBug NX Lithium (799€) et NX DHC Lithium (899€). Specs, prix, Downhill Control, pliage VRAP. 2 accessoires offerts avec chaque chariot.",
+  alternates: { canonical: "/trolleys" },
 };
 
 export const revalidate = 3600;
@@ -50,7 +51,7 @@ export default async function TrolleysPage() {
       {/* Header */}
       <div className="mb-4 text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-[#6B7280]">
-          Portee 2025
+          Gamme 2026
         </p>
       </div>
       <div className="mb-14 text-center">
@@ -60,6 +61,16 @@ export default async function TrolleysPage() {
         <p className="mx-auto mt-4 max-w-2xl text-lg text-[#6B7280]">
           Trouvez le chariot qui vous correspond. Le NX pour l&apos;essentiel, le
           NX DHC pour le controle total.
+        </p>
+      </div>
+
+      {/* Introduction prose */}
+      <div className="mx-auto mb-14 max-w-3xl space-y-4 text-[#6B7280]">
+        <p className="leading-relaxed">
+          Tous les chariots PowerBug de la série NX partagent le même ADN : un système d&apos;alimentation 28V à batterie lithium, le pliage VRAP ultra-compact breveté et un moteur brushless silencieux. La différence entre le NX et le NX DHC se situe au niveau du contrôle en descente et du freinage.
+        </p>
+        <p className="leading-relaxed">
+          Le <strong className="text-[#0F0F10]">NX Lithium</strong> est le choix idéal pour les golfeurs qui recherchent un chariot électrique fiable, léger (7,9&nbsp;kg) et performant sur terrain plat ou légèrement vallonné. Le <strong className="text-[#0F0F10]">NX DHC Lithium</strong> ajoute le système Downhill Control qui régule automatiquement la vitesse en descente, ainsi qu&apos;un frein parking électronique — indispensable sur les parcours avec du dénivelé.
         </p>
       </div>
 
@@ -249,6 +260,21 @@ export default async function TrolleysPage() {
         </div>
       </div>
 
+      {/* Comment choisir */}
+      <div className="mt-16 mx-auto max-w-3xl">
+        <h2 className="mb-6 text-2xl font-bold text-[#0F0F10] sm:text-3xl">
+          Comment choisir entre le NX et le NX DHC ?
+        </h2>
+        <div className="space-y-4 text-[#6B7280]">
+          <p className="leading-relaxed">
+            Le choix entre le NX et le NX DHC dépend principalement de votre parcours habituel. Si vous jouez sur un terrain relativement plat, le <strong className="text-[#0F0F10]">NX Lithium à 799&nbsp;&euro;</strong> offre toutes les fonctionnalités essentielles avec un rapport qualité-prix excellent. Si votre parcours comporte des pentes marquées ou si vous souhaitez un contrôle maximal dans toutes les situations, le <strong className="text-[#0F0F10]">NX DHC Lithium à 899&nbsp;&euro;</strong> est le choix recommandé.
+          </p>
+          <p className="leading-relaxed">
+            Les deux modèles bénéficient de la même batterie lithium 36 trous, du même pliage VRAP en moins de 5 secondes et de la même garantie constructeur 2 ans. Avec l&apos;offre de lancement, 2 accessoires d&apos;une valeur de ~60&nbsp;&euro; sont inclus avec chaque chariot : le porte-parapluie NX et le porte-scorecard.
+          </p>
+        </div>
+      </div>
+
       {/* Bundle CTA */}
       <div className="mt-16 flex items-start gap-4 rounded-2xl border border-[#356B0D]/20 bg-[#356B0D]/5 p-8 sm:items-center sm:p-12">
         <Gift className="h-10 w-10 shrink-0 text-[#356B0D]" />
@@ -265,6 +291,38 @@ export default async function TrolleysPage() {
           >
             <Link href="/#quiz">Quel trolley pour moi ?</Link>
           </Button>
+        </div>
+      </div>
+
+      {/* FAQ Trolleys */}
+      <div className="mt-16 mx-auto max-w-3xl">
+        <h2 className="mb-8 text-2xl font-bold text-[#0F0F10] sm:text-3xl">
+          Questions fréquentes sur les chariots
+        </h2>
+        <div className="divide-y divide-[#DBDBDB]">
+          {[
+            {
+              q: "Quelle autonomie a la batterie du PowerBug NX ?",
+              a: "La batterie lithium 28V offre une autonomie de 36 trous (2 tours complets) sur une seule charge. La durée de vie estimée de la batterie est de 5 à 7 ans avec un entretien standard : rechargez après chaque utilisation et stockez à température ambiante.",
+            },
+            {
+              q: "Le NX se plie-t-il facilement ?",
+              a: "Oui, grâce au système de pliage VRAP breveté, le NX se plie en moins de 5 secondes, roues comprises. Plié, il est suffisamment compact pour se glisser dans n\u2019importe quel coffre de voiture. Le NX pèse 7,9 kg et le NX DHC 8,2 kg, batterie incluse.",
+            },
+            {
+              q: "Peut-on ajouter des accessoires au NX ?",
+              a: "Chaque chariot NX dispose d\u2019une station accessoires intégrée permettant de fixer les accessoires PowerBug : porte-parapluie, porte-scorecard, support téléphone, sac isotherme, mitaines chauffantes et bien d\u2019autres. La fixation est universelle, sans outils.",
+            },
+            {
+              q: "Le NX DHC fonctionne-t-il sous la pluie ?",
+              a: "Oui, les chariots PowerBug NX sont conçus pour fonctionner par tous les temps. L\u2019électronique est protégée et les pneus Winter-Ready offrent une adhérence optimale sur terrain humide. Les pneus sont même inversibles pour passer en profil cranté l\u2019hiver.",
+            },
+          ].map((item) => (
+            <div key={item.q} className="py-5">
+              <h3 className="text-base font-semibold text-[#0F0F10]">{item.q}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[#6B7280]">{item.a}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

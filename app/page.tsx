@@ -136,6 +136,30 @@ const schemaFAQ = {
         text: "Rechargez après chaque utilisation, stockez entre 10°C et 25°C, évitez la décharge complète. Une batterie bien entretenue dure 5 à 7 ans.",
       },
     },
+    {
+      "@type": "Question",
+      name: "Combien coûte un chariot PowerBug ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Le NX Lithium est à 799€ et le NX DHC Lithium à 899€. Chaque achat de chariot inclut 2 accessoires offerts d'une valeur de ~60€ (porte-parapluie + porte-scorecard).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quelle est la différence entre une batterie lithium et une batterie plomb ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "La batterie lithium PowerBug pèse environ 2 kg contre 8-10 kg pour une batterie plomb équivalente. Elle dure 5 à 7 ans (contre 1-2 ans pour le plomb), se recharge plus vite et maintient une puissance constante du début à la fin de la charge.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Peut-on retourner un chariot PowerBug ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Oui, nous proposons une politique de retour sous 30 jours. Si le chariot ne vous convient pas, vous pouvez le retourner dans son emballage d'origine pour un remboursement.",
+      },
+    },
   ],
 };
 
@@ -328,6 +352,15 @@ export default async function Home() {
             </p>
           </div>
 
+          <div className="mx-auto mb-14 max-w-3xl space-y-4 text-center text-[#6B7280]">
+            <p className="leading-relaxed">
+              Fondée en 2003 en Angleterre par Wizza Ltd (Buckinghamshire), PowerBug s&apos;est imposée comme la marque de référence mondiale dans les chariots électriques de golf. Présente dans plus de 13 pays, la marque cumule plus de 8&nbsp;300 avis clients vérifiés sur Trustpilot et Reviews.co.uk, avec une note moyenne de 4.9 sur 5.
+            </p>
+            <p className="leading-relaxed">
+              En tant que distributeur exclusif officiel en France, PowerBug.fr vous garantit un service après-vente réactif, des pièces détachées disponibles localement et la garantie constructeur de 2 ans sur tous les produits. Vous bénéficiez de la qualité britannique avec un accompagnement 100&nbsp;% français.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature) => (
               <div
@@ -348,6 +381,40 @@ export default async function Home() {
                 <p className="mt-2 text-sm leading-relaxed text-[#6B7280]">{feature.description}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4b. TECHNOLOGIE LITHIUM */}
+      <section className="border-t border-[#DBDBDB] bg-white py-20 sm:py-28">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
+          <div className="mb-14 text-center">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#6B7280]">
+              Innovation
+            </p>
+            <h2 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
+              Technologie lithium 28V
+            </h2>
+          </div>
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-10 md:grid-cols-2">
+            <div className="space-y-4 text-[#6B7280]">
+              <h3 className="text-lg font-semibold text-[#0F0F10]">Puissance et autonomie</h3>
+              <p className="leading-relaxed">
+                La série NX est équipée du système d&apos;alimentation 28V, une technologie propriétaire PowerBug qui délivre une puissance constante du premier au dernier trou. Contrairement aux batteries au plomb traditionnelles, la batterie lithium du NX offre 36 trous d&apos;autonomie — soit 2 tours complets — pour un poids réduit de moitié.
+              </p>
+              <p className="leading-relaxed">
+                Le moteur brushless silencieux garantit un fonctionnement fluide et sans entretien, par tous les temps et sur tous les terrains. Montées, fairways humides après la pluie, terrains vallonnés : le 28V ne ralentit pas.
+              </p>
+            </div>
+            <div className="space-y-4 text-[#6B7280]">
+              <h3 className="text-lg font-semibold text-[#0F0F10]">Durabilité et entretien</h3>
+              <p className="leading-relaxed">
+                La batterie lithium PowerBug est conçue pour durer 5 à 7 ans avec un entretien minimal. Rechargez après chaque utilisation et stockez à température ambiante (entre 10&nbsp;°C et 25&nbsp;°C). Pas de décharge complète, pas de maintenance compliquée.
+              </p>
+              <p className="leading-relaxed">
+                Le système de pliage VRAP breveté permet de ranger le chariot en moins de 5 secondes, roues comprises. Le NX plié se glisse dans n&apos;importe quel coffre de voiture — idéal pour les golfeurs qui enchaînent les parcours.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -417,6 +484,28 @@ export default async function Home() {
                   </span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5b. DISTRIBUTION FRANCE */}
+      <section className="border-t border-[#DBDBDB] bg-[#F5F5F5] py-20 sm:py-28">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#6B7280]">
+              Service France
+            </p>
+            <h2 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
+              Distribution et SAV en France
+            </h2>
+            <div className="mt-6 space-y-4 text-[#6B7280]">
+              <p className="leading-relaxed">
+                PowerBug France assure la distribution exclusive des chariots PowerBug sur tout le territoire métropolitain. Chaque commande est expédiée via DPD avec suivi en temps réel, pour une livraison sous 2 à 4 jours ouvrés. Notre stock est maintenu en France pour garantir des délais courts.
+              </p>
+              <p className="leading-relaxed">
+                En cas de besoin, notre équipe basée en France prend en charge les demandes de garantie, les réparations et les pièces détachées. Vous n&apos;avez pas à traiter avec le Royaume-Uni : tout est géré localement, en français, avec la réactivité d&apos;un distributeur dédié.
+              </p>
             </div>
           </div>
         </div>

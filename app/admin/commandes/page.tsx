@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 interface Order {
@@ -12,25 +13,27 @@ interface Order {
   shipping_cost: number;
   tracking_number: string | null;
   created_at: string;
-  shipping_address: { name?: string } | null;
+  shipping_address: { name?: string; city?: string } | null;
 }
 
 const STATUSES = [
   { value: "all", label: "Toutes" },
-  { value: "confirmed", label: "Confirmées" },
-  { value: "processing", label: "En préparation" },
-  { value: "shipped", label: "Expédiées" },
-  { value: "delivered", label: "Livrées" },
-  { value: "cancelled", label: "Annulées" },
+  { value: "action_needed", label: "A traiter" },
+  { value: "needs_tracking", label: "Sans tracking" },
+  { value: "confirmed", label: "Confirmees" },
+  { value: "processing", label: "En preparation" },
+  { value: "shipped", label: "Expediees" },
+  { value: "delivered", label: "Livrees" },
+  { value: "cancelled", label: "Annulees" },
 ];
 
 const STATUS_LABELS: Record<string, string> = {
-  confirmed: "Confirmée",
-  processing: "En préparation",
-  shipped: "Expédiée",
-  delivered: "Livrée",
-  cancelled: "Annulée",
-  refunded: "Remboursée",
+  confirmed: "Confirmee",
+  processing: "En preparation",
+  shipped: "Expediee",
+  delivered: "Livree",
+  cancelled: "Annulee",
+  refunded: "Remboursee",
 };
 
 const STATUS_COLORS: Record<string, string> = {
@@ -42,10 +45,24 @@ const STATUS_COLORS: Record<string, string> = {
   refunded: "bg-gray-100 text-gray-800",
 };
 
-export default function AdminOrders() {
+export default function AdminOrdersPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-gray-400 text-sm">Chargement...</div>}>
+      <AdminOrders />
+    </Suspense>
+  );
+}
+
+function AdminOrders() {
+  const searchParams = useSearchParams();
+  const initialFilter = searchParams.get("status") ?? "all";
+
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState(initialFilter);
+  const [trackingInputs, setTrackingInputs] = useState<Record<string, string>>({});
+  const [actionLoading, setActionLoading] = useState<Record<string, boolean>>({});
+  const [messages, setMessages] = useState<Record<string, { type: "success" | "error"; text: string }>>({});
 
   useEffect(() => {
     fetchOrders();
@@ -57,11 +74,54 @@ export default function AdminOrders() {
       const res = await fetch(`/api/admin/commandes?status=${filter}`);
       const data = await res.json();
       setOrders(data.orders ?? []);
+      // Pre-fill tracking inputs
+      const inputs: Record<string, string> = {};
+      for (const o of data.orders ?? []) {
+        if (o.tracking_number) inputs[o.id] = o.tracking_number;
+      }
+      setTrackingInputs((prev) => ({ ...prev, ...inputs }));
     } catch {
       console.error("Failed to fetch orders");
     } finally {
       setLoading(false);
     }
+  }
+
+  async function handleAction(orderId: string, body: Record<string, string>) {
+    setActionLoading((prev) => ({ ...prev, [orderId]: true }));
+    setMessages((prev) => { const n = { ...prev }; delete n[orderId]; return n; });
+    try {
+      const res = await fetch(`/api/admin/commandes/${orderId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        setMessages((prev) => ({ ...prev, [orderId]: { type: "error", text: err.error ?? "Erreur" } }));
+      } else {
+        setMessages((prev) => ({ ...prev, [orderId]: { type: "success", text: "OK" } }));
+        setTimeout(() => fetchOrders(), 500);
+      }
+    } catch {
+      setMessages((prev) => ({ ...prev, [orderId]: { type: "error", text: "Erreur reseau" } }));
+    } finally {
+      setActionLoading((prev) => ({ ...prev, [orderId]: false }));
+    }
+  }
+
+  function handleMarkShipped(order: Order) {
+    const tracking = trackingInputs[order.id]?.trim();
+    if (!tracking) {
+      setMessages((prev) => ({ ...prev, [order.id]: { type: "error", text: "Saisissez un n° tracking" } }));
+      return;
+    }
+    handleAction(order.id, { status: "shipped", tracking_number: tracking });
+  }
+
+  // Age in days since creation
+  function orderAge(createdAt: string) {
+    return Math.floor((Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60 * 24));
   }
 
   return (
@@ -85,69 +145,129 @@ export default function AdminOrders() {
         ))}
       </div>
 
-      {/* Table */}
-      <div className="bg-white rounded-xl border border-[#DBDBDB] overflow-hidden">
-        {loading ? (
-          <div className="p-8 text-center text-gray-400 text-sm">Chargement...</div>
-        ) : orders.length === 0 ? (
-          <div className="p-8 text-center text-gray-400 text-sm">Aucune commande</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="bg-gray-50 text-left">
-                  <th className="px-5 py-3 font-medium text-gray-500">N°</th>
-                  <th className="px-5 py-3 font-medium text-gray-500">Date</th>
-                  <th className="px-5 py-3 font-medium text-gray-500">Client</th>
-                  <th className="px-5 py-3 font-medium text-gray-500">Total</th>
-                  <th className="px-5 py-3 font-medium text-gray-500">Statut</th>
-                  <th className="px-5 py-3 font-medium text-gray-500">Tracking</th>
-                  <th className="px-5 py-3"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order) => (
-                  <tr key={order.id} className="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td className="px-5 py-3 font-mono text-xs">{order.id.slice(0, 8).toUpperCase()}</td>
-                    <td className="px-5 py-3 text-gray-500">
-                      {new Date(order.created_at).toLocaleDateString("fr-FR", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </td>
-                    <td className="px-5 py-3">
-                      <div className="font-medium">{order.shipping_address?.name ?? "—"}</div>
-                      <div className="text-xs text-gray-400">{order.email}</div>
-                    </td>
-                    <td className="px-5 py-3 font-medium">{order.total?.toFixed(2)} €</td>
-                    <td className="px-5 py-3">
-                      <span
-                        className={`inline-block px-2.5 py-1 rounded-full text-xs font-medium ${
-                          STATUS_COLORS[order.status] ?? "bg-gray-100 text-gray-800"
-                        }`}
+      {/* Orders */}
+      {loading ? (
+        <div className="p-8 text-center text-gray-400 text-sm">Chargement...</div>
+      ) : orders.length === 0 ? (
+        <div className="p-8 text-center text-gray-400 text-sm bg-white rounded-xl border border-[#DBDBDB]">
+          Aucune commande
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {orders.map((order) => {
+            const age = orderAge(order.created_at);
+            const isOld = (order.status === "confirmed" || order.status === "processing") && age >= 2;
+            const msg = messages[order.id];
+            const isLoading = actionLoading[order.id];
+
+            return (
+              <div key={order.id} className={`bg-white rounded-xl border ${isOld ? "border-red-300" : "border-[#DBDBDB]"} overflow-hidden`}>
+                {/* Header row */}
+                <div className="flex flex-wrap items-center gap-3 px-5 py-3 border-b border-gray-100">
+                  <span className="font-mono text-xs text-gray-400">{order.id.slice(0, 8).toUpperCase()}</span>
+                  <span className="text-xs text-gray-400">
+                    {new Date(order.created_at).toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" })}
+                  </span>
+                  {isOld && (
+                    <span className="text-xs font-semibold text-red-600">
+                      Depuis {age} jours !
+                    </span>
+                  )}
+                  <span className={`ml-auto inline-block px-2.5 py-1 rounded-full text-xs font-medium ${STATUS_COLORS[order.status] ?? "bg-gray-100 text-gray-800"}`}>
+                    {STATUS_LABELS[order.status] ?? order.status}
+                  </span>
+                  <span className="text-base font-bold text-[#0F0F10]">{order.total?.toFixed(2)}&nbsp;&euro;</span>
+                </div>
+
+                {/* Client info */}
+                <div className="flex flex-wrap items-center gap-2 px-5 py-2 text-sm text-gray-600">
+                  <span className="font-medium text-[#0F0F10]">{order.shipping_address?.name ?? "—"}</span>
+                  <span className="text-gray-400">|</span>
+                  <span>{order.email}</span>
+                  {order.shipping_address?.city && (
+                    <>
+                      <span className="text-gray-400">|</span>
+                      <span>{order.shipping_address.city}</span>
+                    </>
+                  )}
+                </div>
+
+                {/* Feedback message */}
+                {msg && (
+                  <div className={`mx-5 mt-2 rounded-lg px-3 py-2 text-xs font-medium ${
+                    msg.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"
+                  }`}>
+                    {msg.text}
+                  </div>
+                )}
+
+                {/* Inline actions */}
+                <div className="flex flex-wrap items-center gap-3 px-5 py-3 bg-gray-50/50">
+                  {/* Confirmed: pass to processing */}
+                  {order.status === "confirmed" && (
+                    <>
+                      <button
+                        onClick={() => handleAction(order.id, { status: "processing" })}
+                        disabled={isLoading}
+                        className="px-4 py-2 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
                       >
-                        {STATUS_LABELS[order.status] ?? order.status}
-                      </span>
-                    </td>
-                    <td className="px-5 py-3 font-mono text-xs text-gray-500">
-                      {order.tracking_number ?? "—"}
-                    </td>
-                    <td className="px-5 py-3">
-                      <Link
-                        href={`/admin/commandes/${order.id}`}
-                        className="text-[#356B0D] font-medium hover:underline text-xs"
+                        Passer en preparation
+                      </button>
+                      <button
+                        onClick={() => handleAction(order.id, { action: "resend_preparation" })}
+                        disabled={isLoading}
+                        className="px-4 py-2 bg-white text-gray-600 text-xs font-medium rounded-lg border border-[#DBDBDB] hover:bg-gray-50 transition-colors disabled:opacity-50"
                       >
-                        Gérer →
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+                        Envoyer bon de preparation
+                      </button>
+                    </>
+                  )}
+
+                  {/* Processing: tracking input + ship */}
+                  {order.status === "processing" && (
+                    <>
+                      <input
+                        type="text"
+                        value={trackingInputs[order.id] ?? ""}
+                        onChange={(e) => setTrackingInputs((prev) => ({ ...prev, [order.id]: e.target.value }))}
+                        placeholder="N° tracking DPD"
+                        className="flex-1 min-w-[200px] h-9 rounded-lg border border-[#DBDBDB] bg-white px-3 text-sm font-mono focus:border-[#356B0D] focus:ring-2 focus:ring-[#356B0D]/30 outline-none"
+                      />
+                      <button
+                        onClick={() => handleMarkShipped(order)}
+                        disabled={isLoading}
+                        className="px-4 py-2 bg-purple-600 text-white text-xs font-medium rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 whitespace-nowrap"
+                      >
+                        Marquer expediee
+                      </button>
+                    </>
+                  )}
+
+                  {/* Shipped: show tracking */}
+                  {order.status === "shipped" && order.tracking_number && (
+                    <a
+                      href={`https://trace.dpd.fr/parceldetails/${order.tracking_number}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-purple-700 font-medium hover:underline font-mono"
+                    >
+                      Suivi DPD: {order.tracking_number} &rarr;
+                    </a>
+                  )}
+
+                  {/* Always: link to detail */}
+                  <Link
+                    href={`/admin/commandes/${order.id}`}
+                    className="ml-auto text-xs text-[#356B0D] font-medium hover:underline"
+                  >
+                    Details &rarr;
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
