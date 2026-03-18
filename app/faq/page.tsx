@@ -37,7 +37,7 @@ const faqs = [
   {
     question: "Comment commander des accessoires ?",
     answer:
-      "Vous pouvez consulter tous nos accessoires disponibles sur la page Accessoires du site. Pour toute question ou commande specifique, contactez-nous par email a contact@progolfdistribution.com ou par telephone au 09\u00A067\u00A087\u00A067\u00A095.",
+      "Vous pouvez consulter tous nos accessoires disponibles sur la page Accessoires du site. Pour toute question ou commande specifique, contactez-nous par email a contact@progolfdistribution.com ou par telephone au 07 88 23 97 84.",
   },
   {
     question: "Puis-je retourner mon chariot ?",
@@ -47,7 +47,7 @@ const faqs = [
   {
     question: "Comment contacter le SAV ?",
     answer:
-      "Notre service apres-vente est gere en France par Golf des Marques. Vous pouvez nous joindre par email a contact@progolfdistribution.com ou par telephone au 09\u00A067\u00A087\u00A067\u00A095. Nous repondons a toutes les demandes sous 24h ouvrees. Pour les demandes de garantie, munissez-vous de votre numero de commande et d\u2019une description du probleme (photos ou video si possible).",
+      "Notre service apres-vente est gere en France par Golf des Marques. Vous pouvez nous joindre par email a contact@progolfdistribution.com ou par telephone au 07 88 23 97 84. Nous repondons a toutes les demandes sous 24h ouvrees. Pour les demandes de garantie, munissez-vous de votre numero de commande et d\u2019une description du probleme (photos ou video si possible).",
   },
   {
     question: "Quels moyens de paiement acceptez-vous ?",
@@ -111,10 +111,10 @@ export default function FaqPage() {
             contact@progolfdistribution.com
           </a>
           <a
-            href="tel:+33967876795"
+            href="tel:+33788239784"
             className="font-medium text-[#356B0D] hover:underline"
           >
-            09 67 87 67 95
+            07 88 23 97 84
           </a>
           <Link
             href="/contact"

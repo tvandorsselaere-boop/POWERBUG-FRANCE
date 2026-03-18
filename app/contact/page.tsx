@@ -223,7 +223,7 @@ export default function ContactPage() {
                 <Phone className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
                 <div>
                   <p className="text-sm font-medium text-[#0F0F10]">Telephone</p>
-                  <a href="tel:+33967876795" className="text-sm text-[#6B7280] hover:text-[#356B0D]">09 67 87 67 95</a>
+                  <a href="tel:+33788239784" className="text-sm text-[#6B7280] hover:text-[#356B0D]">07 88 23 97 84</a>
                 </div>
               </div>
               <div className="flex items-start gap-3">

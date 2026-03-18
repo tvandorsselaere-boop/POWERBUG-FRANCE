@@ -83,10 +83,10 @@ export default function CGVPage() {
             <p>
               <strong className="text-[#0F0F10]">Téléphone :</strong>{" "}
               <a
-                href="tel:+33967876795"
+                href="tel:+33788239784"
                 className="text-[#356B0D] underline"
               >
-                09 67 87 67 95
+                07 88 23 97 84
               </a>
             </p>
           </div>
@@ -233,8 +233,8 @@ export default function CGVPage() {
               contact@progolfdistribution.com
             </a>{" "}
             ou par téléphone au{" "}
-            <a href="tel:+33967876795" className="text-[#356B0D] underline">
-              09 67 87 67 95
+            <a href="tel:+33788239784" className="text-[#356B0D] underline">
+              07 88 23 97 84
             </a>
             .
           </p>
@@ -416,8 +416,8 @@ export default function CGVPage() {
               contact@progolfdistribution.com
             </a>{" "}
             ou par téléphone au{" "}
-            <a href="tel:+33967876795" className="text-[#356B0D] underline">
-              09 67 87 67 95
+            <a href="tel:+33788239784" className="text-[#356B0D] underline">
+              07 88 23 97 84
             </a>
             .
           </p>

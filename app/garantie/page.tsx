@@ -118,8 +118,7 @@ export default function GarantiePage() {
               Contactez-nous
             </h3>
             <p className="mt-2 text-sm text-[#6B7280]">
-              Envoyez-nous un email a contact@progolfdistribution.com ou appelez le 09 67 87
-              67 95 en decrivant le probleme rencontre.
+              Envoyez-nous un email a contact@progolfdistribution.com ou appelez le 07 88 23 97 84 en decrivant le probleme rencontre.
             </p>
           </div>
 
@@ -193,10 +192,10 @@ export default function GarantiePage() {
             <div className="flex items-center gap-3">
               <Phone className="h-5 w-5 shrink-0 text-[#356B0D]" />
               <a
-                href="tel:+33967876795"
+                href="tel:+33788239784"
                 className="text-sm text-[#6B7280] hover:text-[#356B0D]"
               >
-                09 67 87 67 95
+                07 88 23 97 84
               </a>
             </div>
           </div>

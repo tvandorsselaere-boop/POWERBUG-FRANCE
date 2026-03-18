@@ -148,10 +148,10 @@ export default function PolitiqueRetourPage() {
                   </a>{" "}
                   ou appelez-nous au{" "}
                   <a
-                    href="tel:+33967876795"
+                    href="tel:+33788239784"
                     className="text-[#356B0D] underline"
                   >
-                    09 67 87 67 95
+                    07 88 23 97 84
                   </a>{" "}
                   en précisant votre numéro de commande et le motif du retour.
                 </p>
@@ -287,11 +287,11 @@ export default function PolitiqueRetourPage() {
               contact@progolfdistribution.com
             </a>
             <a
-              href="tel:+33967876795"
+              href="tel:+33788239784"
               className="flex items-center gap-2 text-sm text-[#356B0D] hover:underline"
             >
               <Phone className="h-4 w-4" />
-              09 67 87 67 95
+              07 88 23 97 84
             </a>
           </div>
         </section>
