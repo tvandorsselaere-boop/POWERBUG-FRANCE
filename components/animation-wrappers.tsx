@@ -1,13 +1,15 @@
 import React from 'react';
-import { AnimationSection } from './animation-section';
-import { AnimationProductCard } from './animation-product-card';
-import { AnimationFeatureCard } from './animation-feature-card';
-import { AnimationBundleBanner } from './animation-bundle-banner';
+import { AnimationSection as Section } from './animation-section';
+import { AnimationProductCard as ProductCard } from './animation-product-card';
+import { AnimationFeatureCard as FeatureCard } from './animation-feature-card';
+import { AnimationBundleBanner as BundleBanner } from './animation-bundle-banner';
+
+const Hero = ({ children }: { children: React.ReactNode }) => <>{children}</>;
 
 export const HomeAnimations = {
-  Hero: ({ children }: { children: React.ReactNode }) => <>{children}</>,
-  Section: AnimationSection,
-  ProductCard: AnimationProductCard,
-  FeatureCard: AnimationFeatureCard,
-  BundleBanner: AnimationBundleBanner,
+  Hero,
+  Section,
+  ProductCard,
+  FeatureCard,
+  BundleBanner,
 };
