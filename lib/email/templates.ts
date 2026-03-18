@@ -218,6 +218,151 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
 </html>`;
 }
 
+// ─── Notification expédition → client ───────────────────────────────────────
+
+export interface ShippingNotificationData {
+  customerName: string;
+  orderId: string;
+  trackingNumber: string;
+}
+
+export function shippingNotificationHtml(data: ShippingNotificationData): string {
+  const trackingUrl = `https://trace.dpd.fr/parceldetails/${data.trackingNumber}`;
+
+  return `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f5f5f5;font-family:'Helvetica Neue',Arial,sans-serif;color:#0F0F10;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;max-width:600px;width:100%;">
+
+        <!-- Header -->
+        <tr>
+          <td style="background:#356B0D;padding:32px 40px;text-align:center;">
+            <div style="font-size:24px;font-weight:700;color:#ffffff;letter-spacing:1px;">POWERBUG</div>
+            <div style="font-size:13px;color:#8DC63F;margin-top:4px;">France</div>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="padding:40px;">
+            <h1 style="margin:0 0 8px;font-size:22px;font-weight:700;color:#0F0F10;">Votre commande est expédiée !</h1>
+            <p style="margin:0 0 24px;color:#6B7280;font-size:14px;">Commande n° ${data.orderId.slice(0, 8).toUpperCase()}</p>
+
+            <p style="margin:0 0 24px;font-size:15px;line-height:1.6;">
+              Bonjour ${data.customerName},<br><br>
+              Bonne nouvelle ! Votre commande PowerBug a été expédiée via DPD.
+              Vous pouvez suivre votre colis en temps réel grâce au lien ci-dessous.
+            </p>
+
+            <!-- Tracking -->
+            <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:24px;margin-bottom:24px;text-align:center;">
+              <div style="font-size:13px;color:#6B7280;font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Numéro de suivi DPD</div>
+              <div style="font-size:20px;font-weight:700;color:#0F0F10;margin-bottom:16px;letter-spacing:1px;">${data.trackingNumber}</div>
+              <a href="${trackingUrl}" style="display:inline-block;background:#356B0D;color:#ffffff;font-weight:600;font-size:14px;padding:12px 32px;border-radius:10px;text-decoration:none;">
+                Suivre mon colis
+              </a>
+            </div>
+
+            <p style="font-size:14px;color:#6B7280;line-height:1.6;margin:0 0 24px;">
+              Le délai de livraison est généralement de 2 à 4 jours ouvrés en France métropolitaine.
+            </p>
+
+            <p style="font-size:14px;color:#6B7280;margin:0;">
+              Des questions ? Répondez à cet email ou contactez-nous sur
+              <a href="https://powerbug.fr/contact" style="color:#356B0D;">powerbug.fr/contact</a>
+            </p>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#f9f9f9;padding:24px 40px;text-align:center;border-top:1px solid #DBDBDB;">
+            <p style="margin:0;font-size:12px;color:#9CA3AF;">
+              PowerBug France — Distributeur exclusif PowerBug en France<br>
+              PRO GOLF DISTRIBUTION — SIREN 888 311 610
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+// ─── Alerte stock bas → admin ───────────────────────────────────────────────
+
+export interface StockAlertData {
+  productName: string;
+  productSlug: string;
+  currentStock: number;
+  sku: string | null;
+}
+
+export function stockAlertHtml(alerts: StockAlertData[]): string {
+  const rows = alerts
+    .map(
+      (a) => `
+      <tr>
+        <td style="padding:10px 8px;border-bottom:1px solid #DBDBDB;font-size:14px;font-weight:500;">${a.productName}</td>
+        <td style="padding:10px 8px;border-bottom:1px solid #DBDBDB;font-size:14px;color:#6B7280;">${a.sku ?? "—"}</td>
+        <td style="padding:10px 8px;border-bottom:1px solid #DBDBDB;text-align:center;font-size:16px;font-weight:700;color:${a.currentStock === 0 ? "#AE1717" : "#F6A429"};">${a.currentStock}</td>
+      </tr>`
+    )
+    .join("");
+
+  return `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f5f5f5;font-family:'Helvetica Neue',Arial,sans-serif;color:#0F0F10;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f5f5;padding:40px 20px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;max-width:600px;width:100%;">
+        <tr>
+          <td style="background:#AE1717;padding:24px 40px;">
+            <div style="font-size:12px;color:#fecaca;font-weight:600;text-transform:uppercase;letter-spacing:1px;">ALERTE STOCK</div>
+            <div style="font-size:20px;font-weight:700;color:#ffffff;margin-top:4px;">Stock faible détecté</div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:40px;">
+            <p style="margin:0 0 24px;font-size:15px;line-height:1.6;">
+              Les produits suivants ont un stock faible ou sont en rupture.
+              Pensez à passer commande auprès de PowerBug UK.
+            </p>
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+              <thead>
+                <tr style="background:#f9f9f9;">
+                  <th style="padding:10px 8px;text-align:left;font-size:13px;color:#6B7280;font-weight:600;">Produit</th>
+                  <th style="padding:10px 8px;text-align:left;font-size:13px;color:#6B7280;font-weight:600;">SKU</th>
+                  <th style="padding:10px 8px;text-align:center;font-size:13px;color:#6B7280;font-weight:600;">Stock</th>
+                </tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+            <a href="https://powerbug.fr/admin/stock" style="display:inline-block;background:#356B0D;color:#ffffff;font-weight:600;font-size:14px;padding:10px 24px;border-radius:10px;text-decoration:none;">
+              Voir le stock complet
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f9f9f9;padding:20px 40px;text-align:center;border-top:1px solid #DBDBDB;">
+            <p style="margin:0;font-size:12px;color:#9CA3AF;">PowerBug France — Admin</p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
 // ─── Formulaire de contact → Fred ──────────────────────────────────────────
 
 export interface ContactData {

@@ -3,7 +3,7 @@ import { stripe } from "@/lib/stripe/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import Stripe from "stripe";
 import { sendEmail } from "@/lib/email/zepto";
-import { orderConfirmationHtml, preparationOrderHtml, type OrderItem } from "@/lib/email/templates";
+import { orderConfirmationHtml, preparationOrderHtml, stockAlertHtml, type OrderItem, type StockAlertData } from "@/lib/email/templates";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -166,6 +166,61 @@ export async function POST(req: NextRequest) {
         html: preparationOrderHtml(emailData),
         replyTo: customerEmail,
       });
+
+      // ─── Décrémentation du stock ──────────────────────────────────────
+      const LOW_STOCK_THRESHOLD = 3;
+      const stockAlerts: StockAlertData[] = [];
+
+      for (const item of orderItems) {
+        // Skip shipping line item
+        if (item.variant_label === "shipping") continue;
+
+        // Find product by slug
+        const { data: product } = await supabase
+          .from("products")
+          .select("id, name")
+          .eq("slug", item.variant_label)
+          .eq("store", "powerbug")
+          .single();
+
+        if (!product) continue;
+
+        // Get variants and decrement stock
+        const { data: variants } = await supabase
+          .from("product_variants")
+          .select("id, stock_quantity, sku")
+          .eq("product_id", product.id);
+
+        for (const variant of variants ?? []) {
+          const newQty = Math.max(0, variant.stock_quantity - item.quantity);
+          const newStatus = newQty === 0 ? "out_of_stock" : newQty <= LOW_STOCK_THRESHOLD ? "low_stock" : "in_stock";
+
+          await supabase
+            .from("product_variants")
+            .update({ stock_quantity: newQty, stock_status: newStatus })
+            .eq("id", variant.id);
+
+          if (newQty <= LOW_STOCK_THRESHOLD) {
+            stockAlerts.push({
+              productName: product.name,
+              productSlug: item.variant_label,
+              currentStock: newQty,
+              sku: variant.sku,
+            });
+          }
+        }
+      }
+
+      // Send stock alert email if any products are low
+      if (stockAlerts.length > 0) {
+        const alertTo = process.env.EMAIL_STOCK_ALERT_TO ?? process.env.EMAIL_ORDERS_TO ?? "thomas@facile-ia.fr";
+        await sendEmail({
+          to: alertTo,
+          subject: `[PowerBug] ALERTE STOCK — ${stockAlerts.length} produit${stockAlerts.length > 1 ? "s" : ""} à réapprovisionner`,
+          html: stockAlertHtml(stockAlerts),
+        });
+        console.log(`Stock alert sent for ${stockAlerts.length} products`);
+      }
 
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unknown error";
