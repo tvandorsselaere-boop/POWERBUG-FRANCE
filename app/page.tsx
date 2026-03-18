@@ -162,18 +162,6 @@ export default async function Home() {
         {/* Overlay — léger sur mobile (bandes noires suffisent), plus fort desktop */}
         <div className="absolute inset-0 bg-black/20 sm:bg-black/50" />
 
-        {/* Logo PowerBug — mobile only (pas de logo dans la vidéo mobile) */}
-        <div className="absolute inset-0 z-[5] flex items-center justify-center sm:hidden">
-          <Image
-            src="/images/powerbug-logo.png"
-            alt=""
-            width={320}
-            height={80}
-            className="w-[80%] max-w-[340px] opacity-30 brightness-0 invert"
-            aria-hidden="true"
-          />
-        </div>
-
         <div className="relative z-10 flex h-full flex-col justify-between px-4 py-6 text-center sm:px-6 sm:py-16 lg:px-10 lg:py-20">
           {/* Texte en haut — calé dans la bande noire mobile */}
           <div>
@@ -197,22 +185,33 @@ export default async function Home() {
             </p>
           </div>
 
-          {/* Boutons en bas — côte à côte sur mobile, calés dans la bande noire */}
-          <div className="animate-fade-in-delay-3 flex flex-row justify-center gap-3 sm:gap-4">
-            <Link
-              href="/trolleys"
-              className="inline-flex items-center justify-center gap-1 rounded-[10px] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_6px_24px_rgba(53,107,13,0.45)] active:scale-[0.98] sm:px-8 sm:py-3 sm:text-base"
-              style={{ background: "linear-gradient(90deg,#356B0D,#8DC63F)" }}
-            >
-              Découvrir la gamme
-              <ChevronRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/accessoires"
-              className="inline-flex items-center justify-center rounded-[10px] border-2 border-white bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white hover:text-[#0F0F10] sm:px-8 sm:py-3 sm:text-base"
-            >
-              Voir les accessoires
-            </Link>
+          {/* Logo + Boutons en bas — calés dans la bande noire */}
+          <div className="animate-fade-in-delay-3 flex flex-col items-center gap-3 sm:gap-4">
+            {/* Logo PowerBug — mobile only */}
+            <Image
+              src="/images/powerbug-logo.png"
+              alt=""
+              width={240}
+              height={60}
+              className="mb-1 w-[50%] max-w-[220px] opacity-40 brightness-0 invert sm:hidden"
+              aria-hidden="true"
+            />
+            <div className="flex flex-row justify-center gap-3 sm:gap-4">
+              <Link
+                href="/trolleys"
+                className="inline-flex items-center justify-center gap-1 rounded-[10px] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_6px_24px_rgba(53,107,13,0.45)] active:scale-[0.98] sm:px-8 sm:py-3 sm:text-base"
+                style={{ background: "linear-gradient(90deg,#356B0D,#8DC63F)" }}
+              >
+                Découvrir la gamme
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/accessoires"
+                className="inline-flex items-center justify-center rounded-[10px] border-2 border-white bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white hover:text-[#0F0F10] sm:px-8 sm:py-3 sm:text-base"
+              >
+                Voir les accessoires
+              </Link>
+            </div>
           </div>
         </div>
       </section>
