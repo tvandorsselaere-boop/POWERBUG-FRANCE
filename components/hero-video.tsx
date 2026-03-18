@@ -12,7 +12,7 @@ export function HeroVideo() {
   return (
     <video
       key={isMobile ? "mobile" : "desktop"}
-      src={isMobile ? "/videos/mobile.mp4" : "/videos/nx-showcase.mp4"}
+      src={isMobile ? "/videos/mobile.mp4" : "/videos/desktop.mp4"}
       autoPlay
       muted
       playsInline
