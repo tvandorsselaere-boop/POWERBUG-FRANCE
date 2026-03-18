@@ -15,7 +15,6 @@ import { HeroVideo } from "@/components/hero-video";
 import { HomeTrustBar } from "@/components/home-trust-bar";
 import { HomeFaq } from "@/components/home-faq";
 import { HomeReviews } from "@/components/home-reviews";
-import { HomeAnimations } from "@/components/animation-wrappers";
 const trolleyMeta = [
   {
     slug: "nx-lithium",
@@ -222,7 +221,7 @@ export default async function Home() {
       {/* ── 3. PRODUCT SHOWCASE ──────────────────────────────────────── */}
       <section className="py-20 sm:py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
-          <HomeAnimations.Section>
+          <div>
             <div className="mb-4 text-center">
               <p className="text-sm font-semibold uppercase tracking-widest text-[#6B7280]">
                 Gamme 2025
@@ -234,11 +233,11 @@ export default async function Home() {
             <p className="mx-auto mb-12 max-w-lg text-center text-[#6B7280]">
               Deux modèles, une même excellence. Choisissez le niveau de contrôle qui correspond à votre jeu.
             </p>
-          </HomeAnimations.Section>
+          </div>
 
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
             {trolleyMeta.map((trolley, i) => (
-              <HomeAnimations.ProductCard key={trolley.slug} index={i}>
+              <div key={trolley.slug}>
                 {/* Product image */}
                 <div className="mb-6 flex h-64 items-center justify-center overflow-hidden rounded-xl bg-white">
                   {imageMap[trolley.slug] ? (
@@ -300,7 +299,7 @@ export default async function Home() {
                     </Link>
                   </div>
                 </div>
-              </HomeAnimations.ProductCard>
+              </div>
             ))}
           </div>
 
@@ -319,7 +318,7 @@ export default async function Home() {
       {/* ── 4. POURQUOI POWERBUG ─────────────────────────────────────── */}
       <section className="border-t border-[#DBDBDB] bg-[#F5F5F5] py-20 sm:py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
-          <HomeAnimations.Section>
+          <div>
             <div className="mb-14 text-center">
               <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#6B7280]">
                 Notre différence
@@ -331,11 +330,11 @@ export default async function Home() {
                 La référence mondiale du chariot électrique depuis 2003, désormais en France.
               </p>
             </div>
-          </HomeAnimations.Section>
+          </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature, i) => (
-              <HomeAnimations.FeatureCard key={feature.title} index={i}>
+              <div key={feature.title}>
                 <div
                   className="rounded-2xl p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(0,0,0,0.10)]"
                   style={{
@@ -352,15 +351,14 @@ export default async function Home() {
                   <h3 className="text-base font-semibold text-[#0F0F10]">{feature.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-[#6B7280]">{feature.description}</p>
                 </div>
-              </HomeAnimations.FeatureCard>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── 5. BUNDLE OFFER ──────────────────────────────────────────── */}
-      <HomeAnimations.BundleBanner>
-        <section className="border-t border-[#DBDBDB] py-20 sm:py-28">
+      <section className="border-t border-[#DBDBDB] py-20 sm:py-28">
           <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
             <div
               className="overflow-hidden rounded-3xl"
@@ -430,12 +428,11 @@ export default async function Home() {
             </div>
           </div>
         </section>
-      </HomeAnimations.BundleBanner>
 
       {/* ── 6. FAQ ───────────────────────────────────────────────────── */}
       <section className="border-t border-[#DBDBDB] bg-white py-20 sm:py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
-          <HomeAnimations.Section>
+          <div>
             <div className="mb-12 text-center">
               <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#6B7280]">
                 Questions fréquentes
@@ -447,7 +444,7 @@ export default async function Home() {
                 Retrouvez les réponses aux questions les plus fréquentes sur nos chariots électriques.
               </p>
             </div>
-          </HomeAnimations.Section>
+          </div>
           <div className="mx-auto max-w-3xl">
             <HomeFaq />
           </div>
