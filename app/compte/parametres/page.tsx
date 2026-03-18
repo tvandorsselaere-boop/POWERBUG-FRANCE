@@ -13,7 +13,7 @@ export default function ParametresPage() {
   const [isGoogleUser, setIsGoogleUser] = useState(false);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data: { user } }) => {
+    supabase.auth.getUser().then(({ data: { user } }: { data: { user: import('@supabase/supabase-js').User | null } }) => {
       if (user?.app_metadata?.provider === "google") setIsGoogleUser(true);
     });
   }, [supabase]);
