@@ -12,7 +12,7 @@ export async function middleware(request: NextRequest) {
     url.pathname = '/auth/callback';
     // Preserve next param if present, otherwise default based on context
     if (!url.searchParams.has('next')) {
-      url.searchParams.set('next', '/compte/nouveau-mot-de-passe');
+      url.searchParams.set('next', '/compte');
     }
     return NextResponse.redirect(url);
   }
