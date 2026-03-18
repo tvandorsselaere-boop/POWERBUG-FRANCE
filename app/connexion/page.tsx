@@ -12,12 +12,15 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/compte";
-  const { signIn } = useAuth();
+  const { signIn, resetPassword } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [forgotMode, setForgotMode] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
+  const [resetLoading, setResetLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,8 +44,105 @@ function LoginForm() {
     router.refresh();
   };
 
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setResetLoading(true);
+
+    if (!email) {
+      setError("Veuillez saisir votre adresse email.");
+      setResetLoading(false);
+      return;
+    }
+
+    const { error } = await resetPassword(email);
+    if (error) {
+      setError(error.message);
+      setResetLoading(false);
+      return;
+    }
+
+    setResetSent(true);
+    setResetLoading(false);
+  };
+
   const inputClass =
     "w-full rounded-[10px] border border-[#DBDBDB] bg-white px-4 py-2.5 text-sm text-[#0F0F10] placeholder-[#9CA3AF] focus:border-[#356B0D] focus:outline-none focus:ring-1 focus:ring-[#356B0D]";
+
+  if (forgotMode && resetSent) {
+    return (
+      <div className="mt-8 text-center">
+        <div className="rounded-[10px] border border-green-200 bg-green-50 px-4 py-5 text-sm text-green-800">
+          <p className="font-medium">Email envoye !</p>
+          <p className="mt-1">
+            Si un compte existe avec <span className="font-medium">{email}</span>,
+            vous recevrez un lien pour reinitialiser votre mot de passe.
+          </p>
+        </div>
+        <button
+          onClick={() => { setForgotMode(false); setResetSent(false); setError(""); }}
+          className="mt-4 text-sm font-medium text-[#356B0D] hover:underline"
+        >
+          Retour a la connexion
+        </button>
+      </div>
+    );
+  }
+
+  if (forgotMode) {
+    return (
+      <div className="mt-8 space-y-5">
+        <form onSubmit={handleResetPassword} className="space-y-5">
+          {error && (
+            <div className="rounded-[10px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              {error}
+            </div>
+          )}
+          <div>
+            <label
+              htmlFor="reset-email"
+              className="mb-1 block text-sm font-medium text-[#0F0F10]"
+            >
+              Votre adresse email
+            </label>
+            <input
+              type="email"
+              id="reset-email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={inputClass}
+              placeholder="votre@email.com"
+              autoComplete="email"
+              required
+            />
+          </div>
+
+          <Button
+            type="submit"
+            size="lg"
+            disabled={resetLoading}
+            className="w-full btn-glass rounded-[10px] text-white"
+          >
+            {resetLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Envoi en cours...
+              </>
+            ) : (
+              "Envoyer le lien de reinitialisation"
+            )}
+          </Button>
+        </form>
+
+        <button
+          onClick={() => { setForgotMode(false); setError(""); }}
+          className="block w-full text-center text-sm font-medium text-[#356B0D] hover:underline"
+        >
+          Retour a la connexion
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-8 space-y-5">
@@ -113,6 +213,13 @@ function LoginForm() {
               )}
             </button>
           </div>
+          <button
+            type="button"
+            onClick={() => { setForgotMode(true); setError(""); }}
+            className="mt-1.5 text-sm text-[#356B0D] hover:underline"
+          >
+            Mot de passe oublie ?
+          </button>
         </div>
 
         <Button
