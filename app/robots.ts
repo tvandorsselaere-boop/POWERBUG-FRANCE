@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://powerbug-france.vercel.app/sitemap.xml",
+    sitemap: "https://www.powerbug.fr/sitemap.xml",
   };
 }

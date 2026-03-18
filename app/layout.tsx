@@ -13,12 +13,16 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.powerbug.fr"),
   title: {
     default: "PowerBug France | Chariots Electriques de Golf Premium",
     template: "%s | PowerBug France",
   },
   description:
     "Distributeur exclusif France des chariots electriques de golf PowerBug. NX Lithium et NX DHC Lithium, accessoires, batteries. Livraison France entiere.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "PowerBug France | Chariots Electriques de Golf Premium",
     description:
@@ -26,6 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "fr_FR",
     siteName: "PowerBug France",
+    url: "https://www.powerbug.fr",
   },
   robots: {
     index: true,
@@ -34,6 +39,29 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+};
+
+const schemaWebsite = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "PowerBug France",
+  url: "https://www.powerbug.fr",
+  description: "Distributeur exclusif France des chariots électriques de golf PowerBug",
+};
+
+const schemaOrganization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "PowerBug France",
+  url: "https://www.powerbug.fr",
+  description: "Distributeur exclusif France des chariots électriques de golf PowerBug depuis 2024",
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+33788239784",
+    contactType: "customer service",
+    availableLanguage: "French",
+  },
+  sameAs: [],
 };
 
 export default function RootLayout({
@@ -49,6 +77,8 @@ export default function RootLayout({
         <TrustBanner />
         <main className="min-h-screen">{children}</main>
         <Footer />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaWebsite) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrganization) }} />
       </body>
     </html>
   );

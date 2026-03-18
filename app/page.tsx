@@ -69,6 +69,53 @@ const features = [
 
 export const revalidate = 3600;
 
+const schemaFAQ = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Pourquoi choisir un chariot électrique PowerBug ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "PowerBug est le leader mondial du chariot électrique de golf avec plus de 20 ans d'expérience. Nos chariots utilisent la technologie lithium dernière génération, offrant 36 trous d'autonomie, une garantie 2 ans et un SAV en France.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quelle est la différence entre le NX Lithium et le NX DHC Lithium ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Le NX DHC Lithium ajoute le système Downhill Control (DHC) et un frein parking électronique par rapport au NX Lithium. Idéal pour les terrains vallonnés, il offre un contrôle total de la descente.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Livrez-vous partout en France ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Oui, PowerBug France livre partout en France métropolitaine via DPD. La livraison est rapide avec un suivi en temps réel de votre colis.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Quelle est la garantie sur les chariots PowerBug ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Tous nos chariots sont couverts par une garantie constructeur de 2 ans, batterie comprise. Le SAV est assuré en France pour une assistance rapide.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Comment entretenir la batterie lithium de mon PowerBug ?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Rechargez la batterie après chaque utilisation, stockez-la à température ambiante (entre 10°C et 25°C) et évitez la décharge complète. Une batterie bien entretenue dure 5 à 7 ans.",
+      },
+    },
+  ],
+};
+
 export default async function Home() {
   const dbTrolleys = await getTrolleys();
   const imageMap: Record<string, string> = {};
@@ -79,6 +126,7 @@ export default async function Home() {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaFAQ) }} />
       {/* Hero — full-width background carousel */}
       <section className="relative h-[85vh] min-h-[500px] max-h-[900px] overflow-hidden">
         {/* Background images carousel */}
