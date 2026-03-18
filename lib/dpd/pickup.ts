@@ -18,12 +18,13 @@ export interface RelayPoint {
 }
 
 export async function searchRelayPoints(zipCode: string, city?: string): Promise<RelayPoint[]> {
-  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const now = new Date();
+  const today = `${String(now.getDate()).padStart(2, "0")}/${String(now.getMonth() + 1).padStart(2, "0")}/${now.getFullYear()}`;
 
   const soapBody = `<?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
-    <GetPudoList xmlns="http://mypudo.pickup-services.com/v4/">
+    <GetPudoList xmlns="http://MyPudo.pickup-services.com/">
       <carrier>${CARRIER}</carrier>
       <key>${KEY}</key>
       <address></address>
@@ -43,16 +44,23 @@ export async function searchRelayPoints(zipCode: string, city?: string): Promise
     method: "POST",
     headers: {
       "Content-Type": "text/xml; charset=utf-8",
-      SOAPAction: "http://mypudo.pickup-services.com/v4/GetPudoList",
+      SOAPAction: "http://MyPudo.pickup-services.com/GetPudoList",
     },
     body: soapBody,
   });
+
+  const xml = await res.text();
 
   if (!res.ok) {
     throw new Error(`MyPudo API error: ${res.status}`);
   }
 
-  const xml = await res.text();
+  // Check for SOAP-level errors
+  const errorMatch = xml.match(/<ERROR[^>]*>([^<]*)<\/ERROR>/i);
+  if (errorMatch) {
+    throw new Error(`MyPudo error: ${errorMatch[1]}`);
+  }
+
   return parseRelayPoints(xml);
 }
 
@@ -75,22 +83,25 @@ function parseRelayPoints(xml: string): RelayPoint[] {
     const distanceM = parseFloat(getTag(block, "DISTANCE")) || 0;
     const distanceKm = (distanceM / 1000).toFixed(1);
 
-    // Parse opening hours
-    const dayBlocks = getAllBlocks(block, "OPENING_HOURS_ITEMS");
-    const hours: string[] = [];
-    for (const day of dayBlocks) {
-      const dayName = getTag(day, "DAY_ID");
-      const slots = getAllBlocks(day, "OPENING_HOURS_ITEM");
-      const timeParts: string[] = [];
-      for (const slot of slots) {
-        const start = getTag(slot, "START_TM");
-        const end = getTag(slot, "END_TM");
-        if (start && end) timeParts.push(`${start}-${end}`);
-      }
-      if (timeParts.length > 0) {
-        hours.push(`${dayLabel(dayName)}: ${timeParts.join(", ")}`);
+    // Parse opening hours — each OPENING_HOURS_ITEM is flat with DAY_ID/START_TM/END_TM
+    const slots = getAllBlocks(block, "OPENING_HOURS_ITEM");
+    const byDay: Record<string, string[]> = {};
+    for (const slot of slots) {
+      const dayId = getTag(slot, "DAY_ID");
+      const start = getTag(slot, "START_TM");
+      const end = getTag(slot, "END_TM");
+      if (dayId && start && end) {
+        if (!byDay[dayId]) byDay[dayId] = [];
+        byDay[dayId].push(`${start}-${end}`);
       }
     }
+    const hours: string[] = [];
+    for (const [dayId, times] of Object.entries(byDay)) {
+      hours.push(`${dayLabel(dayId)}: ${times.join(", ")}`);
+    }
+
+    // Lat/long use comma as decimal separator in French locale
+    const parseFrench = (s: string) => parseFloat(s.replace(",", ".")) || 0;
 
     return {
       id: getTag(block, "PUDO_ID"),
@@ -98,8 +109,8 @@ function parseRelayPoints(xml: string): RelayPoint[] {
       address: getTag(block, "ADDRESS1"),
       zipCode: getTag(block, "ZIPCODE"),
       city: getTag(block, "CITY"),
-      latitude: parseFloat(getTag(block, "LATITUDE")) || 0,
-      longitude: parseFloat(getTag(block, "LONGITUDE")) || 0,
+      latitude: parseFrench(getTag(block, "LATITUDE")),
+      longitude: parseFrench(getTag(block, "LONGITUDE")),
       distance: `${distanceKm} km`,
       openingHours: hours,
     };
