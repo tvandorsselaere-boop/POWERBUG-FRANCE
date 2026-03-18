@@ -1,10 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
 /**
- * Verify that the current request is from an authenticated admin.
- * Used in API routes (which are excluded from middleware protection).
- * Returns the user if admin, or a 401/403 NextResponse.
+ * Verify that the current request is from an authenticated PowerBug admin.
+ * Checks: 1) authenticated, 2) email in ADMIN_EMAILS, 3) profile tagged 'powerbug'.
  */
 export async function verifyAdmin() {
   const supabase = await createClient();
@@ -22,6 +22,19 @@ export async function verifyAdmin() {
     .filter(Boolean);
 
   if (!user.email || !admins.includes(user.email)) {
+    return { user: null, error: NextResponse.json({ error: "Accès refusé" }, { status: 403 }) };
+  }
+
+  // Vérifier que l'admin est bien tagué powerbug
+  const serviceClient = createServiceClient();
+  const { data: profile } = await serviceClient
+    .from("profiles")
+    .select("stores")
+    .eq("id", user.id)
+    .single();
+
+  const stores: string[] = profile?.stores ?? [];
+  if (!stores.includes("powerbug")) {
     return { user: null, error: NextResponse.json({ error: "Accès refusé" }, { status: 403 }) };
   }
 
