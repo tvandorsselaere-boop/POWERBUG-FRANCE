@@ -11,10 +11,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { CheckoutButton } from "@/components/checkout-button";
 import { useCartStore, cartTotal, cartCount } from "@/store/cart-store";
+import { useAuth } from "@/hooks/use-auth";
 import { useEffect, useState } from "react";
 
 export default function PanierPage() {
   const { items, removeItem, updateQuantity, clearCart } = useCartStore();
+  const { user, loading: authLoading } = useAuth();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -173,7 +175,22 @@ export default function PanierPage() {
                 </span>
               </div>
 
-              <div className="mt-6">
+              {!authLoading && !user && (
+                <div className="mt-4 rounded-[10px] border border-[#DBDBDB] bg-[#F9F9F9] px-4 py-3 text-sm">
+                  <p className="text-[#6B7280]">
+                    <Link href="/connexion?redirect=/panier" className="font-medium text-[#356B0D] hover:underline">
+                      Connectez-vous
+                    </Link>{" "}
+                    ou{" "}
+                    <Link href="/inscription" className="font-medium text-[#356B0D] hover:underline">
+                      creez un compte
+                    </Link>{" "}
+                    pour suivre vos commandes.
+                  </p>
+                </div>
+              )}
+
+              <div className="mt-4">
                 <CheckoutButton />
               </div>
 
