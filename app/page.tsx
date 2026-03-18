@@ -154,12 +154,13 @@ export default async function Home() {
       />
 
       {/* 1. HERO — looping video background */}
-      <section className="relative h-[90vh] min-h-[560px] max-h-[960px] overflow-hidden">
+      <section className="relative h-[100svh] min-h-[560px] max-h-[960px] overflow-hidden sm:h-[90vh]">
         <div className="absolute inset-0">
           <HeroVideo />
         </div>
 
-        <div className="absolute inset-0 bg-black/50" />
+        {/* Overlay — léger sur mobile (bandes noires suffisent), plus fort desktop */}
+        <div className="absolute inset-0 bg-black/20 sm:bg-black/50" />
 
         {/* Logo PowerBug — mobile only (pas de logo dans la vidéo mobile) */}
         <div className="absolute inset-0 z-[5] flex items-center justify-center sm:hidden">
@@ -173,34 +174,34 @@ export default async function Home() {
           />
         </div>
 
-        <div className="relative z-10 flex h-full flex-col justify-between px-6 py-12 text-center sm:py-16 lg:px-10 lg:py-20">
-          {/* Texte en haut */}
+        <div className="relative z-10 flex h-full flex-col justify-between px-4 py-6 text-center sm:px-6 sm:py-16 lg:px-10 lg:py-20">
+          {/* Texte en haut — calé dans la bande noire mobile */}
           <div>
             <p
-              className="animate-fade-in mb-4 text-sm font-semibold uppercase tracking-widest text-[#8DC63F]"
+              className="animate-fade-in mb-2 text-xs font-semibold uppercase tracking-widest text-[#8DC63F] sm:mb-4 sm:text-sm"
               style={{ textShadow: "0 1px 8px rgba(0,0,0,0.4)" }}
             >
               Distributeur exclusif France — Qualité britannique depuis 2003
             </p>
             <h1
-              className="animate-fade-in-delay-1 text-balance text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
+              className="animate-fade-in-delay-1 text-balance text-2xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl"
               style={{ textShadow: "0 2px 16px rgba(0,0,0,0.5)" }}
             >
               Chariots Électriques de Golf Premium
             </h1>
             <p
-              className="animate-fade-in-delay-2 mx-auto mt-5 max-w-3xl text-lg text-white/85"
+              className="animate-fade-in-delay-2 mx-auto mt-2 max-w-3xl text-sm text-white/85 sm:mt-5 sm:text-lg"
               style={{ textShadow: "0 1px 8px rgba(0,0,0,0.4)" }}
             >
               La série NX — technologie lithium 28V, pliage VRAP breveté, 36 trous d&apos;autonomie.
             </p>
           </div>
 
-          {/* Boutons en bas */}
-          <div className="animate-fade-in-delay-3 inline-flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          {/* Boutons en bas — côte à côte sur mobile, calés dans la bande noire */}
+          <div className="animate-fade-in-delay-3 flex flex-row justify-center gap-3 sm:gap-4">
             <Link
               href="/trolleys"
-              className="inline-flex items-center justify-center gap-1 rounded-[10px] px-8 py-3 text-base font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_6px_24px_rgba(53,107,13,0.45)] active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-1 rounded-[10px] px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_6px_24px_rgba(53,107,13,0.45)] active:scale-[0.98] sm:px-8 sm:py-3 sm:text-base"
               style={{ background: "linear-gradient(90deg,#356B0D,#8DC63F)" }}
             >
               Découvrir la gamme
@@ -208,7 +209,7 @@ export default async function Home() {
             </Link>
             <Link
               href="/accessoires"
-              className="inline-flex items-center justify-center rounded-[10px] border-2 border-white bg-white/10 px-8 py-3 text-base font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white hover:text-[#0F0F10]"
+              className="inline-flex items-center justify-center rounded-[10px] border-2 border-white bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-all duration-200 hover:bg-white hover:text-[#0F0F10] sm:px-8 sm:py-3 sm:text-base"
             >
               Voir les accessoires
             </Link>
