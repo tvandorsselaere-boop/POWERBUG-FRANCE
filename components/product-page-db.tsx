@@ -18,6 +18,15 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
   const specs = product.specs ?? {};
   const images = product.product_images?.sort((a, b) => a.position - b.position) ?? [];
 
+  // Short teaser: first sentence(s) up to ~200 chars
+  const description = product.description ?? "";
+  const sentences = description.split(/(?<=\.)\s+/);
+  const teaser = sentences.length > 1
+    ? sentences[0]
+    : description.length > 200
+      ? description.slice(0, 200).trimEnd() + "\u2026"
+      : description;
+
   const categoryLabel = isTrolley ? "Chariots" : isAccessoire ? "Accessoires" : "Piles & Pieces";
   const categoryHref = isTrolley ? "/trolleys" : isAccessoire ? "/accessoires" : "/batteries";
 
@@ -61,7 +70,7 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
           </h1>
 
           <p className="mt-4 text-lg leading-relaxed text-[#6B7280]">
-            {product.description}
+            {teaser}
           </p>
 
           {/* Bundle banner for trolleys */}
@@ -144,6 +153,20 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
           )}
         </div>
       </div>
+
+      {/* Full description */}
+      {description.length > teaser.length && (
+        <div className="mt-16 border-t border-[#DBDBDB] pt-12">
+          <h2 className="mb-6 text-2xl font-bold text-[#0F0F10]">Description</h2>
+          <div className="prose prose-gray max-w-none">
+            {description.split("\n").filter(Boolean).map((para, i) => (
+              <p key={i} className="mb-4 text-base leading-relaxed text-[#0F0F10]">
+                {para}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Trolley-specific sections */}
       {isTrolley && (
