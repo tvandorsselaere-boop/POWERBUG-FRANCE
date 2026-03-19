@@ -28,7 +28,7 @@ export async function GET(
 
   const { buffer, invoiceNumber } = generateInvoicePdf(order as unknown as InvoiceOrder);
 
-  return new NextResponse(buffer, {
+  return new NextResponse(new Uint8Array(buffer), {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": `inline; filename="Facture_${invoiceNumber}.pdf"`,
