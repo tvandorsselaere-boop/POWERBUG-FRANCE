@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, ShoppingCart } from "lucide-react";
+import { Menu, ShoppingCart, User } from "lucide-react";
 import { CartCount } from "@/components/cart-count";
+import { useAuth } from "@/hooks/use-auth";
 
 interface MobileBottomBarProps {
   onMenuOpen: () => void;
@@ -19,7 +20,6 @@ function TrolleyIcon({ className }: { className?: string }) {
       strokeLinejoin="round"
       className={className}
     >
-      {/* Simple golf trolley icon */}
       <circle cx="8" cy="20" r="2" />
       <circle cx="16" cy="20" r="2" />
       <path d="M10 20h4" />
@@ -31,6 +31,17 @@ function TrolleyIcon({ className }: { className?: string }) {
 }
 
 export function MobileBottomBar({ onMenuOpen }: MobileBottomBarProps) {
+  const { user } = useAuth();
+
+  const initials = user?.user_metadata?.full_name
+    ? user.user_metadata.full_name
+        .split(" ")
+        .map((n: string) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : user?.email?.slice(0, 2).toUpperCase() ?? null;
+
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#DBDBDB] bg-white md:hidden">
       <div className="flex h-14 items-stretch">
@@ -50,6 +61,21 @@ export function MobileBottomBar({ onMenuOpen }: MobileBottomBarProps) {
         >
           <TrolleyIcon className="h-5 w-5" />
           <span className="text-[10px] font-medium">Chariots</span>
+        </Link>
+
+        {/* Compte */}
+        <Link
+          href={user ? "/compte" : "/connexion"}
+          className="flex flex-1 flex-col items-center justify-center gap-0.5 text-[#6B7280] transition-colors active:text-[#356B0D]"
+        >
+          {initials ? (
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#356B0D] text-[9px] font-semibold text-white">
+              {initials}
+            </span>
+          ) : (
+            <User className="h-5 w-5" />
+          )}
+          <span className="text-[10px] font-medium">Compte</span>
         </Link>
 
         {/* Panier */}
