@@ -1,20 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function HeroVideo() {
-  const [isMobile, setIsMobile] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [src, setSrc] = useState("/videos/desktop.mp4");
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 640);
+    const mobile = window.innerWidth < 640;
+    const newSrc = mobile ? "/videos/mobile.mp4" : "/videos/desktop.mp4";
+    setSrc(newSrc);
+
+    // Safari iOS: programmatic play() after src change
+    const video = videoRef.current;
+    if (video) {
+      video.src = newSrc;
+      video.load();
+      video.play().catch(() => {
+        // Autoplay blocked — poster will show as fallback
+      });
+    }
   }, []);
 
   return (
     <video
-      key={isMobile ? "mobile" : "desktop"}
-      src={isMobile ? "/videos/mobile.mp4" : "/videos/desktop.mp4"}
+      ref={videoRef}
+      src={src}
       poster="/images/hero-poster.jpg"
-      preload="none"
+      preload="metadata"
       autoPlay
       muted
       playsInline

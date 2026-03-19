@@ -106,7 +106,7 @@ export default function RootLayout({
         <ConstructionBanner />
         <Header />
         <TrustBanner />
-        <main className="min-h-screen">{children}</main>
+        <main className="min-h-screen pb-16 md:pb-0">{children}</main>
         <Footer />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaWebsite) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrganization) }} />

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Menu, ShoppingCart, User, LogOut, Package, Settings, ChevronDown, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CartCount } from "@/components/cart-count";
+import { MobileBottomBar } from "@/components/mobile-bottom-bar";
 import { useAuth } from "@/hooks/use-auth";
 
 const navigation = [
@@ -138,21 +139,16 @@ export function Header() {
             )
           )}
 
-          {/* Cart */}
-          <Button variant="ghost" size="icon" className="relative text-[#0F0F10] hover:text-[#356B0D]" asChild>
+          {/* Cart — desktop only, mobile uses bottom bar */}
+          <Button variant="ghost" size="icon" className="relative hidden text-[#0F0F10] hover:text-[#356B0D] md:flex" asChild>
             <Link href="/panier">
               <ShoppingCart className="h-5 w-5" />
               <CartCount />
             </Link>
           </Button>
 
-          {/* Mobile menu */}
+          {/* Mobile menu — Sheet only, trigger is in bottom bar */}
           <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-[#0F0F10] md:hidden">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
             <SheetContent side="right" className="w-72 border-[#DBDBDB] bg-white">
               <nav className="mt-8 flex flex-col gap-1">
                 {navigation.map((item) => (
@@ -198,6 +194,9 @@ export function Header() {
           </Sheet>
         </div>
       </div>
+
+      {/* Mobile bottom navigation bar */}
+      <MobileBottomBar onMenuOpen={() => setOpen(true)} />
     </header>
   );
 }
