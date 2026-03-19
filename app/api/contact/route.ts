@@ -1,11 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail } from "@/lib/email/zepto";
 import { contactFormHtml } from "@/lib/email/templates";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit: 5 requests per minute per IP
+    const ip = getClientIp(request.headers);
+    const { allowed } = rateLimit(`contact:${ip}`, 5, 60_000);
+    if (!allowed) {
+      return NextResponse.json(
+        { success: false, error: "Trop de demandes. Veuillez réessayer dans une minute." },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const { firstname, lastname, email, subject, message } = body;
+
+    // Honeypot: if filled, it's a bot (hidden field in form)
+    if (body.website) {
+      // Silently accept to not tip off bots
+      return NextResponse.json({ success: true, message: "Votre message a bien ete envoye." });
+    }
 
     // Validate required fields
     const errors: string[] = [];

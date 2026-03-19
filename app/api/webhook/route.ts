@@ -64,6 +64,19 @@ export async function POST(req: NextRequest) {
 
       const supabase = createServiceClient();
 
+      // Idempotency: skip if this payment was already processed
+      const paymentId = session.payment_intent as string;
+      const { data: existingOrder } = await supabase
+        .from("orders")
+        .select("id")
+        .eq("payment_id", paymentId)
+        .maybeSingle();
+
+      if (existingOrder) {
+        console.log(`Order already exists for payment ${paymentId}, skipping`);
+        return NextResponse.json({ received: true, skipped: "duplicate" });
+      }
+
       // Stripe SDK v20+: shipping is under collected_information.shipping_details
       const shippingDetails = fullSession.collected_information?.shipping_details ?? null;
 

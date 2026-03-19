@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe/server";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 type CartItem = {
   slug: string;
@@ -10,6 +11,16 @@ type CartItem = {
 
 export async function POST(req: NextRequest) {
   try {
+    // Rate limit: 10 requests per minute per IP
+    const ip = getClientIp(req.headers);
+    const { allowed } = rateLimit(`checkout:${ip}`, 10, 60_000);
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Trop de demandes. Veuillez réessayer dans une minute." },
+        { status: 429 }
+      );
+    }
+
     const { items, email, shippingAddress, relay } = (await req.json()) as {
       items: CartItem[];
       email?: string;

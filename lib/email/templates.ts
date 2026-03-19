@@ -3,6 +3,17 @@
 const COUNTRY_NAMES: Record<string, string> = { FR: "France", BE: "Belgique", CH: "Suisse", LU: "Luxembourg", DE: "Allemagne" };
 function countryName(code?: string) { return code ? (COUNTRY_NAMES[code.toUpperCase()] ?? code) : ""; }
 
+/** Escape HTML to prevent XSS in email templates */
+function esc(str: string | undefined | null): string {
+  if (!str) return "";
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 // ─── Confirmation commande → client ────────────────────────────────────────
 
 export interface OrderItem {
@@ -41,7 +52,7 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
       (item) => `
       <tr>
         <td style="padding:8px 0;border-bottom:1px solid #DBDBDB;">
-          ${item.product_name}
+          ${esc(item.product_name)}
         </td>
         <td style="padding:8px 0;border-bottom:1px solid #DBDBDB;text-align:center;">${item.quantity}</td>
         <td style="padding:8px 0;border-bottom:1px solid #DBDBDB;text-align:right;">${item.unit_price.toFixed(2)} €</td>
@@ -52,6 +63,7 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
   const addr = data.shippingAddress;
   const addrHtml = [addr.name, addr.line1, addr.line2, `${addr.postal_code ?? ""} ${addr.city ?? ""}`.trim(), countryName(addr.country)]
     .filter(Boolean)
+    .map(esc)
     .join("<br>");
 
   return `
@@ -74,10 +86,10 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
         <tr>
           <td style="padding:40px;">
             <h1 style="margin:0 0 8px;font-size:20px;font-weight:600;color:#0F0F10;">Commande confirmee</h1>
-            <p style="margin:0 0 24px;color:#6B7280;font-size:14px;">Commande n° ${data.orderId.slice(0, 8).toUpperCase()}</p>
+            <p style="margin:0 0 24px;color:#6B7280;font-size:14px;">Commande n° ${esc(data.orderId.slice(0, 8).toUpperCase())}</p>
 
             <p style="margin:0 0 24px;font-size:15px;line-height:1.6;">
-              Bonjour ${data.customerName},<br><br>
+              Bonjour ${esc(data.customerName)},<br><br>
               Merci pour votre commande ! Nous l'avons bien reçue et elle est en cours de traitement.
               Vous recevrez un email de confirmation d'expédition avec votre numéro de suivi DPD.
             </p>
@@ -114,8 +126,8 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
             ${addr.relay_name ? `
             <div style="background:#f3e8ff;border-radius:8px;padding:20px;margin-bottom:16px;">
               <div style="font-size:13px;font-weight:600;color:#7C3AED;margin-bottom:8px;">Point relais DPD Pickup</div>
-              <div style="font-size:15px;font-weight:600;line-height:1.6;">${addr.relay_name}</div>
-              <div style="font-size:14px;line-height:1.6;color:#6B7280;">${addr.relay_address ?? ""}</div>
+              <div style="font-size:15px;font-weight:600;line-height:1.6;">${esc(addr.relay_name)}</div>
+              <div style="font-size:14px;line-height:1.6;color:#6B7280;">${esc(addr.relay_address)}</div>
             </div>
             ` : ""}
             <div style="background:#f9f9f9;border-radius:8px;padding:20px;margin-bottom:32px;">
@@ -192,7 +204,7 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
       (item) => `
       <tr>
         <td style="padding:10px 8px;border-bottom:1px solid #DBDBDB;font-size:15px;">
-          <strong>${item.product_name}</strong>${item.variant_label && item.variant_label !== "standard" ? ` (${item.variant_label})` : ""}
+          <strong>${esc(item.product_name)}</strong>${item.variant_label && item.variant_label !== "standard" ? ` (${esc(item.variant_label)})` : ""}
         </td>
         <td style="padding:10px 8px;border-bottom:1px solid #DBDBDB;text-align:center;font-size:18px;font-weight:700;">${item.quantity}</td>
       </tr>`
@@ -202,6 +214,7 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
   const addr = data.shippingAddress;
   const addrHtml = [addr.name, addr.line1, addr.line2, `${addr.postal_code ?? ""} ${addr.city ?? ""}`.trim(), countryName(addr.country)]
     .filter(Boolean)
+    .map(esc)
     .join("<br>");
 
   const method = data.shippingMethod ?? (data.shippingAddress?.shipping_method as string | undefined);
@@ -222,7 +235,7 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
         <tr>
           <td style="background:#0F0F10;padding:24px 40px;">
             <div style="font-size:12px;color:#8DC63F;font-weight:600;text-transform:uppercase;letter-spacing:1px;">BON DE PRÉPARATION</div>
-            <div style="font-size:20px;font-weight:700;color:#ffffff;margin-top:4px;">Commande n° ${data.orderId.slice(0, 8).toUpperCase()}</div>
+            <div style="font-size:20px;font-weight:700;color:#ffffff;margin-top:4px;">Commande n° ${esc(data.orderId.slice(0, 8).toUpperCase())}</div>
             <div style="font-size:13px;color:#9CA3AF;margin-top:4px;">${new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" })}</div>
           </td>
         </tr>
@@ -243,9 +256,9 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
             <!-- Relais choisi par le client -->
             <div style="background:#f3e8ff;border:2px solid #7C3AED;border-radius:8px;padding:20px;margin-bottom:32px;">
               <div style="font-size:13px;font-weight:700;color:#7C3AED;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">RELAIS CHOISI PAR LE CLIENT</div>
-              <div style="font-size:18px;font-weight:700;line-height:1.4;">${addr.relay_name}</div>
-              <div style="font-size:15px;color:#6B7280;margin-top:4px;">${addr.relay_address ?? ""}</div>
-              <div style="font-size:12px;color:#7C3AED;margin-top:8px;font-weight:600;">ID Relais : ${addr.relay_id ?? ""}</div>
+              <div style="font-size:18px;font-weight:700;line-height:1.4;">${esc(addr.relay_name)}</div>
+              <div style="font-size:15px;color:#6B7280;margin-top:4px;">${esc(addr.relay_address)}</div>
+              <div style="font-size:12px;color:#7C3AED;margin-top:8px;font-weight:600;">ID Relais : ${esc(addr.relay_id)}</div>
             </div>
             ` : ""}
 
@@ -270,7 +283,7 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
             <!-- Email client -->
             <div style="background:#f9f9f9;border-radius:8px;padding:16px;margin-bottom:32px;">
               <span style="font-size:13px;color:#6B7280;font-weight:600;">Email client : </span>
-              <span style="font-size:14px;">${data.customerEmail}</span>
+              <span style="font-size:14px;">${esc(data.customerEmail)}</span>
             </div>
 
             <p style="font-size:13px;color:#6B7280;margin:0;">
@@ -325,10 +338,10 @@ export function shippingNotificationHtml(data: ShippingNotificationData): string
         <tr>
           <td style="padding:40px;">
             <h1 style="margin:0 0 8px;font-size:20px;font-weight:600;color:#0F0F10;">Votre commande est expediee</h1>
-            <p style="margin:0 0 24px;color:#6B7280;font-size:14px;">Commande n° ${data.orderId.slice(0, 8).toUpperCase()}</p>
+            <p style="margin:0 0 24px;color:#6B7280;font-size:14px;">Commande n° ${esc(data.orderId.slice(0, 8).toUpperCase())}</p>
 
             <p style="margin:0 0 24px;font-size:15px;line-height:1.6;">
-              Bonjour ${data.customerName},<br><br>
+              Bonjour ${esc(data.customerName)},<br><br>
               Bonne nouvelle ! Votre commande PowerBug a été expédiée via DPD.
               Vous pouvez suivre votre colis en temps réel grâce au lien ci-dessous.
             </p>
@@ -336,7 +349,7 @@ export function shippingNotificationHtml(data: ShippingNotificationData): string
             <!-- Tracking -->
             <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:24px;margin-bottom:24px;text-align:center;">
               <div style="font-size:13px;color:#6B7280;font-weight:600;margin-bottom:8px;">Numero de suivi DPD</div>
-              <div style="font-size:20px;font-weight:700;color:#0F0F10;margin-bottom:16px;letter-spacing:1px;">${data.trackingNumber}</div>
+              <div style="font-size:20px;font-weight:700;color:#0F0F10;margin-bottom:16px;letter-spacing:1px;">${esc(data.trackingNumber)}</div>
               <a href="${trackingUrl}" style="display:inline-block;background:#356B0D;color:#ffffff;font-weight:600;font-size:14px;padding:12px 32px;border-radius:10px;text-decoration:none;">
                 Suivre mon colis
               </a>
@@ -402,8 +415,8 @@ export function stockAlertHtml(alerts: StockAlertData[]): string {
     .map(
       (a) => `
       <tr>
-        <td style="padding:10px 8px;border-bottom:1px solid #DBDBDB;font-size:14px;font-weight:500;">${a.productName}</td>
-        <td style="padding:10px 8px;border-bottom:1px solid #DBDBDB;font-size:14px;color:#6B7280;">${a.sku ?? "—"}</td>
+        <td style="padding:10px 8px;border-bottom:1px solid #DBDBDB;font-size:14px;font-weight:500;">${esc(a.productName)}</td>
+        <td style="padding:10px 8px;border-bottom:1px solid #DBDBDB;font-size:14px;color:#6B7280;">${esc(a.sku) || "—"}</td>
         <td style="padding:10px 8px;border-bottom:1px solid #DBDBDB;text-align:center;font-size:16px;font-weight:700;color:${a.currentStock === 0 ? "#AE1717" : "#F6A429"};">${a.currentStock}</td>
       </tr>`
     )
@@ -486,20 +499,20 @@ export function contactFormHtml(data: ContactData): string {
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td style="padding:8px 0;font-size:13px;color:#6B7280;width:120px;">De :</td>
-                <td style="padding:8px 0;font-size:14px;font-weight:600;">${data.firstname} ${data.lastname}</td>
+                <td style="padding:8px 0;font-size:14px;font-weight:600;">${esc(data.firstname)} ${esc(data.lastname)}</td>
               </tr>
               <tr>
                 <td style="padding:8px 0;font-size:13px;color:#6B7280;">Email :</td>
-                <td style="padding:8px 0;font-size:14px;"><a href="mailto:${data.email}" style="color:#356B0D;">${data.email}</a></td>
+                <td style="padding:8px 0;font-size:14px;"><a href="mailto:${esc(data.email)}" style="color:#356B0D;">${esc(data.email)}</a></td>
               </tr>
               <tr>
                 <td style="padding:8px 0;font-size:13px;color:#6B7280;">Sujet :</td>
-                <td style="padding:8px 0;font-size:14px;">${data.subject}</td>
+                <td style="padding:8px 0;font-size:14px;">${esc(data.subject)}</td>
               </tr>
             </table>
             <div style="margin-top:24px;background:#f9f9f9;border-radius:8px;padding:20px;">
               <div style="font-size:13px;color:#6B7280;font-weight:600;margin-bottom:12px;">Message :</div>
-              <div style="font-size:15px;line-height:1.7;white-space:pre-wrap;">${data.message}</div>
+              <div style="font-size:15px;line-height:1.7;white-space:pre-wrap;">${esc(data.message)}</div>
             </div>
           </td>
         </tr>

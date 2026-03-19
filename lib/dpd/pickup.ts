@@ -47,6 +47,7 @@ export async function searchRelayPoints(zipCode: string, city?: string): Promise
       SOAPAction: "http://MyPudo.pickup-services.com/GetPudoList",
     },
     body: soapBody,
+    signal: AbortSignal.timeout(10_000), // 10s timeout
   });
 
   const xml = await res.text();

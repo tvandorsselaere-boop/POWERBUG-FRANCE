@@ -215,15 +215,31 @@ export default function MentionsLegalesPage() {
             (notamment les obligations comptables et fiscales).
           </p>
 
-          <h3 className="mt-4 text-base font-medium text-[#0F0F10]">
+          <h3 id="cookies" className="mt-4 text-base font-medium text-[#0F0F10]">
             Cookies
           </h3>
           <p className="mt-2 text-sm leading-relaxed text-[#6B7280]">
-            Le site n&apos;utilise pas de cookies de tracking ou de publicité.
-            Seuls des cookies techniques strictement nécessaires au
-            fonctionnement du site (panier, session) peuvent être utilisés. Ces
-            cookies ne nécessitent pas le consentement préalable de
-            l&apos;utilisateur conformément à la directive ePrivacy.
+            Le site utilise les catégories de cookies suivantes :
+          </p>
+          <ul className="mt-2 list-disc pl-6 text-sm leading-relaxed text-[#6B7280]">
+            <li>
+              <strong className="text-[#0F0F10]">Cookies techniques</strong> (strictement nécessaires) :
+              panier, session utilisateur. Ces cookies ne nécessitent pas le
+              consentement préalable conformément à la directive ePrivacy.
+            </li>
+            <li>
+              <strong className="text-[#0F0F10]">Cookies de mesure d&apos;audience</strong> (Google Analytics) :
+              ces cookies ne sont déposés qu&apos;après votre consentement explicite
+              via le bandeau cookies affiché lors de votre première visite.
+              Ils permettent de mesurer la fréquentation du site de manière anonymisée
+              (adresse IP anonymisée). Vous pouvez retirer votre consentement à tout moment
+              en supprimant le cookie <code className="rounded bg-[#F5F5F5] px-1 text-xs">cookie_consent</code> de votre navigateur.
+            </li>
+          </ul>
+          <p className="mt-2 text-sm leading-relaxed text-[#6B7280]">
+            Le site n&apos;utilise aucun cookie de publicité ou de ciblage.
+            La durée de validité du consentement est de 13 mois conformément
+            aux recommandations de la CNIL.
           </p>
 
           <h3 className="mt-4 text-base font-medium text-[#0F0F10]">
@@ -289,6 +305,10 @@ export default function MentionsLegalesPage() {
             <li>
               <strong className="text-[#0F0F10]">DPD</strong> — Transport et
               livraison des colis
+            </li>
+            <li>
+              <strong className="text-[#0F0F10]">Google Analytics</strong> — Mesure
+              d&apos;audience (avec consentement)
             </li>
           </ul>
         </section>

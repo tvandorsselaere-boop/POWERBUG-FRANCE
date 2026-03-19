@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ConstructionBanner } from "@/components/construction-banner";
 import { TrustBanner } from "@/components/trust-banner";
+import { Analytics } from "@/components/analytics";
+import { CookieConsent } from "@/components/cookie-consent";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -46,8 +47,11 @@ export const metadata: Metadata = {
     description: "Distributeur exclusif France des chariots électriques de golf PowerBug. Qualité britannique, livraison France entière.",
   },
   icons: {
-    icon: "/images/logo/powerbug-logo-hd.png",
-    apple: "/images/logo/powerbug-logo-hd.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -89,7 +93,8 @@ export default function RootLayout({
         <Footer />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaWebsite) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrganization) }} />
-        <GoogleAnalytics gaId="G-VEKW0YYE2L" />
+        <Analytics />
+        <CookieConsent />
       </body>
     </html>
   );

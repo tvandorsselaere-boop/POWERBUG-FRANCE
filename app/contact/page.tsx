@@ -26,7 +26,10 @@ export default function ContactPage() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ firstname, lastname, email, subject, message }),
+        body: JSON.stringify({
+          firstname, lastname, email, subject, message,
+          website: (document.getElementById("website") as HTMLInputElement)?.value ?? "",
+        }),
       });
 
       const data = await res.json();
@@ -181,6 +184,12 @@ export default function ContactPage() {
                 placeholder="Votre message..."
                 required
               />
+            </div>
+
+            {/* Honeypot anti-bot — hidden from real users */}
+            <div className="absolute -left-[9999px]" aria-hidden="true">
+              <label htmlFor="website">Ne pas remplir</label>
+              <input type="text" id="website" name="website" tabIndex={-1} autoComplete="off" />
             </div>
 
             <Button
