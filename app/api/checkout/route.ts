@@ -79,41 +79,44 @@ export async function POST(req: NextRequest) {
     let customerId: string | undefined;
 
     if (email && shippingAddress?.full_name && shippingAddress?.street) {
-      // Check if customer already exists
-      const existing = await stripe.customers.list({ email, limit: 1 });
-      if (existing.data.length > 0) {
-        // Update existing customer with latest address
-        const customer = await stripe.customers.update(existing.data[0].id, {
-          name: shippingAddress.full_name,
-          phone: shippingAddress.phone || undefined,
-          shipping: {
+      // Si relais choisi, pré-remplir Stripe avec l'adresse du relais
+      const shippingData = relay
+        ? {
+            name: `${shippingAddress.full_name} (Relais: ${relay.name})`,
+            phone: shippingAddress.phone || undefined,
+            address: {
+              line1: relay.address,
+              city: relay.city,
+              postal_code: relay.zipCode,
+              country: "FR" as const,
+            },
+          }
+        : {
             name: shippingAddress.full_name,
             phone: shippingAddress.phone || undefined,
             address: {
               line1: shippingAddress.street,
               city: shippingAddress.city || undefined,
               postal_code: shippingAddress.zip || undefined,
-              country: "FR",
+              country: "FR" as const,
             },
-          },
+          };
+
+      // Check if customer already exists
+      const existing = await stripe.customers.list({ email, limit: 1 });
+      if (existing.data.length > 0) {
+        const customer = await stripe.customers.update(existing.data[0].id, {
+          name: shippingAddress.full_name,
+          phone: shippingAddress.phone || undefined,
+          shipping: shippingData,
         });
         customerId = customer.id;
       } else {
-        // Create new customer
         const customer = await stripe.customers.create({
           email,
           name: shippingAddress.full_name,
           phone: shippingAddress.phone || undefined,
-          shipping: {
-            name: shippingAddress.full_name,
-            phone: shippingAddress.phone || undefined,
-            address: {
-              line1: shippingAddress.street,
-              city: shippingAddress.city || undefined,
-              postal_code: shippingAddress.zip || undefined,
-              country: "FR",
-            },
-          },
+          shipping: shippingData,
         });
         customerId = customer.id;
       }
