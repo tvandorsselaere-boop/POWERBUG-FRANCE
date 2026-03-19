@@ -13,6 +13,8 @@ export function HeroVideo() {
     <video
       key={isMobile ? "mobile" : "desktop"}
       src={isMobile ? "/videos/mobile.mp4" : "/videos/desktop.mp4"}
+      poster="/images/hero-poster.jpg"
+      preload="none"
       autoPlay
       muted
       playsInline

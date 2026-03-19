@@ -90,7 +90,21 @@ const FREE_ACCESSORIES = [
   },
 ];
 
+export const dynamic = "force-static";
 export const revalidate = 3600;
+
+const schemaBreadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Accueil",
+      item: "https://www.powerbug.fr/",
+    },
+  ],
+};
 
 const schemaFAQ = {
   "@context": "https://schema.org",
@@ -173,6 +187,10 @@ export default async function Home() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaBreadcrumb) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaFAQ) }}
