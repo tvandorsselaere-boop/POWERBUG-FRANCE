@@ -85,7 +85,7 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
         <!-- Body -->
         <tr>
           <td style="padding:40px;">
-            <h1 style="margin:0 0 8px;font-size:20px;font-weight:600;color:#0F0F10;">Commande confirmee</h1>
+            <h1 style="margin:0 0 8px;font-size:20px;font-weight:600;color:#0F0F10;">Commande confirmée</h1>
             <p style="margin:0 0 24px;color:#6B7280;font-size:14px;">Commande n° ${esc(data.orderId.slice(0, 8).toUpperCase())}</p>
 
             <p style="margin:0 0 24px;font-size:15px;line-height:1.6;">
@@ -172,7 +172,7 @@ export function orderConfirmationText(data: OrderConfirmationData): string {
     .filter(Boolean)
     .join("\n");
 
-  let text = `Commande confirmee - n° ${data.orderId.slice(0, 8).toUpperCase()}
+  let text = `Commande confirmée - n° ${data.orderId.slice(0, 8).toUpperCase()}
 
 Bonjour ${data.customerName},
 

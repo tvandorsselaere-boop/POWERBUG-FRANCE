@@ -221,7 +221,7 @@ export async function POST(req: NextRequest) {
       await sendEmail({
         to: customerEmail,
         toName: customerName,
-        subject: `Votre commande n° ${order.id.slice(0, 8).toUpperCase()} est confirmee`,
+        subject: `Votre commande n° ${order.id.slice(0, 8).toUpperCase()} est confirmée`,
         html: orderConfirmationHtml(emailData),
         text: orderConfirmationText(emailData),
         attachments: [
