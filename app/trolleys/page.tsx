@@ -49,33 +49,22 @@ export default async function TrolleysPage() {
         <span className="text-[#0F0F10]">Chariots</span>
       </nav>
 
-      {/* Header */}
-      <div className="mb-4 text-center">
+      {/* Header — compact on mobile */}
+      <div className="mb-2 text-center md:mb-4">
         <p className="text-sm font-semibold uppercase tracking-widest text-[#6B7280]">
           Gamme 2026
         </p>
       </div>
-      <div className="mb-14 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-5xl">
+      <div className="mb-6 text-center md:mb-14">
+        <h1 className="text-2xl font-bold tracking-tight text-[#0F0F10] sm:text-5xl">
           Serie NX
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-[#6B7280]">
-          Trouvez le chariot qui vous correspond. Le NX pour l&apos;essentiel, le
-          NX DHC pour le controle total.
+        <p className="mx-auto mt-2 max-w-2xl text-sm text-[#6B7280] md:mt-4 md:text-lg">
+          Le NX pour l&apos;essentiel, le NX DHC pour le controle total.
         </p>
       </div>
 
-      {/* Introduction prose */}
-      <div className="mx-auto mb-14 max-w-3xl space-y-4 text-[#6B7280]">
-        <p className="leading-relaxed">
-          Tous les chariots PowerBug de la série NX partagent le même ADN : un système d&apos;alimentation 28V à batterie lithium, le pliage VRAP ultra-compact breveté et un moteur brushless silencieux. La différence entre le NX et le NX DHC se situe au niveau du contrôle en descente et du freinage.
-        </p>
-        <p className="leading-relaxed">
-          Le <strong className="text-[#0F0F10]">NX Lithium</strong> est le choix idéal pour les golfeurs qui recherchent un chariot électrique fiable, léger (7,9&nbsp;kg) et performant sur terrain plat ou légèrement vallonné. Le <strong className="text-[#0F0F10]">NX DHC Lithium</strong> ajoute le système Downhill Control qui régule automatiquement la vitesse en descente, ainsi qu&apos;un frein parking électronique — indispensable sur les parcours avec du dénivelé.
-        </p>
-      </div>
-
-      {/* Mobile quick shop cards */}
+      {/* Mobile quick shop cards — AVANT le texte */}
       <div className="mb-8 grid grid-cols-2 gap-3 md:hidden">
         {[
           { slug: "nx-lithium", name: "NX Lithium", price: 799, compare: 899, img: nxImg, badge: "Populaire", badgeColor: "bg-[#356B0D]/10 text-[#356B0D]", href: "/trolleys/nx-lithium" },
@@ -118,10 +107,20 @@ export default async function TrolleysPage() {
           </div>
         ))}
       </div>
-      <p className="mb-10 text-center text-[10px] text-[#6B7280] md:hidden">
+      <p className="mb-8 text-center text-[10px] text-[#6B7280] md:hidden">
         <Gift className="mr-1 inline h-3 w-3 text-[#356B0D]" />
         Porte-parapluie + porte-scorecard offerts (~60€) avec chaque chariot
       </p>
+
+      {/* Introduction prose */}
+      <div className="mx-auto mb-14 max-w-3xl space-y-4 text-[#6B7280]">
+        <p className="leading-relaxed">
+          Tous les chariots PowerBug de la série NX partagent le même ADN : un système d&apos;alimentation 28V à batterie lithium, le pliage VRAP ultra-compact breveté et un moteur brushless silencieux. La différence entre le NX et le NX DHC se situe au niveau du contrôle en descente et du freinage.
+        </p>
+        <p className="leading-relaxed">
+          Le <strong className="text-[#0F0F10]">NX Lithium</strong> est le choix idéal pour les golfeurs qui recherchent un chariot électrique fiable, léger (7,9&nbsp;kg) et performant sur terrain plat ou légèrement vallonné. Le <strong className="text-[#0F0F10]">NX DHC Lithium</strong> ajoute le système Downhill Control qui régule automatiquement la vitesse en descente, ainsi qu&apos;un frein parking électronique — indispensable sur les parcours avec du dénivelé.
+        </p>
+      </div>
 
       {/* Desktop comparator table */}
       <div className="hidden md:block">

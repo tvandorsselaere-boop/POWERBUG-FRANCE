@@ -45,59 +45,59 @@ export function MobileBottomBar({ onMenuOpen }: MobileBottomBarProps) {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#DBDBDB] bg-white md:hidden">
-      <div className="flex h-14 items-stretch">
+      <div className="flex h-16 items-stretch">
         {/* Accueil — favicon */}
         <Link
           href="/"
-          className="flex flex-1 flex-col items-center justify-center gap-0.5 text-[#6B7280] transition-colors active:text-[#356B0D]"
+          className="flex flex-1 flex-col items-center justify-center gap-1 text-[#6B7280] transition-colors active:text-[#356B0D]"
         >
-          <Image src="/icon-192.png" alt="PowerBug" width={22} height={22} className="h-[22px] w-[22px]" />
-          <span className="text-[10px] font-medium">Accueil</span>
+          <Image src="/icon-192.png" alt="PowerBug" width={24} height={24} className="h-6 w-6" />
+          <span className="text-[11px] font-medium">Accueil</span>
         </Link>
 
         {/* Menu burger */}
         <button
           onClick={onMenuOpen}
-          className="flex flex-1 flex-col items-center justify-center gap-0.5 text-[#6B7280] transition-colors active:text-[#356B0D]"
+          className="flex flex-1 flex-col items-center justify-center gap-1 text-[#6B7280] transition-colors active:text-[#356B0D]"
         >
-          <Menu className="h-5 w-5" />
-          <span className="text-[10px] font-medium">Menu</span>
+          <Menu className="h-6 w-6" />
+          <span className="text-[11px] font-medium">Menu</span>
         </button>
 
         {/* Chariots */}
         <Link
           href="/trolleys"
-          className="flex flex-1 flex-col items-center justify-center gap-0.5 text-[#6B7280] transition-colors active:text-[#356B0D]"
+          className="flex flex-1 flex-col items-center justify-center gap-1 text-[#6B7280] transition-colors active:text-[#356B0D]"
         >
-          <TrolleyIcon className="h-5 w-5" />
-          <span className="text-[10px] font-medium">Chariots</span>
+          <TrolleyIcon className="h-6 w-6" />
+          <span className="text-[11px] font-medium">Chariots</span>
         </Link>
 
         {/* Compte */}
         <Link
           href={user ? "/compte" : "/connexion"}
-          className="flex flex-1 flex-col items-center justify-center gap-0.5 text-[#6B7280] transition-colors active:text-[#356B0D]"
+          className="flex flex-1 flex-col items-center justify-center gap-1 text-[#6B7280] transition-colors active:text-[#356B0D]"
         >
           {initials ? (
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#356B0D] text-[9px] font-semibold text-white">
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#356B0D] text-[10px] font-semibold text-white">
               {initials}
             </span>
           ) : (
-            <User className="h-5 w-5" />
+            <User className="h-6 w-6" />
           )}
-          <span className="text-[10px] font-medium">Compte</span>
+          <span className="text-[11px] font-medium">Compte</span>
         </Link>
 
         {/* Panier */}
         <Link
           href="/panier"
-          className="relative flex flex-1 flex-col items-center justify-center gap-0.5 text-[#6B7280] transition-colors active:text-[#356B0D]"
+          className="relative flex flex-1 flex-col items-center justify-center gap-1 text-[#6B7280] transition-colors active:text-[#356B0D]"
         >
           <span className="relative">
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-6 w-6" />
             <CartCount />
           </span>
-          <span className="text-[10px] font-medium">Panier</span>
+          <span className="text-[11px] font-medium">Panier</span>
         </Link>
       </div>
       {/* Safe area for iPhone notch */}
