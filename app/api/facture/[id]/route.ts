@@ -26,7 +26,26 @@ export async function GET(
     return NextResponse.json({ error: "Commande introuvable" }, { status: 404 });
   }
 
-  const { buffer, invoiceNumber } = generateInvoicePdf(order as unknown as InvoiceOrder);
+  const invoiceNumber = `FA-${new Date(order.created_at).getFullYear()}-${String(order.order_number).padStart(4, "0")}`;
+
+  // Try to serve from Supabase Storage first (archived original)
+  const storagePath = `powerbug/${id}.pdf`;
+  const { data: storedPdf } = await supabase.storage
+    .from("invoices")
+    .download(storagePath);
+
+  if (storedPdf) {
+    const arrayBuffer = await storedPdf.arrayBuffer();
+    return new NextResponse(new Uint8Array(arrayBuffer), {
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `inline; filename="Facture_${invoiceNumber}.pdf"`,
+      },
+    });
+  }
+
+  // Fallback: generate on the fly (for orders created before storage was added)
+  const { buffer } = generateInvoicePdf(order as unknown as InvoiceOrder);
 
   return new NextResponse(new Uint8Array(buffer), {
     headers: {

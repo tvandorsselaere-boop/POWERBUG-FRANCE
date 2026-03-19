@@ -192,6 +192,18 @@ export async function POST(req: NextRequest) {
       };
       const { buffer: pdfBuffer, invoiceNumber } = generateInvoicePdf(invoiceOrder);
 
+      // Save invoice PDF to Supabase Storage
+      const storagePath = `powerbug/${order.id}.pdf`;
+      const { error: storageError } = await supabase.storage
+        .from("invoices")
+        .upload(storagePath, pdfBuffer, {
+          contentType: "application/pdf",
+          upsert: true,
+        });
+      if (storageError) {
+        console.error("Failed to store invoice PDF:", storageError.message);
+      }
+
       // Email confirmation → client (avec facture PDF)
       await sendEmail({
         to: customerEmail,
