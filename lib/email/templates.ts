@@ -78,7 +78,7 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
         <!-- Header -->
         <tr>
           <td style="background:#356B0D;padding:24px 40px;">
-            <div style="font-size:18px;font-weight:600;color:#ffffff;">PowerBug France</div>
+            <img src="https://www.powerbug.fr/images/powerbug-logo.png" alt="PowerBug France" width="160" height="40" style="display:block;filter:brightness(0) invert(1);opacity:0.95;" />
           </td>
         </tr>
 
