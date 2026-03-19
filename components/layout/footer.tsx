@@ -105,7 +105,7 @@ export function Footer() {
         <div className="mt-10 border-t border-[#DBDBDB] pt-6 text-center text-xs text-[#6B7280]">
           <p>&copy; {new Date().getFullYear()} PowerBug France. Tous droits reserves.</p>
           <p className="mt-1">
-            PRO GOLF DISTRIBUTION SAS — SIREN 888 311 610 | Site realise par{" "}
+            PRO GOLF DISTRIBUTION SASU — SIREN 888 311 610 — TVA FR 07 888 311 610 | Site realise par{" "}
             <a
               href="https://facile-ia.fr"
               target="_blank"

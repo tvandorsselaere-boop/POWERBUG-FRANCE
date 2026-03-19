@@ -332,11 +332,21 @@ Page interactive `/configurateur` :
 - Toutes les requêtes Supabase incluent `.eq('store', 'powerbug')`
 - Les inserts en base incluent `store: 'powerbug'`
 
-## Tarification & Mentions légales
+## Informations légales PRO GOLF DISTRIBUTION (source INPI 19/03/2026)
 
-- **Auto-entrepreneur** : TVA non applicable, article 293 B du CGI
-- Prix affichés = prix TTC (pas de mention HT)
+- **Forme juridique** : SASU (Société par actions simplifiée unipersonnelle)
+- **SIREN** : 888 311 610 | **SIRET siège** : 888 311 610 00032
+- **RCS** : Aix-en-Provence
+- **Siège social** : Domaine de Riquetti, 13290 Aix-en-Provence
+- **Capital social** : 1 000 €
+- **Code APE** : 4764Z
+- **TVA** : assujetti TVA 20% (PAS en franchise art. 293 B)
+- **N° TVA intracommunautaire** : FR 07 888 311 610
+- **Prix affichés** : TTC (incluant TVA 20%)
 - Mention "Site réalisé par Facile-IA" dans le footer
+
+## Tarification Facile-IA
+
 - Setup 499€ + 49€/mois + 10% commission sur CA via site
 
 ## Budget infra récurrent (confirmé 2026)

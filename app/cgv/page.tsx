@@ -56,19 +56,29 @@ export default function CGVPage() {
               GOLF DISTRIBUTION
             </p>
             <p>
-              <strong className="text-[#0F0F10]">Forme juridique :</strong> SAS
-              (Société par Actions Simplifiée)
+              <strong className="text-[#0F0F10]">Forme juridique :</strong> SASU
+              (Société par Actions Simplifiée Unipersonnelle)
             </p>
             <p>
-              <strong className="text-[#0F0F10]">SIREN :</strong> 888 311 610 —
-              RCS Aix-en-Provence
+              <strong className="text-[#0F0F10]">SIREN :</strong> 888 311 610 —{" "}
+              <strong className="text-[#0F0F10]">SIRET :</strong> 888 311 610 00032
+            </p>
+            <p>
+              <strong className="text-[#0F0F10]">RCS :</strong> Aix-en-Provence
+            </p>
+            <p>
+              <strong className="text-[#0F0F10]">Capital social :</strong> 1 000 €
+            </p>
+            <p>
+              <strong className="text-[#0F0F10]">N° TVA intracommunautaire :</strong>{" "}
+              FR 07 888 311 610
             </p>
             <p>
               <strong className="text-[#0F0F10]">Siège social :</strong>{" "}
               Domaine de Riquetti, 13290 Aix-en-Provence
             </p>
             <p>
-              <strong className="text-[#0F0F10]">Dirigeant :</strong> Frédéric
+              <strong className="text-[#0F0F10]">Président :</strong> Frédéric
               Pensu
             </p>
             <p>
