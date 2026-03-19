@@ -147,7 +147,7 @@ export default async function PiecesDetacheesPage() {
           </a>
 
           <a
-            href="mailto:contact@powerbug.fr"
+            href="mailto:commandes@powerbug.fr"
             className="card-glass group flex flex-col items-center rounded-2xl p-8 text-center transition-all hover:border-[#356B0D]/30 hover:shadow-lg"
           >
             <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#356B0D]/10 transition-colors group-hover:bg-[#356B0D]/20">
@@ -157,7 +157,7 @@ export default async function PiecesDetacheesPage() {
               Par email
             </h3>
             <p className="mb-4 text-2xl font-bold text-[#356B0D]">
-              contact@powerbug.fr
+              commandes@powerbug.fr
             </p>
             <span className="btn-glass inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white">
               <Mail className="h-4 w-4" />

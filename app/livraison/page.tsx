@@ -181,9 +181,9 @@ export default function LivraisonPage() {
             Notre équipe répond sous 24h ouvrées.
           </p>
           <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-6">
-            <a href="mailto:contact@powerbug.fr" className="flex items-center gap-2 text-sm text-[#356B0D] hover:underline">
+            <a href="mailto:commandes@powerbug.fr" className="flex items-center gap-2 text-sm text-[#356B0D] hover:underline">
               <Mail className="h-4 w-4" />
-              contact@powerbug.fr
+              commandes@powerbug.fr
             </a>
             <a href="tel:+33788239784" className="flex items-center gap-2 text-sm text-[#356B0D] hover:underline">
               <Phone className="h-4 w-4" />
