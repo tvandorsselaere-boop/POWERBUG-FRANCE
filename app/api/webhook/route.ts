@@ -4,6 +4,7 @@ import { createServiceClient } from "@/lib/supabase/server";
 import Stripe from "stripe";
 import { sendEmail } from "@/lib/email/zepto";
 import { orderConfirmationHtml, orderConfirmationText, preparationOrderHtml, type OrderItem } from "@/lib/email/templates";
+import { generateInvoicePdf, type InvoiceOrder } from "@/lib/invoice/generate";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -127,7 +128,7 @@ export async function POST(req: NextRequest) {
           payment_id: session.payment_intent as string,
           store: "powerbug",
         })
-        .select("id")
+        .select("id, order_number, created_at")
         .single();
 
       if (orderError) {
@@ -178,13 +179,33 @@ export async function POST(req: NextRequest) {
         shippingMethod,
       };
 
-      // Email confirmation → client
+      // Generate invoice PDF
+      const invoiceOrder: InvoiceOrder = {
+        order_number: order.order_number,
+        created_at: order.created_at,
+        email: customerEmail,
+        total,
+        subtotal,
+        shipping_cost: shippingCost,
+        shipping_address: shippingAddress as Record<string, string>,
+        items: orderItems,
+      };
+      const { buffer: pdfBuffer, invoiceNumber } = generateInvoicePdf(invoiceOrder);
+
+      // Email confirmation → client (avec facture PDF)
       await sendEmail({
         to: customerEmail,
         toName: customerName,
         subject: `Votre commande n° ${order.id.slice(0, 8).toUpperCase()} est confirmee`,
         html: orderConfirmationHtml(emailData),
         text: orderConfirmationText(emailData),
+        attachments: [
+          {
+            content: pdfBuffer.toString("base64"),
+            mime_type: "application/pdf",
+            name: `Facture_${invoiceNumber}.pdf`,
+          },
+        ],
       });
 
       // Email bon de préparation → Golf des Marques (via Fred pour l'instant)

@@ -1,5 +1,11 @@
 const ZEPTO_API_URL = "https://api.zeptomail.eu/v1.1/email";
 
+interface EmailAttachment {
+  content: string; // base64
+  mime_type: string;
+  name: string;
+}
+
 interface EmailPayload {
   to: string;
   toName?: string;
@@ -7,9 +13,10 @@ interface EmailPayload {
   html: string;
   text?: string;
   replyTo?: string;
+  attachments?: EmailAttachment[];
 }
 
-export async function sendEmail({ to, toName, subject, html, text, replyTo }: EmailPayload) {
+export async function sendEmail({ to, toName, subject, html, text, replyTo, attachments }: EmailPayload) {
   const apiKey = process.env.ZEPTO_API_KEY;
   const from = process.env.EMAIL_FROM ?? "thomas@facile-ia.fr";
 
@@ -25,6 +32,7 @@ export async function sendEmail({ to, toName, subject, html, text, replyTo }: Em
     htmlbody: html,
     ...(text ? { textbody: text } : {}),
     ...(replyTo ? { reply_to: [{ address: replyTo }] } : {}),
+    ...(attachments?.length ? { attachments } : {}),
   };
 
   try {
