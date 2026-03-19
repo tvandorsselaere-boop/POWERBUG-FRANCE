@@ -104,9 +104,10 @@ export default async function CommandesPage() {
               const statusClass =
                 STATUS_CLASS[order.status] ?? STATUS_CLASS.pending;
               return (
-                <div
+                <Link
                   key={order.id}
-                  className="rounded-[10px] border border-[#DBDBDB] bg-white p-4"
+                  href={`/compte/commandes/${order.id}`}
+                  className="block rounded-[10px] border border-[#DBDBDB] bg-white p-4 transition-colors hover:border-[#356B0D]"
                 >
                   <div className="flex items-center justify-between">
                     <div>
@@ -132,11 +133,14 @@ export default async function CommandesPage() {
                       Suivi : {order.tracking_number}
                     </p>
                   )}
-                  <div className="mt-3 text-sm text-[#6B7280]">
-                    {order.items?.length ?? 0} article
-                    {(order.items?.length ?? 0) > 1 ? "s" : ""}
+                  <div className="mt-3 flex items-center justify-between text-sm text-[#6B7280]">
+                    <span>
+                      {order.items?.length ?? 0} article
+                      {(order.items?.length ?? 0) > 1 ? "s" : ""}
+                    </span>
+                    <ChevronRight className="h-4 w-4" />
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>
