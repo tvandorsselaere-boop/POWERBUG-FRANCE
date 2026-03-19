@@ -44,15 +44,18 @@ export function MobileBottomBar({ onMenuOpen }: MobileBottomBarProps) {
     : user?.email?.slice(0, 2).toUpperCase() ?? null;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#DBDBDB] bg-white md:hidden">
-      <div className="flex h-16 items-stretch">
+    <nav
+      className="fixed bottom-0 left-0 right-0 z-[9999] border-t border-[#DBDBDB] bg-white md:hidden"
+      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+    >
+      <div className="flex h-[68px] items-stretch">
         {/* Accueil — favicon */}
         <Link
           href="/"
           className="flex flex-1 flex-col items-center justify-center gap-1 text-[#6B7280] transition-colors active:text-[#356B0D]"
         >
-          <Image src="/icon-192.png" alt="PowerBug" width={24} height={24} className="h-6 w-6" />
-          <span className="text-[11px] font-medium">Accueil</span>
+          <Image src="/icon-192.png" alt="PowerBug" width={26} height={26} className="h-[26px] w-[26px]" />
+          <span className="text-xs font-medium">Accueil</span>
         </Link>
 
         {/* Menu burger */}
@@ -60,8 +63,8 @@ export function MobileBottomBar({ onMenuOpen }: MobileBottomBarProps) {
           onClick={onMenuOpen}
           className="flex flex-1 flex-col items-center justify-center gap-1 text-[#6B7280] transition-colors active:text-[#356B0D]"
         >
-          <Menu className="h-6 w-6" />
-          <span className="text-[11px] font-medium">Menu</span>
+          <Menu className="h-[26px] w-[26px]" />
+          <span className="text-xs font-medium">Menu</span>
         </button>
 
         {/* Chariots */}
@@ -69,8 +72,8 @@ export function MobileBottomBar({ onMenuOpen }: MobileBottomBarProps) {
           href="/trolleys"
           className="flex flex-1 flex-col items-center justify-center gap-1 text-[#6B7280] transition-colors active:text-[#356B0D]"
         >
-          <TrolleyIcon className="h-6 w-6" />
-          <span className="text-[11px] font-medium">Chariots</span>
+          <TrolleyIcon className="h-[26px] w-[26px]" />
+          <span className="text-xs font-medium">Chariots</span>
         </Link>
 
         {/* Compte */}
@@ -79,13 +82,13 @@ export function MobileBottomBar({ onMenuOpen }: MobileBottomBarProps) {
           className="flex flex-1 flex-col items-center justify-center gap-1 text-[#6B7280] transition-colors active:text-[#356B0D]"
         >
           {initials ? (
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#356B0D] text-[10px] font-semibold text-white">
+            <span className="flex h-[26px] w-[26px] items-center justify-center rounded-full bg-[#356B0D] text-[11px] font-semibold text-white">
               {initials}
             </span>
           ) : (
-            <User className="h-6 w-6" />
+            <User className="h-[26px] w-[26px]" />
           )}
-          <span className="text-[11px] font-medium">Compte</span>
+          <span className="text-xs font-medium">Compte</span>
         </Link>
 
         {/* Panier */}
@@ -94,14 +97,12 @@ export function MobileBottomBar({ onMenuOpen }: MobileBottomBarProps) {
           className="relative flex flex-1 flex-col items-center justify-center gap-1 text-[#6B7280] transition-colors active:text-[#356B0D]"
         >
           <span className="relative">
-            <ShoppingCart className="h-6 w-6" />
+            <ShoppingCart className="h-[26px] w-[26px]" />
             <CartCount />
           </span>
-          <span className="text-[11px] font-medium">Panier</span>
+          <span className="text-xs font-medium">Panier</span>
         </Link>
       </div>
-      {/* Safe area for iPhone notch */}
-      <div className="h-[env(safe-area-inset-bottom)]" />
     </nav>
   );
 }
