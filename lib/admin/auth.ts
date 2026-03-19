@@ -18,10 +18,10 @@ export async function verifyAdmin() {
 
   const admins = (process.env.ADMIN_EMAILS ?? process.env.ADMIN_EMAIL ?? "")
     .split(",")
-    .map((e) => e.trim())
+    .map((e) => e.trim().toLowerCase())
     .filter(Boolean);
 
-  if (!user.email || !admins.includes(user.email)) {
+  if (!user.email || !admins.includes(user.email.toLowerCase())) {
     return { user: null, error: NextResponse.json({ error: "Accès refusé" }, { status: 403 }) };
   }
 

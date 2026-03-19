@@ -146,6 +146,7 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
         <tr>
           <td style="background:#f9f9f9;padding:20px 40px;text-align:center;border-top:1px solid #DBDBDB;">
             <p style="margin:0;font-size:12px;color:#9CA3AF;">PowerBug France — powerbug.fr</p>
+            <p style="margin:8px 0 0;font-size:11px;color:#b0b0b0;">PRO GOLF DISTRIBUTION SASU — SIREN 888 311 610 — Domaine de Riquetti, 13290 Aix-en-Provence</p>
           </td>
         </tr>
 
@@ -191,7 +192,7 @@ Total : ${data.total.toFixed(2)} EUR
 
   text += `\nAdresse :\n${addrText}\n`;
   text += `\nDes questions ? Repondez a cet email ou contactez-nous sur powerbug.fr/contact\n`;
-  text += `\nPowerBug France — powerbug.fr`;
+  text += `\nPowerBug France — powerbug.fr\nPRO GOLF DISTRIBUTION SASU — SIREN 888 311 610 — Domaine de Riquetti, 13290 Aix-en-Provence`;
 
   return text;
 }
@@ -370,6 +371,7 @@ export function shippingNotificationHtml(data: ShippingNotificationData): string
         <tr>
           <td style="background:#f9f9f9;padding:20px 40px;text-align:center;border-top:1px solid #DBDBDB;">
             <p style="margin:0;font-size:12px;color:#9CA3AF;">PowerBug France — powerbug.fr</p>
+            <p style="margin:8px 0 0;font-size:11px;color:#b0b0b0;">PRO GOLF DISTRIBUTION SASU — SIREN 888 311 610 — Domaine de Riquetti, 13290 Aix-en-Provence</p>
           </td>
         </tr>
 
@@ -398,7 +400,8 @@ Le delai de livraison est generalement de 2 a 4 jours ouvres en France metropoli
 
 Des questions ? Repondez a cet email ou contactez-nous sur powerbug.fr/contact
 
-PowerBug France — powerbug.fr`;
+PowerBug France — powerbug.fr
+PRO GOLF DISTRIBUTION SASU — SIREN 888 311 610 — Domaine de Riquetti, 13290 Aix-en-Provence`;
 }
 
 // ─── Alerte stock bas → admin ───────────────────────────────────────────────
@@ -519,6 +522,7 @@ export function contactFormHtml(data: ContactData): string {
         <tr>
           <td style="background:#f9f9f9;padding:20px 40px;text-align:center;border-top:1px solid #DBDBDB;">
             <p style="margin:0;font-size:12px;color:#9CA3AF;">PowerBug France — powerbug.fr</p>
+            <p style="margin:8px 0 0;font-size:11px;color:#b0b0b0;">PRO GOLF DISTRIBUTION SASU — SIREN 888 311 610 — Domaine de Riquetti, 13290 Aix-en-Provence</p>
           </td>
         </tr>
       </table>

@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     const message = err instanceof Error ? err.message : "Unknown error";
     console.error("Webhook signature verification failed:", message);
     return NextResponse.json(
-      { error: `Signature verification failed: ${message}` },
+      { error: "Invalid request" },
       { status: 400 }
     );
   }
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
-    console.log("Session metadata:", JSON.stringify(session.metadata));
+    console.log("Processing checkout session:", session.id);
 
     // Only process PowerBug orders
     if (session.metadata?.store !== "powerbug") {
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
       // Stripe SDK v20+: shipping is under collected_information.shipping_details
       const shippingDetails = fullSession.collected_information?.shipping_details ?? null;
 
-      console.log("Shipping details from Stripe:", JSON.stringify(shippingDetails));
+      // Shipping details retrieved from Stripe session
 
       const addr = shippingDetails?.address;
       // Detect shipping method from metadata or fallback to shipping line item description
@@ -124,7 +124,7 @@ export async function POST(req: NextRequest) {
       const shippingCost = shippingLineItem ? (shippingLineItem.price?.unit_amount ?? 0) / 100 : 0;
       const subtotal = total - shippingCost;
 
-      console.log("Inserting order:", { email: session.customer_details?.email, total, subtotal, shippingCost });
+      console.log("Inserting order:", { total, shippingCost });
 
       // Insert order
       const { data: order, error: orderError } = await supabase

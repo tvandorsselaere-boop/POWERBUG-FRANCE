@@ -2,8 +2,8 @@
 // Public credentials (no secret needed)
 
 const MYPUDO_URL = "https://mypudo.pickup-services.com/mypudo/mypudo.asmx";
-const CARRIER = "EXA";
-const KEY = "deecd7bc81b71fcc0e292b53e826c48f";
+const CARRIER = process.env.DPD_CARRIER ?? "EXA";
+const KEY = process.env.DPD_KEY ?? "";
 
 export interface RelayPoint {
   id: string;

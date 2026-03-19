@@ -106,7 +106,8 @@ export async function PATCH(
   const { error: updateError } = await supabase
     .from("orders")
     .update(update)
-    .eq("id", id);
+    .eq("id", id)
+    .eq("store", "powerbug");
 
   if (updateError) {
     return NextResponse.json({ error: updateError.message }, { status: 500 });
