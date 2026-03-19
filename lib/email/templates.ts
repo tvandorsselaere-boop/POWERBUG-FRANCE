@@ -235,9 +235,18 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
         <!-- Header -->
         <tr>
           <td style="background:#0F0F10;padding:24px 40px;">
-            <div style="font-size:12px;color:#8DC63F;font-weight:600;text-transform:uppercase;letter-spacing:1px;">BON DE PRÉPARATION</div>
-            <div style="font-size:20px;font-weight:700;color:#ffffff;margin-top:4px;">Commande n° ${esc(data.orderId.slice(0, 8).toUpperCase())}</div>
-            <div style="font-size:13px;color:#9CA3AF;margin-top:4px;">${new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" })}</div>
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="vertical-align:middle;">
+                  <img src="https://www.powerbug.fr/images/powerbug-logo.png" alt="PowerBug France" width="140" height="35" style="display:block;filter:brightness(0) invert(1);opacity:0.9;" />
+                </td>
+                <td style="vertical-align:middle;text-align:right;">
+                  <div style="font-size:11px;color:#8DC63F;font-weight:600;text-transform:uppercase;letter-spacing:1px;">BON DE PRÉPARATION</div>
+                  <div style="font-size:18px;font-weight:700;color:#ffffff;margin-top:2px;">n° ${esc(data.orderId.slice(0, 8).toUpperCase())}</div>
+                  <div style="font-size:12px;color:#9CA3AF;margin-top:2px;">${new Date().toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric" })}</div>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
 
