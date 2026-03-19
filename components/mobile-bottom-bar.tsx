@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, ShoppingCart, User } from "lucide-react";
 import { CartCount } from "@/components/cart-count";
 import { useAuth } from "@/hooks/use-auth";
@@ -45,6 +46,15 @@ export function MobileBottomBar({ onMenuOpen }: MobileBottomBarProps) {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-[#DBDBDB] bg-white md:hidden">
       <div className="flex h-14 items-stretch">
+        {/* Accueil — favicon */}
+        <Link
+          href="/"
+          className="flex flex-1 flex-col items-center justify-center gap-0.5 text-[#6B7280] transition-colors active:text-[#356B0D]"
+        >
+          <Image src="/icon-192.png" alt="PowerBug" width={22} height={22} className="h-[22px] w-[22px]" />
+          <span className="text-[10px] font-medium">Accueil</span>
+        </Link>
+
         {/* Menu burger */}
         <button
           onClick={onMenuOpen}
