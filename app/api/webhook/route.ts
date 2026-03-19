@@ -3,7 +3,7 @@ import { stripe } from "@/lib/stripe/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import Stripe from "stripe";
 import { sendEmail } from "@/lib/email/zepto";
-import { orderConfirmationHtml, preparationOrderHtml, type OrderItem } from "@/lib/email/templates";
+import { orderConfirmationHtml, orderConfirmationText, preparationOrderHtml, type OrderItem } from "@/lib/email/templates";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -182,8 +182,9 @@ export async function POST(req: NextRequest) {
       await sendEmail({
         to: customerEmail,
         toName: customerName,
-        subject: `Confirmation de commande PowerBug — n° ${order.id.slice(0, 8).toUpperCase()}`,
+        subject: `Votre commande n° ${order.id.slice(0, 8).toUpperCase()} est confirmee`,
         html: orderConfirmationHtml(emailData),
+        text: orderConfirmationText(emailData),
       });
 
       // Email bon de préparation → Golf des Marques (via Fred pour l'instant)

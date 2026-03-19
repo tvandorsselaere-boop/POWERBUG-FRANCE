@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyAdmin } from "@/lib/admin/auth";
 import { createServiceClient } from "@/lib/supabase/server";
 import { sendEmail } from "@/lib/email/zepto";
-import { shippingNotificationHtml, preparationOrderHtml, type OrderConfirmationData } from "@/lib/email/templates";
+import { shippingNotificationHtml, shippingNotificationText, preparationOrderHtml, type OrderConfirmationData } from "@/lib/email/templates";
 
 export async function GET(
   _req: NextRequest,
@@ -116,15 +116,17 @@ export async function PATCH(
   if ((tracking_number && tracking_number !== order.tracking_number) || action === "send_shipping") {
     const trackingNum = tracking_number ?? order.tracking_number;
     if (trackingNum) {
-      await sendEmail({
-        to: order.email,
-        toName: order.shipping_address?.name ?? order.email,
-        subject: `Votre commande PowerBug est expédiée — Suivi DPD`,
-        html: shippingNotificationHtml({
+      const shipData = {
           customerName: order.shipping_address?.name ?? order.email,
           orderId: order.id,
           trackingNumber: trackingNum,
-        }),
+        };
+      await sendEmail({
+        to: order.email,
+        toName: order.shipping_address?.name ?? order.email,
+        subject: `Votre commande n° ${order.id.slice(0, 8).toUpperCase()} est expediee`,
+        html: shippingNotificationHtml(shipData),
+        text: shippingNotificationText(shipData),
       });
     }
   }

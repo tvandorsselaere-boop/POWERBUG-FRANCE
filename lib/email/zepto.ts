@@ -5,10 +5,11 @@ interface EmailPayload {
   toName?: string;
   subject: string;
   html: string;
+  text?: string;
   replyTo?: string;
 }
 
-export async function sendEmail({ to, toName, subject, html, replyTo }: EmailPayload) {
+export async function sendEmail({ to, toName, subject, html, text, replyTo }: EmailPayload) {
   const apiKey = process.env.ZEPTO_API_KEY;
   const from = process.env.EMAIL_FROM ?? "thomas@facile-ia.fr";
 
@@ -22,6 +23,7 @@ export async function sendEmail({ to, toName, subject, html, replyTo }: EmailPay
     to: [{ email_address: { address: to, name: toName ?? to } }],
     subject,
     htmlbody: html,
+    ...(text ? { textbody: text } : {}),
     ...(replyTo ? { reply_to: [{ address: replyTo }] } : {}),
   };
 

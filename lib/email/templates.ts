@@ -65,16 +65,15 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
 
         <!-- Header -->
         <tr>
-          <td style="background:#356B0D;padding:32px 40px;text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:#ffffff;letter-spacing:1px;">POWERBUG</div>
-            <div style="font-size:13px;color:#8DC63F;margin-top:4px;">France</div>
+          <td style="background:#356B0D;padding:24px 40px;">
+            <div style="font-size:18px;font-weight:600;color:#ffffff;">PowerBug France</div>
           </td>
         </tr>
 
         <!-- Body -->
         <tr>
           <td style="padding:40px;">
-            <h1 style="margin:0 0 8px;font-size:22px;font-weight:700;color:#0F0F10;">Commande confirmée ✓</h1>
+            <h1 style="margin:0 0 8px;font-size:20px;font-weight:600;color:#0F0F10;">Commande confirmee</h1>
             <p style="margin:0 0 24px;color:#6B7280;font-size:14px;">Commande n° ${data.orderId.slice(0, 8).toUpperCase()}</p>
 
             <p style="margin:0 0 24px;font-size:15px;line-height:1.6;">
@@ -114,13 +113,13 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
             <!-- Adresse / Relais -->
             ${addr.relay_name ? `
             <div style="background:#f3e8ff;border-radius:8px;padding:20px;margin-bottom:16px;">
-              <div style="font-size:13px;font-weight:600;color:#7C3AED;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Point relais DPD Pickup</div>
+              <div style="font-size:13px;font-weight:600;color:#7C3AED;margin-bottom:8px;">Point relais DPD Pickup</div>
               <div style="font-size:15px;font-weight:600;line-height:1.6;">${addr.relay_name}</div>
               <div style="font-size:14px;line-height:1.6;color:#6B7280;">${addr.relay_address ?? ""}</div>
             </div>
             ` : ""}
             <div style="background:#f9f9f9;border-radius:8px;padding:20px;margin-bottom:32px;">
-              <div style="font-size:13px;font-weight:600;color:#6B7280;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">${addr.relay_name ? "Votre adresse" : "Adresse de livraison"}</div>
+              <div style="font-size:13px;font-weight:600;color:#6B7280;margin-bottom:8px;">${addr.relay_name ? "Votre adresse" : "Adresse de livraison"}</div>
               <div style="font-size:14px;line-height:1.8;">${addrHtml}</div>
             </div>
 
@@ -133,11 +132,8 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
 
         <!-- Footer -->
         <tr>
-          <td style="background:#f9f9f9;padding:24px 40px;text-align:center;border-top:1px solid #DBDBDB;">
-            <p style="margin:0;font-size:12px;color:#9CA3AF;">
-              PowerBug France — Distributeur exclusif PowerBug en France<br>
-              PRO GOLF DISTRIBUTION — SIREN 888 311 610
-            </p>
+          <td style="background:#f9f9f9;padding:20px 40px;text-align:center;border-top:1px solid #DBDBDB;">
+            <p style="margin:0;font-size:12px;color:#9CA3AF;">PowerBug France — powerbug.fr</p>
           </td>
         </tr>
 
@@ -146,6 +142,46 @@ export function orderConfirmationHtml(data: OrderConfirmationData): string {
   </table>
 </body>
 </html>`;
+}
+
+// ─── Version texte confirmation commande ──────────────────────────────────
+
+export function orderConfirmationText(data: OrderConfirmationData): string {
+  const addr = data.shippingAddress;
+  const method = data.shippingMethod ?? (addr?.shipping_method as string | undefined);
+  const isRelay = method === "dpd_relay";
+
+  const itemsText = data.items
+    .map((item) => `- ${item.product_name} x${item.quantity} : ${item.unit_price.toFixed(2)} EUR`)
+    .join("\n");
+
+  const addrText = [addr.name, addr.line1, addr.line2, `${addr.postal_code ?? ""} ${addr.city ?? ""}`.trim(), countryName(addr.country)]
+    .filter(Boolean)
+    .join("\n");
+
+  let text = `Commande confirmee - n° ${data.orderId.slice(0, 8).toUpperCase()}
+
+Bonjour ${data.customerName},
+
+Merci pour votre commande. Elle est en cours de traitement. Vous recevrez un email avec votre numero de suivi DPD.
+
+Articles :
+${itemsText}
+
+Sous-total : ${data.subtotal.toFixed(2)} EUR
+${isRelay ? "Livraison DPD Relais" : "Livraison DPD a domicile"} : ${data.shippingCost.toFixed(2)} EUR
+Total : ${data.total.toFixed(2)} EUR
+`;
+
+  if (addr.relay_name) {
+    text += `\nPoint relais : ${addr.relay_name}\n${addr.relay_address ?? ""}\n`;
+  }
+
+  text += `\nAdresse :\n${addrText}\n`;
+  text += `\nDes questions ? Repondez a cet email ou contactez-nous sur powerbug.fr/contact\n`;
+  text += `\nPowerBug France — powerbug.fr`;
+
+  return text;
 }
 
 // ─── Bon de préparation → Golf des Marques ─────────────────────────────────
@@ -280,16 +316,15 @@ export function shippingNotificationHtml(data: ShippingNotificationData): string
 
         <!-- Header -->
         <tr>
-          <td style="background:#356B0D;padding:32px 40px;text-align:center;">
-            <div style="font-size:24px;font-weight:700;color:#ffffff;letter-spacing:1px;">POWERBUG</div>
-            <div style="font-size:13px;color:#8DC63F;margin-top:4px;">France</div>
+          <td style="background:#356B0D;padding:24px 40px;">
+            <div style="font-size:18px;font-weight:600;color:#ffffff;">PowerBug France</div>
           </td>
         </tr>
 
         <!-- Body -->
         <tr>
           <td style="padding:40px;">
-            <h1 style="margin:0 0 8px;font-size:22px;font-weight:700;color:#0F0F10;">Votre commande est expédiée !</h1>
+            <h1 style="margin:0 0 8px;font-size:20px;font-weight:600;color:#0F0F10;">Votre commande est expediee</h1>
             <p style="margin:0 0 24px;color:#6B7280;font-size:14px;">Commande n° ${data.orderId.slice(0, 8).toUpperCase()}</p>
 
             <p style="margin:0 0 24px;font-size:15px;line-height:1.6;">
@@ -300,7 +335,7 @@ export function shippingNotificationHtml(data: ShippingNotificationData): string
 
             <!-- Tracking -->
             <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:24px;margin-bottom:24px;text-align:center;">
-              <div style="font-size:13px;color:#6B7280;font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px;">Numéro de suivi DPD</div>
+              <div style="font-size:13px;color:#6B7280;font-weight:600;margin-bottom:8px;">Numero de suivi DPD</div>
               <div style="font-size:20px;font-weight:700;color:#0F0F10;margin-bottom:16px;letter-spacing:1px;">${data.trackingNumber}</div>
               <a href="${trackingUrl}" style="display:inline-block;background:#356B0D;color:#ffffff;font-weight:600;font-size:14px;padding:12px 32px;border-radius:10px;text-decoration:none;">
                 Suivre mon colis
@@ -320,11 +355,8 @@ export function shippingNotificationHtml(data: ShippingNotificationData): string
 
         <!-- Footer -->
         <tr>
-          <td style="background:#f9f9f9;padding:24px 40px;text-align:center;border-top:1px solid #DBDBDB;">
-            <p style="margin:0;font-size:12px;color:#9CA3AF;">
-              PowerBug France — Distributeur exclusif PowerBug en France<br>
-              PRO GOLF DISTRIBUTION — SIREN 888 311 610
-            </p>
+          <td style="background:#f9f9f9;padding:20px 40px;text-align:center;border-top:1px solid #DBDBDB;">
+            <p style="margin:0;font-size:12px;color:#9CA3AF;">PowerBug France — powerbug.fr</p>
           </td>
         </tr>
 
@@ -333,6 +365,27 @@ export function shippingNotificationHtml(data: ShippingNotificationData): string
   </table>
 </body>
 </html>`;
+}
+
+// ─── Version texte notification expedition ────────────────────────────────
+
+export function shippingNotificationText(data: ShippingNotificationData): string {
+  const trackingUrl = `https://trace.dpd.fr/parceldetails/${data.trackingNumber}`;
+
+  return `Votre commande est expediee - n° ${data.orderId.slice(0, 8).toUpperCase()}
+
+Bonjour ${data.customerName},
+
+Votre commande PowerBug a ete expediee via DPD.
+
+Numero de suivi : ${data.trackingNumber}
+Suivre mon colis : ${trackingUrl}
+
+Le delai de livraison est generalement de 2 a 4 jours ouvres en France metropolitaine.
+
+Des questions ? Repondez a cet email ou contactez-nous sur powerbug.fr/contact
+
+PowerBug France — powerbug.fr`;
 }
 
 // ─── Alerte stock bas → admin ───────────────────────────────────────────────
