@@ -7,7 +7,7 @@ interface EmailAttachment {
 }
 
 interface EmailPayload {
-  to: string;
+  to: string | string[];
   toName?: string;
   subject: string;
   html: string;
@@ -25,9 +25,12 @@ export async function sendEmail({ to, toName, subject, html, text, replyTo, atta
     return { success: false, error: "ZEPTO_API_KEY not configured" };
   }
 
+  // Supporte une string simple, une string comma-séparée, ou un tableau
+  const toAddresses = (Array.isArray(to) ? to : to.split(",").map(s => s.trim())).filter(Boolean);
+
   const body = {
     from: { address: from, name: "PowerBug France" },
-    to: [{ email_address: { address: to, name: toName ?? to } }],
+    to: toAddresses.map(addr => ({ email_address: { address: addr, name: toName ?? addr } })),
     subject,
     htmlbody: html,
     ...(text ? { textbody: text } : {}),
