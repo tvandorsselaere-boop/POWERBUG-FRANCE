@@ -70,7 +70,7 @@ const schemaOrganization = {
   legalName: "PRO GOLF DISTRIBUTION",
   url: "https://www.powerbug.fr",
   description: "Distributeur exclusif France des chariots électriques de golf PowerBug depuis 2024",
-  email: "commandes@powerbug.fr",
+  email: "fred@powerbug.fr",
   telephone: "+33788239784",
   address: {
     "@type": "PostalAddress",
