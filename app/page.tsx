@@ -55,25 +55,25 @@ const features = [
     icon: Zap,
     title: "Technologie 28V Lithium",
     description:
-      "Le système d'alimentation 28V offre une puissance constante du premier au dernier trou, par tous les temps.",
+      "Le système d'alimentation 28,8V délivre une puissance constante du premier au dernier trou, même sur les terrains vallonnés et les fairways humides. Le moteur silencieux brushless ne nécessite aucun entretien.",
   },
   {
     icon: FoldVertical,
     title: "Pliage VRAP breveté",
     description:
-      "Pliage en moins de 5 secondes, roues comprises. Le NX se range facilement dans n'importe quel coffre.",
+      "Le système VRAP (Variable Run And Park) permet de plier le chariot en quelques secondes, roues comprises. Dimensions pliées : 77 × 57 × 41 cm, ou 38 cm de large avec les roues inversées. Il se glisse dans n'importe quel coffre.",
   },
   {
     icon: Battery,
     title: "36 trous d'autonomie",
     description:
-      "Batterie lithium longue durée pour jouer 2 tours complets sans recharge. Garantie 2 ans.",
+      "La batterie lithium de 1,5 kg offre 2 tours complets sans recharge, soit 36 trous. Elle se recharge après chaque utilisation et dure 5 à 7 ans avec un entretien minimal. Garantie constructeur 2 ans.",
   },
   {
     icon: Star,
     title: "8 300+ avis clients",
     description:
-      "N°1 au classement client des marques de chariots électriques. Depuis 2003, reconnu mondialement.",
+      "N°1 au classement client des marques de chariots électriques sur Trustpilot (4.9/5, 3 895 avis) et Reviews.co.uk (4.7/5, 4 415 avis). Depuis 2003, reconnue mondialement dans 13 pays.",
   },
 ];
 
@@ -403,7 +403,99 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 4b. TECHNOLOGIE LITHIUM */}
+      {/* 4b. TABLEAU COMPARATIF NX vs NX DHC */}
+      <section className="border-t border-[#DBDBDB] bg-white py-20 sm:py-28">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
+          <div className="mb-14 text-center">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#6B7280]">
+              Comparatif
+            </p>
+            <h2 className="text-3xl font-bold tracking-tight text-[#0F0F10] sm:text-4xl">
+              NX Lithium vs NX DHC Lithium
+            </h2>
+            <p className="mt-3 text-[#6B7280]">
+              Les deux modèles partagent le même châssis en aluminium aéronautique, la même batterie lithium 28,8V et le système VRAP. Le NX DHC ajoute le contrôle en descente et le frein parking électronique.
+            </p>
+          </div>
+          <div className="mx-auto max-w-3xl overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-[#DBDBDB]">
+                  <th className="py-3 pr-4 text-left font-semibold text-[#0F0F10]">Caractéristique</th>
+                  <th className="py-3 px-4 text-center font-semibold text-[#0F0F10]">NX Lithium</th>
+                  <th className="py-3 pl-4 text-center font-semibold text-[#0F0F10]">NX DHC Lithium</th>
+                </tr>
+              </thead>
+              <tbody className="text-[#6B7280]">
+                <tr className="border-b border-[#DBDBDB]/50">
+                  <td className="py-3 pr-4">Prix</td>
+                  <td className="py-3 px-4 text-center font-medium text-[#0F0F10]">799&nbsp;&euro;</td>
+                  <td className="py-3 pl-4 text-center font-medium text-[#0F0F10]">899&nbsp;&euro;</td>
+                </tr>
+                <tr className="border-b border-[#DBDBDB]/50">
+                  <td className="py-3 pr-4">Poids (sans batterie)</td>
+                  <td className="py-3 px-4 text-center">9,5&nbsp;kg</td>
+                  <td className="py-3 pl-4 text-center">9,5&nbsp;kg</td>
+                </tr>
+                <tr className="border-b border-[#DBDBDB]/50">
+                  <td className="py-3 pr-4">Batterie lithium 28,8V</td>
+                  <td className="py-3 px-4 text-center">1,5&nbsp;kg — 36 trous</td>
+                  <td className="py-3 pl-4 text-center">1,5&nbsp;kg — 36 trous</td>
+                </tr>
+                <tr className="border-b border-[#DBDBDB]/50">
+                  <td className="py-3 pr-4">Dimensions pliées</td>
+                  <td className="py-3 px-4 text-center">77&nbsp;×&nbsp;57&nbsp;×&nbsp;41&nbsp;cm</td>
+                  <td className="py-3 pl-4 text-center">77&nbsp;×&nbsp;57&nbsp;×&nbsp;41&nbsp;cm</td>
+                </tr>
+                <tr className="border-b border-[#DBDBDB]/50">
+                  <td className="py-3 pr-4">Vitesses</td>
+                  <td className="py-3 px-4 text-center">9 niveaux (pas de 0,5)</td>
+                  <td className="py-3 pl-4 text-center">9 niveaux (pas de 0,5)</td>
+                </tr>
+                <tr className="border-b border-[#DBDBDB]/50">
+                  <td className="py-3 pr-4">VRAP (marche autonome)</td>
+                  <td className="py-3 px-4 text-center">&#10003;</td>
+                  <td className="py-3 pl-4 text-center">&#10003;</td>
+                </tr>
+                <tr className="border-b border-[#DBDBDB]/50">
+                  <td className="py-3 pr-4">Port USB</td>
+                  <td className="py-3 px-4 text-center">&#10003;</td>
+                  <td className="py-3 pl-4 text-center">&#10003;</td>
+                </tr>
+                <tr className="border-b border-[#DBDBDB]/50">
+                  <td className="py-3 pr-4 font-medium text-[#0F0F10]">Downhill Control (DHC)</td>
+                  <td className="py-3 px-4 text-center">—</td>
+                  <td className="py-3 pl-4 text-center text-[#356B0D] font-medium">&#10003;</td>
+                </tr>
+                <tr className="border-b border-[#DBDBDB]/50">
+                  <td className="py-3 pr-4 font-medium text-[#0F0F10]">Frein parking électronique</td>
+                  <td className="py-3 px-4 text-center">—</td>
+                  <td className="py-3 pl-4 text-center text-[#356B0D] font-medium">&#10003;</td>
+                </tr>
+                <tr>
+                  <td className="py-3 pr-4">Garantie</td>
+                  <td className="py-3 px-4 text-center">2 ans</td>
+                  <td className="py-3 pl-4 text-center">2 ans</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="mx-auto mt-6 max-w-3xl text-center text-sm text-[#6B7280]">
+            Le Downhill Control maintient automatiquement une vitesse constante en descente, empêchant le chariot de prendre de la vitesse sur les pentes. Le frein parking électronique bloque la rotation des roues dans les deux sens pendant que vous jouez votre coup.
+          </p>
+          <div className="mt-8 text-center">
+            <Link
+              href="/trolleys"
+              className="inline-flex items-center gap-1 rounded-[10px] border border-[#DBDBDB] bg-white px-7 py-2.5 text-sm font-semibold text-[#0F0F10] transition-all hover:border-[#356B0D] hover:text-[#356B0D]"
+            >
+              Voir le comparatif détaillé
+              <ChevronRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* 4c. TECHNOLOGIE LITHIUM */}
       <section className="border-t border-[#DBDBDB] bg-white py-20 sm:py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-10">
           <div className="mb-14 text-center">
@@ -418,19 +510,25 @@ export default async function Home() {
             <div className="space-y-4 text-[#6B7280]">
               <h3 className="text-lg font-semibold text-[#0F0F10]">Puissance et autonomie</h3>
               <p className="leading-relaxed">
-                La série NX est équipée du système d&apos;alimentation 28V, une technologie propriétaire PowerBug qui délivre une puissance constante du premier au dernier trou. Contrairement aux batteries au plomb traditionnelles, la batterie lithium du NX offre 36 trous d&apos;autonomie — soit 2 tours complets — pour un poids réduit de moitié.
+                La série NX est équipée du système d&apos;alimentation 28,8V, une technologie propriétaire PowerBug qui délivre une puissance constante du premier au dernier trou. La batterie lithium ne pèse que 1,5&nbsp;kg — contre 8 à 10&nbsp;kg pour une batterie au plomb équivalente — et offre 36 trous d&apos;autonomie, soit 2 tours complets sans recharge.
               </p>
               <p className="leading-relaxed">
-                Le moteur brushless silencieux garantit un fonctionnement fluide et sans entretien, par tous les temps et sur tous les terrains. Montées, fairways humides après la pluie, terrains vallonnés : le 28V ne ralentit pas.
+                Le moteur brushless silencieux garantit un fonctionnement fluide et sans entretien. Le châssis en aluminium aéronautique pèse 9,5&nbsp;kg sans batterie, ce qui en fait l&apos;un des chariots électriques les plus légers du marché. Montées, fairways humides, terrains vallonnés : le NX ne ralentit pas.
+              </p>
+              <p className="leading-relaxed">
+                Le chariot propose 9 niveaux de vitesse réglables par incréments de 0,5, un écran d&apos;affichage avec indicateur de niveau de batterie et un port USB intégré au guidon pour recharger votre téléphone ou GPS pendant le parcours.
               </p>
             </div>
             <div className="space-y-4 text-[#6B7280]">
-              <h3 className="text-lg font-semibold text-[#0F0F10]">Durabilité et entretien</h3>
+              <h3 className="text-lg font-semibold text-[#0F0F10]">VRAP, pliage et entretien</h3>
               <p className="leading-relaxed">
-                La batterie lithium PowerBug est conçue pour durer 5 à 7 ans avec un entretien minimal. Rechargez après chaque utilisation et stockez à température ambiante (entre 10&nbsp;°C et 25&nbsp;°C). Pas de décharge complète, pas de maintenance compliquée.
+                Le système VRAP (Variable Run And Park) permet d&apos;envoyer le chariot en autonomie jusqu&apos;à 50 mètres devant vous — par exemple vers le départ suivant pendant que vous êtes sur le green — pour accélérer le rythme de jeu. Le chariot s&apos;arrête automatiquement à la distance programmée.
               </p>
               <p className="leading-relaxed">
-                Le système de pliage VRAP breveté permet de ranger le chariot en moins de 5 secondes, roues comprises. Le NX plié se glisse dans n&apos;importe quel coffre de voiture — idéal pour les golfeurs qui enchaînent les parcours.
+                Le pliage breveté se fait en quelques secondes, roues comprises. Dimensions pliées : 77&nbsp;×&nbsp;57&nbsp;×&nbsp;41&nbsp;cm. En inversant les roues, la largeur passe à 38&nbsp;cm pour se glisser dans n&apos;importe quel coffre. La roue avant anti-colmatage à dégagement rapide se retire sans outil pour un nettoyage facile après un parcours sur terrain humide.
+              </p>
+              <p className="leading-relaxed">
+                La batterie lithium est conçue pour durer 5 à 7 ans. Rechargez après chaque utilisation et stockez entre 10&nbsp;°C et 25&nbsp;°C. La batterie est protégée dans un boîtier rigide et se place dans son compartiment sans câble de connexion externe.
               </p>
             </div>
           </div>
@@ -519,10 +617,13 @@ export default async function Home() {
             </h2>
             <div className="mt-6 space-y-4 text-[#6B7280]">
               <p className="leading-relaxed">
-                PowerBug France assure la distribution exclusive des chariots PowerBug sur tout le territoire métropolitain. Chaque commande est expédiée via DPD avec suivi en temps réel, pour une livraison sous 2 à 4 jours ouvrés. Notre stock est maintenu en France pour garantir des délais courts.
+                PowerBug France (PRO GOLF DISTRIBUTION, Aix-en-Provence) assure la distribution exclusive des chariots PowerBug sur tout le territoire métropolitain. Chaque commande est expédiée via DPD avec suivi en temps réel, pour une livraison sous 2 à 4 jours ouvrés à domicile ou en point relais. Notre stock est maintenu en France pour garantir des délais courts.
               </p>
               <p className="leading-relaxed">
-                En cas de besoin, notre équipe basée en France prend en charge les demandes de garantie, les réparations et les pièces détachées. Vous n&apos;avez pas à traiter avec le Royaume-Uni : tout est géré localement, en français, avec la réactivité d&apos;un distributeur dédié.
+                Tous les chariots et batteries sont couverts par la garantie constructeur de 2 ans. Notre équipe basée en France prend en charge les demandes de garantie, les réparations et les pièces détachées disponibles localement : roues, moteurs, chargeurs, batteries de remplacement. Vous n&apos;avez pas à traiter avec le Royaume-Uni — tout est géré en français, avec la réactivité d&apos;un distributeur dédié.
+              </p>
+              <p className="leading-relaxed">
+                Paiement sécurisé par carte bancaire, Apple Pay ou Google Pay. Politique de retour sous 30 jours : si le chariot ne vous convient pas, retournez-le dans son emballage d&apos;origine pour un remboursement complet.
               </p>
             </div>
           </div>
