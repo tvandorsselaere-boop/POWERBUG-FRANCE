@@ -5,6 +5,7 @@ import { ChevronRight, Zap, Check, X, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trolleySpecs } from "@/lib/data/products";
 import { getTrolleys } from "@/lib/supabase/queries";
+import { AddToCartRedirect } from "@/components/add-to-cart-redirect";
 
 export const metadata: Metadata = {
   title: "Comparateur NX vs NX DHC - Chariots Électriques PowerBug",
@@ -74,72 +75,53 @@ export default async function TrolleysPage() {
         </p>
       </div>
 
-      {/* Mobile cards */}
-      <div className="mb-12 grid grid-cols-1 gap-6 md:hidden">
-        {/* NX */}
-        <Link href="/trolleys/nx-lithium" className="group card-glass rounded-2xl p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg">
-          <div className="mb-4 flex items-center justify-center rounded-xl bg-[#F5F5F5] py-8 h-56 overflow-hidden">
-            <TrolleyImage url={nxImg} alt="NX Lithium" className="h-full w-full object-contain p-4" />
-          </div>
-          <span className="mb-2 inline-flex rounded-full bg-[#F5F5F5] px-3 py-1 text-xs font-medium text-[#6B7280]">
-            Populaire
-          </span>
-          <h2 className="text-2xl font-bold text-[#0F0F10]">NX Lithium</h2>
-          <p className="mt-2 text-sm text-[#6B7280]">
-            Systeme 28V, batterie lithium 36 trous, pliage VRAP
-            ultra-compact. Le chariot electrique fiable et performant.
-          </p>
-          <ul className="mt-4 space-y-1.5 text-sm text-[#6B7280]">
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />28V Power System</li>
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Batterie Lithium 36 trous</li>
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Pliage VRAP compact</li>
-          </ul>
-          <div className="mt-4 flex items-center justify-between">
-            <div>
-              <p className="text-3xl font-bold text-[#0F0F10]">
-                799<span className="text-lg text-[#6B7280]">&euro;</span>
-              </p>
-              <p className="text-sm text-[#9CA3AF] line-through">899&euro;</p>
-              <span className="ml-2 inline-block rounded-full bg-[#AE1717] px-2 py-0.5 text-xs font-semibold text-white">-100&euro;</span>
+      {/* Mobile quick shop cards */}
+      <div className="mb-8 grid grid-cols-2 gap-3 md:hidden">
+        {[
+          { slug: "nx-lithium", name: "NX Lithium", price: 799, compare: 899, img: nxImg, badge: "Populaire", badgeColor: "bg-[#356B0D]/10 text-[#356B0D]", href: "/trolleys/nx-lithium" },
+          { slug: "nx-dhc-lithium", name: "NX DHC Lithium", price: 899, compare: 999, img: dhcImg, badge: "Premium", badgeColor: "bg-[#F6A429]/15 text-[#A87A00]", href: "/trolleys/nx-dhc-lithium" },
+        ].map((t) => (
+          <div key={t.slug} className="overflow-hidden rounded-xl border border-[#DBDBDB] bg-white">
+            <div className="relative aspect-square bg-white p-2">
+              {t.img ? (
+                <Image src={t.img} alt={t.name} width={300} height={300} className="h-full w-full object-contain p-1" />
+              ) : (
+                <div className="flex h-full items-center justify-center">
+                  <Zap className="h-10 w-10 text-[#DBDBDB]" />
+                </div>
+              )}
+              <div className={`absolute top-2 left-2 rounded-full px-2 py-0.5 text-[10px] font-semibold ${t.badgeColor}`}>
+                {t.badge}
+              </div>
+              <div className="absolute top-2 right-2 rounded-full bg-[#AE1717]/10 px-1.5 py-0.5 text-[10px] font-semibold text-[#AE1717]">
+                -100€
+              </div>
             </div>
-            <span className="text-sm font-medium text-[#356B0D]">
-              Decouvrir &rarr;
-            </span>
-          </div>
-        </Link>
-
-        {/* NX DHC */}
-        <Link href="/trolleys/nx-dhc-lithium" className="group card-glass rounded-2xl border-2 border-[#356B0D] p-6 transition-all hover:shadow-lg">
-          <div className="mb-4 flex items-center justify-center rounded-xl bg-[#356B0D]/5 py-8 h-56 overflow-hidden">
-            <TrolleyImage url={dhcImg} alt="NX DHC Lithium" className="h-full w-full object-contain p-4" />
-          </div>
-          <span className="mb-2 inline-flex rounded-full bg-[#356B0D]/10 px-3 py-1 text-xs font-medium text-[#356B0D]">
-            Premium
-          </span>
-          <h2 className="text-2xl font-bold text-[#0F0F10]">NX DHC Lithium</h2>
-          <p className="mt-2 text-sm text-[#6B7280]">
-            Tous les avantages du NX, plus le Downhill Control
-            et le frein parking electronique. Le controle total.
-          </p>
-          <ul className="mt-4 space-y-1.5 text-sm text-[#6B7280]">
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Downhill Control (DHC)</li>
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Frein parking electronique</li>
-            <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#356B0D]" />Toutes les specs du NX</li>
-          </ul>
-          <div className="mt-4 flex items-center justify-between">
-            <div>
-              <p className="text-3xl font-bold text-[#0F0F10]">
-                899<span className="text-lg text-[#6B7280]">&euro;</span>
-              </p>
-              <p className="text-sm text-[#9CA3AF] line-through">999&euro;</p>
-              <span className="ml-2 inline-block rounded-full bg-[#AE1717] px-2 py-0.5 text-xs font-semibold text-white">-100&euro;</span>
+            <div className="p-3">
+              <h2 className="text-sm font-bold text-[#0F0F10]">{t.name}</h2>
+              <div className="mt-1 flex items-baseline gap-1.5">
+                <span className="text-lg font-bold text-[#0F0F10]">{t.price}€</span>
+                <span className="text-xs text-[#6B7280] line-through">{t.compare}€</span>
+              </div>
+              <AddToCartRedirect
+                slug={t.slug}
+                name={t.name}
+                price={t.price}
+                compare_at_price={t.compare}
+                className="mt-2 w-full rounded-lg py-2 text-xs font-semibold text-white transition-all active:scale-[0.97]"
+                style={{ background: "linear-gradient(90deg,#356B0D,#5a9e1f)" }}
+              />
+              <Link href={t.href} className="mt-1.5 block text-center text-[10px] font-medium text-[#356B0D] underline">
+                Voir le détail
+              </Link>
             </div>
-            <span className="text-sm font-medium text-[#356B0D]">
-              Decouvrir &rarr;
-            </span>
           </div>
-        </Link>
+        ))}
       </div>
+      <p className="mb-10 text-center text-[10px] text-[#6B7280] md:hidden">
+        <Gift className="mr-1 inline h-3 w-3 text-[#356B0D]" />
+        Porte-parapluie + porte-scorecard offerts (~60€) avec chaque chariot
+      </p>
 
       {/* Desktop comparator table */}
       <div className="hidden md:block">
