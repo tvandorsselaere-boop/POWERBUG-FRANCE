@@ -65,10 +65,27 @@ const schemaWebsite = {
 
 const schemaOrganization = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": ["Organization", "Store"],
   name: "PowerBug France",
+  legalName: "PRO GOLF DISTRIBUTION",
   url: "https://www.powerbug.fr",
   description: "Distributeur exclusif France des chariots électriques de golf PowerBug depuis 2024",
+  email: "commandes@powerbug.fr",
+  telephone: "+33788239784",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Domaine de Riquetti",
+    addressLocality: "Aix-en-Provence",
+    postalCode: "13290",
+    addressCountry: "FR",
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "France",
+  },
+  priceRange: "€€",
+  currenciesAccepted: "EUR",
+  paymentAccepted: "Carte bancaire, Apple Pay, Google Pay",
   contactPoint: {
     "@type": "ContactPoint",
     telephone: "+33788239784",
