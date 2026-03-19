@@ -27,7 +27,7 @@ export function HeroVideo() {
       ref={videoRef}
       src={src}
       poster="/images/hero-poster.jpg"
-      preload="metadata"
+      preload="none"
       autoPlay
       muted
       playsInline
