@@ -3,7 +3,7 @@ import { stripe } from "@/lib/stripe/server";
 import { createServiceClient } from "@/lib/supabase/server";
 import Stripe from "stripe";
 import { sendEmail } from "@/lib/email/zepto";
-import { orderConfirmationHtml, orderConfirmationText, preparationOrderHtml, type OrderItem } from "@/lib/email/templates";
+import { orderConfirmationHtml, orderConfirmationText, preparationOrderHtml, preparationOrderText, type OrderItem } from "@/lib/email/templates";
 import { generateInvoicePdf, type InvoiceOrder } from "@/lib/invoice/generate";
 import { logInfo, logError } from "@/lib/logger";
 
@@ -239,8 +239,9 @@ export async function POST(req: NextRequest) {
       } else {
         await sendEmail({
           to: ordersTo,
-          subject: `[PowerBug] Nouvelle commande à préparer — n° ${order.id.slice(0, 8).toUpperCase()}`,
+          subject: `Nouvelle commande a preparer — n° ${order.id.slice(0, 8).toUpperCase()}`,
           html: preparationOrderHtml(emailData),
+          text: preparationOrderText(emailData),
           replyTo: customerEmail,
         });
       }

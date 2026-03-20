@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { items, email, shippingAddress, relay } = (await req.json()) as {
+    const { items, email, shippingAddress, relay, promoCode } = (await req.json()) as {
       items: CartItem[];
       email?: string;
       shippingAddress?: {
@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
         zipCode: string;
         city: string;
       };
+      promoCode?: string;
     };
 
     if (!items || items.length === 0) {

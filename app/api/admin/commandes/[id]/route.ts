@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyAdmin } from "@/lib/admin/auth";
 import { createServiceClient } from "@/lib/supabase/server";
 import { sendEmail } from "@/lib/email/zepto";
-import { shippingNotificationHtml, shippingNotificationText, preparationOrderHtml, type OrderConfirmationData } from "@/lib/email/templates";
+import { shippingNotificationHtml, shippingNotificationText, preparationOrderHtml, preparationOrderText, type OrderConfirmationData } from "@/lib/email/templates";
 
 export async function GET(
   _req: NextRequest,
@@ -93,8 +93,9 @@ export async function PATCH(
     }
     await sendEmail({
       to: ordersTo,
-      subject: `[PowerBug] RENVOI — Commande à préparer — n° ${order.id.slice(0, 8).toUpperCase()}`,
+      subject: `RENVOI — Commande a preparer — n° ${order.id.slice(0, 8).toUpperCase()}`,
       html: preparationOrderHtml(emailData),
+      text: preparationOrderText(emailData),
       replyTo: order.email,
     });
 

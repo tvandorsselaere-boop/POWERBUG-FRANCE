@@ -253,7 +253,7 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
         <!-- Shipping method banner -->
         <tr>
           <td style="background:${shippingBannerBg};padding:16px 40px;text-align:center;">
-            <div style="font-size:18px;font-weight:800;color:#ffffff;letter-spacing:1px;">${shippingBannerText}</div>
+            <div style="font-size:18px;font-weight:800;color:#ffffff;text-transform:uppercase;letter-spacing:1px;">${shippingBannerText}</div>
             ${isRelay && !addr.relay_name ? '<div style="font-size:13px;color:#E9D5FF;margin-top:6px;font-weight:500;">Choisir le relais le plus proche de l\'adresse du client</div>' : ""}
           </td>
         </tr>
@@ -317,6 +317,37 @@ export function preparationOrderHtml(data: OrderConfirmationData): string {
 </html>`;
 }
 
+// ─── Version texte bon de préparation ──────────────────────────────────────
+
+export function preparationOrderText(data: OrderConfirmationData): string {
+  const addr = data.shippingAddress;
+  const method = data.shippingMethod ?? (addr?.shipping_method as string | undefined);
+  const isRelay = method === "dpd_relay";
+
+  const itemsText = data.items
+    .map((item) => `- ${item.product_name}${item.variant_label && item.variant_label !== "standard" ? ` (${item.variant_label})` : ""} x${item.quantity}`)
+    .join("\n");
+
+  const addrText = [addr.name, addr.line1, addr.line2, `${addr.postal_code ?? ""} ${addr.city ?? ""}`.trim(), countryName(addr.country)]
+    .filter(Boolean)
+    .join("\n");
+
+  let text = `Bon de preparation - Commande n° ${data.orderId.slice(0, 8).toUpperCase()}\n`;
+  text += `${isRelay ? "Livraison DPD Relais Pickup" : "Livraison DPD Domicile"}\n\n`;
+
+  if (isRelay && addr.relay_name) {
+    text += `Relais choisi par le client :\n${addr.relay_name}\n${addr.relay_address ?? ""}\nID : ${addr.relay_id ?? ""}\n\n`;
+  }
+
+  text += `Articles a preparer :\n${itemsText}\n\n`;
+  text += `Adresse du client :\n${addrText}\n\n`;
+  text += `Email client : ${data.customerEmail}\n\n`;
+  text += `Merci de preparer et expedier cette commande via DPD${isRelay ? " Relais Pickup" : ""}.\n`;
+  text += `PowerBug France`;
+
+  return text;
+}
+
 // ─── Notification expédition → client ───────────────────────────────────────
 
 export interface ShippingNotificationData {
@@ -359,7 +390,7 @@ export function shippingNotificationHtml(data: ShippingNotificationData): string
             <!-- Tracking -->
             <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:24px;margin-bottom:24px;text-align:center;">
               <div style="font-size:13px;color:#6B7280;font-weight:600;margin-bottom:8px;">Numero de suivi DPD</div>
-              <div style="font-size:20px;font-weight:700;color:#0F0F10;margin-bottom:16px;letter-spacing:1px;">${esc(data.trackingNumber)}</div>
+              <div style="font-size:20px;font-weight:700;color:#0F0F10;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px;">${esc(data.trackingNumber)}</div>
               <a href="${trackingUrl}" style="display:inline-block;background:#356B0D;color:#ffffff;font-weight:600;font-size:14px;padding:12px 32px;border-radius:10px;text-decoration:none;">
                 Suivre mon colis
               </a>
