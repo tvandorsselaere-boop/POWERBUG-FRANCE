@@ -37,17 +37,17 @@ const faqs = [
   {
     question: "Comment commander des accessoires ?",
     answer:
-      "Vous pouvez consulter tous nos accessoires disponibles sur la page Accessoires du site. Pour toute question ou commande specifique, contactez-nous par email a contact@progolfdistribution.com ou par telephone au 07 88 23 97 84.",
+      "Vous pouvez consulter tous nos accessoires disponibles sur la page Accessoires du site. Pour toute question ou commande specifique, contactez-nous par email a fred@powerbug.fr ou par telephone au 07 88 23 97 84.",
   },
   {
     question: "Puis-je retourner mon chariot ?",
     answer:
-      "Oui, vous disposez d\u2019un delai de retractation de 14 jours a compter de la reception de votre commande, conformement a la legislation francaise. Le produit doit etre retourne dans son emballage d\u2019origine, non utilise et en parfait etat. Contactez-nous a contact@progolfdistribution.com pour initier une demande de retour.",
+      "Oui, vous disposez d\u2019un delai de retractation de 14 jours a compter de la reception de votre commande, conformement a la legislation francaise. Le produit doit etre retourne dans son emballage d\u2019origine, non utilise et en parfait etat. Contactez-nous a fred@powerbug.fr pour initier une demande de retour.",
   },
   {
     question: "Comment contacter le SAV ?",
     answer:
-      "Notre service apres-vente est gere en France par Golf des Marques. Vous pouvez nous joindre par email a contact@progolfdistribution.com ou par telephone au 07 88 23 97 84. Nous repondons a toutes les demandes sous 24h ouvrees. Pour les demandes de garantie, munissez-vous de votre numero de commande et d\u2019une description du probleme (photos ou video si possible).",
+      "Notre service apres-vente est gere en France par Golf des Marques. Vous pouvez nous joindre par email a fred@powerbug.fr ou par telephone au 07 88 23 97 84. Nous repondons a toutes les demandes sous 24h ouvrees. Pour les demandes de garantie, munissez-vous de votre numero de commande et d\u2019une description du probleme (photos ou video si possible).",
   },
   {
     question: "Quels moyens de paiement acceptez-vous ?",
@@ -105,10 +105,10 @@ export default function FaqPage() {
         </p>
         <div className="mt-6 flex flex-col gap-3 text-sm sm:flex-row sm:gap-6">
           <a
-            href="mailto:contact@progolfdistribution.com"
+            href="mailto:fred@powerbug.fr"
             className="font-medium text-[#356B0D] hover:underline"
           >
-            contact@progolfdistribution.com
+            fred@powerbug.fr
           </a>
           <a
             href="tel:+33788239784"
