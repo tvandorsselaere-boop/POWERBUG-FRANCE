@@ -29,6 +29,10 @@ export const metadata: Metadata = {
     "Distributeur exclusif France des chariots electriques de golf PowerBug. NX Lithium et NX DHC Lithium, accessoires, batteries. Livraison France entiere.",
   alternates: {
     canonical: "/",
+    languages: {
+      "fr-FR": "https://www.powerbug.fr",
+      "x-default": "https://www.powerbug.fr",
+    },
   },
   openGraph: {
     title: "PowerBug France | Chariots Electriques de Golf Premium",
@@ -46,6 +50,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
   },
   twitter: {
     card: "summary_large_image",

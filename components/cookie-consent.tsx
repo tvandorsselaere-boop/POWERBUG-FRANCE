@@ -61,7 +61,7 @@ export function CookieConsent() {
         <p className="text-sm leading-relaxed text-[#6B7280]">
           Ce site utilise Google Analytics pour mesurer son audience.
           Ces cookies ne sont déposés qu&apos;avec votre consentement.{" "}
-          <a href="/mentions-legales#cookies" className="text-[#356B0D] underline">
+          <a href="/politique-confidentialite" className="text-[#356B0D] underline">
             En savoir plus
           </a>
         </p>
