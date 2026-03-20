@@ -17,6 +17,7 @@ const schemaProduct = {
   "@type": "Product",
   name: "PowerBug NX Lithium",
   description: "Chariot électrique de golf 28V, batterie lithium 36 trous, pliage VRAP ultra-compact.",
+  image: "https://www.powerbug.fr/images/nx-main.jpg",
   brand: { "@type": "Brand", name: "PowerBug" },
   offers: {
     "@type": "Offer",
@@ -25,6 +26,31 @@ const schemaProduct = {
     priceValidUntil: "2026-12-31",
     availability: "https://schema.org/InStock",
     url: "https://www.powerbug.fr/trolleys/nx-lithium",
+    shippingDetails: {
+      "@type": "OfferShippingDetails",
+      shippingRate: {
+        "@type": "MonetaryAmount",
+        value: "14.90",
+        currency: "EUR",
+      },
+      shippingDestination: {
+        "@type": "DefinedRegion",
+        addressCountry: "FR",
+      },
+      deliveryTime: {
+        "@type": "ShippingDeliveryTime",
+        handlingTime: { "@type": "QuantitativeValue", minValue: 1, maxValue: 2, unitCode: "DAY" },
+        transitTime: { "@type": "QuantitativeValue", minValue: 3, maxValue: 5, unitCode: "DAY" },
+      },
+    },
+    hasMerchantReturnPolicy: {
+      "@type": "MerchantReturnPolicy",
+      applicableCountry: "FR",
+      returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+      merchantReturnDays: 14,
+      returnMethod: "https://schema.org/ReturnByMail",
+      returnFees: "https://schema.org/ReturnShippingFees",
+    },
   },
 };
 
