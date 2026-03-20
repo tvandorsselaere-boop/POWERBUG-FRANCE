@@ -146,6 +146,7 @@ export async function POST(req: NextRequest) {
       payment_method_types: ["card"],
       line_items,
       ...(customerId ? { customer: customerId } : { customer_email: email || undefined }),
+      allow_promotion_codes: true,
       shipping_address_collection: {
         allowed_countries: ["FR"],
       },
