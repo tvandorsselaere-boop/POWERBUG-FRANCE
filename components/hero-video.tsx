@@ -26,7 +26,7 @@ export function HeroVideo() {
     <video
       ref={videoRef}
       src={src}
-      poster="/images/hero-poster.jpg"
+      poster="/images/hero-poster.webp"
       preload="none"
       autoPlay
       muted
