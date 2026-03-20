@@ -114,10 +114,10 @@ export default async function TrolleysPage() {
 
       {/* Desktop hero — deux cartes produit côte à côte */}
       <div className="hidden md:block">
-        <div className="grid grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 items-stretch gap-8 lg:gap-12">
           {/* NX Lithium */}
-          <div className="group relative overflow-hidden rounded-3xl border border-[#DBDBDB] bg-white transition-shadow duration-300 hover:shadow-xl">
-            <div className="absolute top-5 left-5 z-10 flex items-center gap-2">
+          <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-[#DBDBDB] bg-white transition-shadow duration-300 hover:shadow-xl">
+            <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
               <span className="rounded-full bg-[#356B0D]/10 px-3 py-1 text-xs font-semibold text-[#356B0D]">
                 Populaire
               </span>
@@ -126,22 +126,22 @@ export default async function TrolleysPage() {
               </span>
             </div>
             <Link href="/trolleys/nx-lithium" className="block">
-              <div className="flex items-center justify-center bg-gradient-to-b from-[#F8F8F8] to-white px-8 pt-16 pb-8">
+              <div className="flex h-[260px] items-center justify-center bg-gradient-to-b from-[#F8F8F8] to-white px-8 pt-10">
                 {nxImg ? (
-                  <Image src={nxImg} alt="PowerBug NX Lithium" width={360} height={360} className="h-auto w-full max-w-[320px] object-contain transition-transform duration-500 group-hover:scale-105" />
+                  <Image src={nxImg} alt="PowerBug NX Lithium" width={280} height={280} className="h-full max-h-[220px] w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
                 ) : (
                   <Zap className="h-24 w-24 text-[#DBDBDB]" />
                 )}
               </div>
             </Link>
-            <div className="px-8 pb-8">
+            <div className="flex flex-1 flex-col px-8 pb-6">
               <h2 className="text-2xl font-bold text-[#0F0F10]">NX Lithium</h2>
               <p className="mt-1 text-sm text-[#6B7280]">Le chariot électrique fiable et ultra-léger (7,9&nbsp;kg)</p>
-              <div className="mt-4 flex items-baseline gap-2">
+              <div className="mt-3 flex items-baseline gap-2">
                 <span className="text-3xl font-bold text-[#0F0F10]">799€</span>
                 <span className="text-lg text-[#9CA3AF] line-through">899€</span>
               </div>
-              <ul className="mt-5 space-y-2">
+              <ul className="mt-4 space-y-1.5">
                 {["28V Power System", "Batterie lithium 36 trous", "Pliage VRAP ultra-compact", "Roue anti-colmatage", "Station accessoires intégrée"].map((f) => (
                   <li key={f} className="flex items-center gap-2 text-sm text-[#6B7280]">
                     <Check className="h-4 w-4 shrink-0 text-[#8DC63F]" />
@@ -155,7 +155,7 @@ export default async function TrolleysPage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-6 flex flex-col gap-2">
+              <div className="mt-auto flex flex-col gap-2 pt-5">
                 <AddToCartRedirect
                   slug="nx-lithium"
                   name="NX Lithium"
@@ -171,8 +171,8 @@ export default async function TrolleysPage() {
           </div>
 
           {/* NX DHC Lithium */}
-          <div className="group relative overflow-hidden rounded-3xl border-2 border-[#356B0D] bg-white shadow-lg transition-shadow duration-300 hover:shadow-2xl">
-            <div className="absolute top-5 left-5 z-10 flex items-center gap-2">
+          <div className="group relative flex flex-col overflow-hidden rounded-3xl border-2 border-[#356B0D] bg-white shadow-lg transition-shadow duration-300 hover:shadow-2xl">
+            <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
               <span className="rounded-full bg-[#356B0D] px-3 py-1 text-xs font-semibold text-white">
                 Premium
               </span>
@@ -180,28 +180,28 @@ export default async function TrolleysPage() {
                 -100€
               </span>
             </div>
-            <div className="absolute top-5 right-5 z-10">
+            <div className="absolute top-4 right-4 z-10">
               <span className="rounded-full bg-[#F6A429]/15 px-3 py-1 text-xs font-semibold text-[#A87A00]">
                 Recommandé
               </span>
             </div>
             <Link href="/trolleys/nx-dhc-lithium" className="block">
-              <div className="flex items-center justify-center bg-gradient-to-b from-[#F0F7EB] to-white px-8 pt-16 pb-8">
+              <div className="flex h-[260px] items-center justify-center bg-gradient-to-b from-[#F0F7EB] to-white px-8 pt-10">
                 {dhcImg ? (
-                  <Image src={dhcImg} alt="PowerBug NX DHC Lithium" width={360} height={360} className="h-auto w-full max-w-[320px] object-contain transition-transform duration-500 group-hover:scale-105" />
+                  <Image src={dhcImg} alt="PowerBug NX DHC Lithium" width={280} height={280} className="h-full max-h-[220px] w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
                 ) : (
                   <Zap className="h-24 w-24 text-[#8DC63F]" />
                 )}
               </div>
             </Link>
-            <div className="px-8 pb-8">
+            <div className="flex flex-1 flex-col px-8 pb-6">
               <h2 className="text-2xl font-bold text-[#0F0F10]">NX DHC Lithium</h2>
               <p className="mt-1 text-sm text-[#6B7280]">Contrôle total avec Downhill Control et frein parking (8,2&nbsp;kg)</p>
-              <div className="mt-4 flex items-baseline gap-2">
+              <div className="mt-3 flex items-baseline gap-2">
                 <span className="text-3xl font-bold text-[#0F0F10]">899€</span>
                 <span className="text-lg text-[#9CA3AF] line-through">999€</span>
               </div>
-              <ul className="mt-5 space-y-2">
+              <ul className="mt-4 space-y-1.5">
                 {["28V Power System", "Batterie lithium 36 trous", "Pliage VRAP ultra-compact", "Roue anti-colmatage", "Station accessoires intégrée"].map((f) => (
                   <li key={f} className="flex items-center gap-2 text-sm text-[#6B7280]">
                     <Check className="h-4 w-4 shrink-0 text-[#8DC63F]" />
@@ -215,7 +215,7 @@ export default async function TrolleysPage() {
                   </li>
                 ))}
               </ul>
-              <div className="mt-6 flex flex-col gap-2">
+              <div className="mt-auto flex flex-col gap-2 pt-5">
                 <AddToCartRedirect
                   slug="nx-dhc-lithium"
                   name="NX DHC Lithium"
