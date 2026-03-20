@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { trolleySpecs } from "@/lib/data/products";
 import { getTrolleys } from "@/lib/supabase/queries";
 import { AddToCartRedirect } from "@/components/add-to-cart-redirect";
+import { TrolleyFeaturesAccordion } from "@/components/trolley-features-accordion";
 
 export const metadata: Metadata = {
   title: "Comparateur NX vs NX DHC - Chariots Électriques PowerBug",
@@ -242,6 +243,9 @@ export default async function TrolleysPage() {
           </div>
         </div>
       </div>
+
+      {/* Feature cards accordion */}
+      <TrolleyFeaturesAccordion />
 
       {/* Introduction prose — visible sur tous les écrans sous le comparatif */}
       <div className="mx-auto mt-14 mb-0 max-w-3xl space-y-4 text-[#6B7280]">

@@ -22,6 +22,7 @@ export const features: FeatureDetail[] = [
       "Fiabilite eprouvee depuis 2003",
     ],
     trolleys: ["both"],
+    image: "/images/lifestyle/NX-Lifestyle-6.jpg",
   },
   {
     slug: "pliage-vrap",
@@ -140,6 +141,7 @@ export const features: FeatureDetail[] = [
       "Chargeur officiel inclus avec le chariot",
     ],
     trolleys: ["both"],
+    image: "/images/nx-battery-lithium.webp",
   },
   {
     slug: "vrap-distance-control",
@@ -156,6 +158,7 @@ export const features: FeatureDetail[] = [
       "Integre de serie sur les deux modeles NX",
     ],
     trolleys: ["both"],
+    image: "/images/lifestyle/NX-Lifestyle-18-Handle-Detail.jpg",
   },
 ];
 
