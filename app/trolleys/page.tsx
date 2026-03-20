@@ -114,122 +114,53 @@ export default async function TrolleysPage() {
 
       {/* Desktop hero — deux cartes produit côte à côte */}
       <div className="hidden md:block">
-        <div className="grid grid-cols-2 items-stretch gap-8 lg:gap-12">
-          {/* NX Lithium */}
-          <div className="group relative flex flex-col overflow-hidden rounded-3xl border border-[#DBDBDB] bg-white transition-shadow duration-300 hover:shadow-xl">
-            <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-              <span className="rounded-full bg-[#356B0D]/10 px-3 py-1 text-xs font-semibold text-[#356B0D]">
-                Populaire
-              </span>
-              <span className="rounded-full bg-[#AE1717]/10 px-3 py-1 text-xs font-bold text-[#AE1717]">
-                -100€
-              </span>
-            </div>
-            <Link href="/trolleys/nx-lithium" className="block">
-              <div className="flex h-[260px] items-center justify-center bg-gradient-to-b from-[#F8F8F8] to-white px-8 pt-10">
-                {nxImg ? (
-                  <Image src={nxImg} alt="PowerBug NX Lithium" width={280} height={280} className="h-full max-h-[220px] w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
-                ) : (
-                  <Zap className="h-24 w-24 text-[#DBDBDB]" />
-                )}
-              </div>
-            </Link>
-            <div className="flex flex-1 flex-col px-8 pb-6">
-              <h2 className="text-2xl font-bold text-[#0F0F10]">NX Lithium</h2>
-              <p className="mt-1 text-sm text-[#6B7280]">Le chariot électrique fiable et ultra-léger (7,9&nbsp;kg)</p>
-              <div className="mt-3 flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-[#0F0F10]">799€</span>
-                <span className="text-lg text-[#9CA3AF] line-through">899€</span>
-              </div>
-              <ul className="mt-4 space-y-1.5">
-                {["28V Power System", "Batterie lithium 36 trous", "Pliage VRAP ultra-compact", "Roue anti-colmatage", "Station accessoires intégrée"].map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-[#6B7280]">
-                    <Check className="h-4 w-4 shrink-0 text-[#8DC63F]" />
-                    {f}
-                  </li>
-                ))}
-                {["Downhill Control", "Frein parking électronique"].map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-[#DBDBDB]">
-                    <X className="h-4 w-4 shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-auto flex flex-col gap-2 pt-5">
-                <AddToCartRedirect
-                  slug="nx-lithium"
-                  name="NX Lithium"
-                  price={799}
-                  compare_at_price={899}
-                  className="w-full rounded-[10px] border-2 border-[#356B0D] bg-white py-3 text-sm font-semibold text-[#356B0D] transition-all hover:bg-[#356B0D] hover:text-white"
-                />
-                <Link href="/trolleys/nx-lithium" className="block text-center text-sm font-medium text-[#356B0D] hover:underline">
-                  Voir tous les détails <ChevronRight className="ml-0.5 inline h-3 w-3" />
+        <div className="mx-auto grid max-w-3xl grid-cols-2 gap-6">
+          {[
+            { slug: "nx-lithium", name: "NX Lithium", price: 799, compare: 899, img: nxImg, badge: "Populaire", badgeColor: "bg-[#356B0D]/10 text-[#356B0D]", href: "/trolleys/nx-lithium" },
+            { slug: "nx-dhc-lithium", name: "NX DHC Lithium", price: 899, compare: 999, img: dhcImg, badge: "Premium", badgeColor: "bg-[#356B0D] text-white", href: "/trolleys/nx-dhc-lithium" },
+          ].map((t) => (
+            <div key={t.slug} className="group overflow-hidden rounded-2xl border border-[#DBDBDB] bg-white transition-shadow duration-300 hover:shadow-lg">
+              <div className="relative bg-white p-4">
+                <div className="absolute top-3 left-3 z-10">
+                  <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${t.badgeColor}`}>
+                    {t.badge}
+                  </span>
+                </div>
+                <div className="absolute top-3 right-3 z-10">
+                  <span className="rounded-full bg-[#AE1717]/10 px-2 py-0.5 text-xs font-bold text-[#AE1717]">
+                    -100€
+                  </span>
+                </div>
+                <Link href={t.href}>
+                  <div className="flex aspect-square items-center justify-center">
+                    {t.img ? (
+                      <Image src={t.img} alt={t.name} width={300} height={300} className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105" />
+                    ) : (
+                      <Zap className="h-16 w-16 text-[#DBDBDB]" />
+                    )}
+                  </div>
                 </Link>
               </div>
-            </div>
-          </div>
-
-          {/* NX DHC Lithium */}
-          <div className="group relative flex flex-col overflow-hidden rounded-3xl border-2 border-[#356B0D] bg-white shadow-lg transition-shadow duration-300 hover:shadow-2xl">
-            <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-              <span className="rounded-full bg-[#356B0D] px-3 py-1 text-xs font-semibold text-white">
-                Premium
-              </span>
-              <span className="rounded-full bg-[#AE1717]/10 px-3 py-1 text-xs font-bold text-[#AE1717]">
-                -100€
-              </span>
-            </div>
-            <div className="absolute top-4 right-4 z-10">
-              <span className="rounded-full bg-[#F6A429]/15 px-3 py-1 text-xs font-semibold text-[#A87A00]">
-                Recommandé
-              </span>
-            </div>
-            <Link href="/trolleys/nx-dhc-lithium" className="block">
-              <div className="flex h-[260px] items-center justify-center bg-gradient-to-b from-[#F0F7EB] to-white px-8 pt-10">
-                {dhcImg ? (
-                  <Image src={dhcImg} alt="PowerBug NX DHC Lithium" width={280} height={280} className="h-full max-h-[220px] w-auto object-contain transition-transform duration-500 group-hover:scale-105" />
-                ) : (
-                  <Zap className="h-24 w-24 text-[#8DC63F]" />
-                )}
-              </div>
-            </Link>
-            <div className="flex flex-1 flex-col px-8 pb-6">
-              <h2 className="text-2xl font-bold text-[#0F0F10]">NX DHC Lithium</h2>
-              <p className="mt-1 text-sm text-[#6B7280]">Contrôle total avec Downhill Control et frein parking (8,2&nbsp;kg)</p>
-              <div className="mt-3 flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-[#0F0F10]">899€</span>
-                <span className="text-lg text-[#9CA3AF] line-through">999€</span>
-              </div>
-              <ul className="mt-4 space-y-1.5">
-                {["28V Power System", "Batterie lithium 36 trous", "Pliage VRAP ultra-compact", "Roue anti-colmatage", "Station accessoires intégrée"].map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm text-[#6B7280]">
-                    <Check className="h-4 w-4 shrink-0 text-[#8DC63F]" />
-                    {f}
-                  </li>
-                ))}
-                {["Downhill Control (DHC)", "Frein parking électronique"].map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm font-medium text-[#356B0D]">
-                    <Check className="h-4 w-4 shrink-0 text-[#356B0D]" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-auto flex flex-col gap-2 pt-5">
+              <div className="px-5 pb-5">
+                <h2 className="text-xl font-bold text-[#0F0F10]">{t.name}</h2>
+                <div className="mt-2 flex items-baseline gap-2">
+                  <span className="text-2xl font-bold text-[#0F0F10]">{t.price}€</span>
+                  <span className="text-base text-[#9CA3AF] line-through">{t.compare}€</span>
+                </div>
                 <AddToCartRedirect
-                  slug="nx-dhc-lithium"
-                  name="NX DHC Lithium"
-                  price={899}
-                  compare_at_price={999}
-                  className="w-full rounded-[10px] py-3 text-sm font-semibold text-white transition-all hover:brightness-110"
+                  slug={t.slug}
+                  name={t.name}
+                  price={t.price}
+                  compare_at_price={t.compare}
+                  className="mt-4 w-full rounded-[10px] py-3 text-sm font-semibold text-white transition-all hover:brightness-110"
                   style={{ background: "linear-gradient(135deg, #356B0D, #5a9e1f)" }}
                 />
-                <Link href="/trolleys/nx-dhc-lithium" className="block text-center text-sm font-medium text-[#356B0D] hover:underline">
-                  Voir tous les détails <ChevronRight className="ml-0.5 inline h-3 w-3" />
+                <Link href={t.href} className="mt-2 block text-center text-sm font-medium text-[#356B0D] hover:underline">
+                  Voir le détail
                 </Link>
               </div>
             </div>
-          </div>
+          ))}
         </div>
 
         {/* Bundle banner desktop */}
