@@ -14,6 +14,8 @@ import {
   Puzzle,
   ArrowDownToLine,
   ParkingMeter,
+  Battery,
+  Send,
 } from "lucide-react";
 import { features, getFeatureBySlug } from "@/lib/data/features";
 
@@ -26,6 +28,8 @@ const featureIcons: Record<string, React.ElementType> = {
   "station-accessoires": Puzzle,
   "downhill-control": ArrowDownToLine,
   "frein-parking": ParkingMeter,
+  "batterie-lithium": Battery,
+  "vrap-distance-control": Send,
 };
 
 export function generateStaticParams() {

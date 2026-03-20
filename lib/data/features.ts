@@ -126,6 +126,37 @@ export const features: FeatureDetail[] = [
     ],
     trolleys: ["dhc"],
   },
+  {
+    slug: "batterie-lithium",
+    title: "Batterie lithium 36 trous",
+    subtitle: "Legere, puissante, durable",
+    description:
+      "La batterie lithium 28,8V ne pese que 1,5 kg et offre une autonomie de 36 trous, soit 2 tours complets sur une seule charge. Elle se loge dans un compartiment dedie integre au chassis, protegee des intemperies et des chocs. Duree de vie estimee : 5 a 7 ans avec un entretien standard.",
+    benefits: [
+      "1,5 kg seulement (contre 8-10 kg pour une batterie plomb)",
+      "36 trous d'autonomie — 2 tours complets",
+      "Duree de vie 5 a 7 ans",
+      "Garantie constructeur 2 ans",
+      "Chargeur officiel inclus avec le chariot",
+    ],
+    trolleys: ["both"],
+  },
+  {
+    slug: "vrap-distance-control",
+    title: "Envoi a distance VRAP",
+    subtitle: "Envoyez votre chariot en autonomie",
+    description:
+      "La fonction VRAP Distance Control permet d'envoyer votre chariot en ligne droite sur une distance predefinie. D'une simple pression sur le bouton, programmez la distance de deplacement : le chariot avance de maniere autonome et s'arrete automatiquement a la distance definie. Jusqu'a 50 yards (environ 45 metres) en 5 paliers de 10 yards.",
+    benefits: [
+      "Envoi autonome jusqu'a 50 yards (~45 m)",
+      "5 distances predefinies (paliers de 10 yards)",
+      "Arret automatique a la distance choisie",
+      "Ideal pour envoyer le chariot vers le depart ou le green",
+      "Gain de temps et d'energie sur chaque trou",
+      "Integre de serie sur les deux modeles NX",
+    ],
+    trolleys: ["both"],
+  },
 ];
 
 export function getFeatureBySlug(slug: string) {
