@@ -17,7 +17,8 @@ import { Button } from "@/components/ui/button";
 export const metadata: Metadata = {
   title: "Notre Histoire - PowerBug France",
   description:
-    "Decouvrez PowerBug, fabricant britannique de chariots de golf electriques depuis 2003. Plus de 20 ans d'innovation, 8 300+ avis clients verifies.",
+    "Découvrez PowerBug, fabricant britannique de chariots de golf électriques depuis 2003. Plus de 20 ans d'innovation, 8 300+ avis clients vérifiés.",
+  alternates: { canonical: "/notre-histoire" },
 };
 
 export default function NotreHistoirePage() {

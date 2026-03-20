@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Conditions Générales de Vente - PowerBug France",
   description:
     "Conditions Générales de Vente du site powerbug.fr — PRO GOLF DISTRIBUTION, distributeur exclusif PowerBug en France.",
+  alternates: { canonical: "/cgv" },
 };
 
 export default function CGVPage() {

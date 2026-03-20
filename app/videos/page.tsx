@@ -4,9 +4,10 @@ import { ChevronRight, ExternalLink } from "lucide-react";
 import { VideoEmbed } from "@/components/video-embed";
 
 export const metadata: Metadata = {
-  title: "Videos PowerBug - Nos chariots en action",
+  title: "Vidéos PowerBug - Nos chariots en action",
   description:
-    "Decouvrez nos chariots electriques PowerBug en video. Presentations, tutoriels et guides de maintenance.",
+    "Découvrez nos chariots électriques PowerBug en vidéo. Présentations, tutoriels et guides de maintenance.",
+  alternates: { canonical: "/videos" },
 };
 
 const presentationVideos = [

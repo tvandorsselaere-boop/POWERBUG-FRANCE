@@ -233,7 +233,7 @@ export default async function Home() {
             {/* Logo PowerBug — mobile only */}
             <Image
               src="/images/powerbug-logo.png"
-              alt=""
+              alt="Logo PowerBug"
               width={240}
               height={60}
               className="mb-1 w-[50%] max-w-[220px] opacity-40 brightness-0 invert sm:hidden"

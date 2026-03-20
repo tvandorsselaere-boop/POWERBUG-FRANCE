@@ -7,7 +7,8 @@ import { SortableGrid } from "@/components/sortable-grid";
 export const metadata: Metadata = {
   title: "Accessoires PowerBug",
   description:
-    "Tous les accessoires officiels PowerBug : housse de transport, porte-parapluie, support telephone, mitaines chauffantes et plus.",
+    "Tous les accessoires officiels PowerBug : housse de transport, porte-parapluie, support téléphone, mitaines chauffantes et plus.",
+  alternates: { canonical: "/accessoires" },
 };
 
 export const revalidate = 3600;

@@ -5,7 +5,8 @@ import { ChevronRight } from "lucide-react";
 export const metadata: Metadata = {
   title: "FAQ - PowerBug France",
   description:
-    "Questions frequentes sur les chariots de golf electriques PowerBug : autonomie, garantie, livraison, SAV, accessoires.",
+    "Questions fréquentes sur les chariots de golf électriques PowerBug : autonomie, garantie, livraison, SAV, accessoires.",
+  alternates: { canonical: "/faq" },
 };
 
 const faqs = [

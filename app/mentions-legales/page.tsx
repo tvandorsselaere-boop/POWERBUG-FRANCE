@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Mentions Légales - PowerBug France",
   description:
     "Mentions légales du site powerbug.fr — PRO GOLF DISTRIBUTION, distributeur exclusif PowerBug en France.",
+  alternates: { canonical: "/mentions-legales" },
 };
 
 export default function MentionsLegalesPage() {

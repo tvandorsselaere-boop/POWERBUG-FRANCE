@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Livraison - PowerBug France",
   description:
     "Livraison PowerBug France — DPD à domicile 14,90€ pour les chariots, DPD Relais 3,90€ pour les accessoires. France métropolitaine, 1 à 3 jours ouvrés.",
+  alternates: { canonical: "/livraison" },
 };
 
 export default function LivraisonPage() {

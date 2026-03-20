@@ -5,7 +5,8 @@ import { ChevronRight, Shield, Mail, Phone, Wrench } from "lucide-react";
 export const metadata: Metadata = {
   title: "Garantie - PowerBug France",
   description:
-    "Garantie constructeur 2 ans sur les chariots et batteries PowerBug. SAV en France, pieces detachees officielles disponibles.",
+    "Garantie constructeur 2 ans sur les chariots et batteries PowerBug. SAV en France, pièces détachées officielles disponibles.",
+  alternates: { canonical: "/garantie" },
 };
 
 export default function GarantiePage() {

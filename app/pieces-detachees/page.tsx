@@ -13,9 +13,10 @@ import { getPiecesDetachees } from "@/lib/supabase/queries";
 import { SortableGrid } from "@/components/sortable-grid";
 
 export const metadata: Metadata = {
-  title: "Pieces detachees - PowerBug France",
+  title: "Pièces détachées - PowerBug France",
   description:
-    "Pieces detachees officielles PowerBug : moteurs, roues, chargeurs. Compatibles NX et NX DHC.",
+    "Pièces détachées officielles PowerBug : moteurs, roues, chargeurs. Compatibles NX et NX DHC.",
+  alternates: { canonical: "/pieces-detachees" },
 };
 
 export const revalidate = 3600;

@@ -10,7 +10,8 @@ import {
 export const metadata: Metadata = {
   title: "Avis & Tests PowerBug - Ce qu'en disent les experts",
   description:
-    "4.9/5 sur Trustpilot, 8 300+ avis clients. Decouvrez les tests independants et avis verifies sur les chariots PowerBug NX.",
+    "4.9/5 sur Trustpilot, 8 300+ avis clients. Découvrez les tests indépendants et avis vérifiés sur les chariots PowerBug NX.",
+  alternates: { canonical: "/avis" },
 };
 
 const reviewPlatforms = [

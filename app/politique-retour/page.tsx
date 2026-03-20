@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Politique de Retour - PowerBug France",
   description:
     "Politique de retour et droit de rétractation — 14 jours pour changer d'avis. PowerBug France, distributeur exclusif.",
+  alternates: { canonical: "/politique-retour" },
 };
 
 export default function PolitiqueRetourPage() {
