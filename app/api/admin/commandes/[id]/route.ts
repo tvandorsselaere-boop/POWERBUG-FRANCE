@@ -87,7 +87,10 @@ export async function PATCH(
       shippingMethod: shippingAddr.shipping_method as "dpd_home" | "dpd_relay" | undefined,
     };
 
-    const ordersTo = process.env.EMAIL_ORDERS_TO ?? "thomas@facile-ia.fr";
+    const ordersTo = process.env.EMAIL_ORDERS_TO;
+    if (!ordersTo) {
+      return NextResponse.json({ error: "EMAIL_ORDERS_TO not configured" }, { status: 500 });
+    }
     await sendEmail({
       to: ordersTo,
       subject: `[PowerBug] RENVOI — Commande à préparer — n° ${order.id.slice(0, 8).toUpperCase()}`,

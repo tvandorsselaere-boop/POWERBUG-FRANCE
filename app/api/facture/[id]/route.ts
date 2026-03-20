@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { generateInvoicePdf, type InvoiceOrder } from "@/lib/invoice/generate";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const ip = getClientIp(req.headers);
+  const { allowed } = rateLimit(`facture:${ip}`, 10, 60_000);
+  if (!allowed) {
+    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
+  }
+
   const { id } = await params;
   const supabase = await createClient();
   const {

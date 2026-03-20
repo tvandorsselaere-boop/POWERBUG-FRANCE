@@ -5,6 +5,7 @@ import Stripe from "stripe";
 import { sendEmail } from "@/lib/email/zepto";
 import { orderConfirmationHtml, orderConfirmationText, preparationOrderHtml, type OrderItem } from "@/lib/email/templates";
 import { generateInvoicePdf, type InvoiceOrder } from "@/lib/invoice/generate";
+import { logInfo, logError } from "@/lib/logger";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -15,7 +16,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (!process.env.STRIPE_WEBHOOK_SECRET) {
-    console.error("STRIPE_WEBHOOK_SECRET is not set");
+    logError("STRIPE_WEBHOOK_SECRET is not set");
     return NextResponse.json(
       { error: "Webhook secret not configured" },
       { status: 500 }
@@ -32,23 +33,23 @@ export async function POST(req: NextRequest) {
     );
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
-    console.error("Webhook signature verification failed:", message);
+    logError("Webhook signature verification failed", { error: message });
     return NextResponse.json(
       { error: "Invalid request" },
       { status: 400 }
     );
   }
 
-  console.log("Webhook event received:", event.type, event.id);
+  logInfo("Webhook event received", { type: event.type, eventId: event.id });
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as Stripe.Checkout.Session;
 
-    console.log("Processing checkout session:", session.id);
+    logInfo("Processing checkout session", { sessionId: session.id });
 
     // Only process PowerBug orders
     if (session.metadata?.store !== "powerbug") {
-      console.log("Skipping: not a powerbug order");
+      logInfo("Skipping non-powerbug order", { store: session.metadata?.store });
       return NextResponse.json({ received: true, skipped: "not powerbug" });
     }
 
@@ -73,14 +74,12 @@ export async function POST(req: NextRequest) {
         .maybeSingle();
 
       if (existingOrder) {
-        console.log(`Order already exists for payment ${paymentId}, skipping`);
+        logInfo("Duplicate payment skipped", { paymentId });
         return NextResponse.json({ received: true, skipped: "duplicate" });
       }
 
       // Stripe SDK v20+: shipping is under collected_information.shipping_details
       const shippingDetails = fullSession.collected_information?.shipping_details ?? null;
-
-      // Shipping details retrieved from Stripe session
 
       const addr = shippingDetails?.address;
       // Detect shipping method from metadata or fallback to shipping line item description
@@ -124,7 +123,7 @@ export async function POST(req: NextRequest) {
       const shippingCost = shippingLineItem ? (shippingLineItem.price?.unit_amount ?? 0) / 100 : 0;
       const subtotal = total - shippingCost;
 
-      console.log("Inserting order:", { total, shippingCost });
+      logInfo("Inserting order", { total, shippingCost, email: session.customer_details?.email });
 
       // Insert order
       const { data: order, error: orderError } = await supabase
@@ -145,7 +144,7 @@ export async function POST(req: NextRequest) {
         .single();
 
       if (orderError) {
-        console.error("Failed to insert order:", JSON.stringify(orderError));
+        logError("Failed to insert order", { error: orderError.message, code: orderError.code });
         return NextResponse.json(
           { error: `DB insert failed: ${orderError.message}` },
           { status: 500 }
@@ -172,10 +171,10 @@ export async function POST(req: NextRequest) {
         .insert(orderItems);
 
       if (itemsError) {
-        console.error("Failed to insert order items:", JSON.stringify(itemsError));
+        logError("Failed to insert order items", { error: itemsError.message, orderId: order.id });
       }
 
-      console.log(`Order ${order.id} created for ${session.customer_details?.email}`);
+      logInfo("Order created", { orderId: order.id, email: session.customer_details?.email });
 
       // Envoyer les emails
       const customerEmail = session.customer_details?.email ?? session.customer_email ?? "";
@@ -214,7 +213,7 @@ export async function POST(req: NextRequest) {
           upsert: true,
         });
       if (storageError) {
-        console.error("Failed to store invoice PDF:", storageError.message);
+        logError("Failed to store invoice PDF", { error: storageError.message, orderId: order.id });
       }
 
       // Email confirmation → client (avec facture PDF)
@@ -234,19 +233,23 @@ export async function POST(req: NextRequest) {
       });
 
       // Email bon de préparation → Golf des Marques (via Fred pour l'instant)
-      const ordersTo = process.env.EMAIL_ORDERS_TO ?? "thomas@facile-ia.fr";
-      await sendEmail({
-        to: ordersTo,
-        subject: `[PowerBug] Nouvelle commande à préparer — n° ${order.id.slice(0, 8).toUpperCase()}`,
-        html: preparationOrderHtml(emailData),
-        replyTo: customerEmail,
-      });
+      const ordersTo = process.env.EMAIL_ORDERS_TO;
+      if (!ordersTo) {
+        logError("EMAIL_ORDERS_TO is not set, skipping preparation email", { orderId: order.id });
+      } else {
+        await sendEmail({
+          to: ordersTo,
+          subject: `[PowerBug] Nouvelle commande à préparer — n° ${order.id.slice(0, 8).toUpperCase()}`,
+          html: preparationOrderHtml(emailData),
+          replyTo: customerEmail,
+        });
+      }
 
       // Stock géré manuellement par Fred — pas de décrémentation auto
 
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unknown error";
-      console.error("Webhook processing error:", message);
+      logError("Webhook processing error", { error: message });
       return NextResponse.json(
         { error: `Processing failed: ${message}` },
         { status: 500 }

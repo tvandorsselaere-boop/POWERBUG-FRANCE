@@ -18,11 +18,16 @@ interface EmailPayload {
 
 export async function sendEmail({ to, toName, subject, html, text, replyTo, attachments }: EmailPayload) {
   const apiKey = process.env.ZEPTO_API_KEY;
-  const from = process.env.EMAIL_FROM ?? "thomas@facile-ia.fr";
+  const from = process.env.EMAIL_FROM;
 
   if (!apiKey) {
     console.error("ZEPTO_API_KEY is not set");
     return { success: false, error: "ZEPTO_API_KEY not configured" };
+  }
+
+  if (!from) {
+    console.error("EMAIL_FROM is not set");
+    return { success: false, error: "EMAIL_FROM not configured" };
   }
 
   // Supporte une string simple, une string comma-séparée, ou un tableau

@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Poppins } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { ConstructionBanner } from "@/components/construction-banner";
 import { TrustBanner } from "@/components/trust-banner";
 import { Analytics } from "@/components/analytics";
 import { CookieConsent } from "@/components/cookie-consent";
@@ -109,7 +108,6 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${poppins.variable} antialiased bg-white text-[#0F0F10]`}>
-        <ConstructionBanner />
         <Header />
         <TrustBanner />
         <main className="min-h-screen pb-24 md:pb-0">{children}</main>
