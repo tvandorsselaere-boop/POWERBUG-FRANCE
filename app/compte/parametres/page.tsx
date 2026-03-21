@@ -11,10 +11,12 @@ export default function ParametresPage() {
   const supabase = createBrowserClient();
   const router = useRouter();
   const [isGoogleUser, setIsGoogleUser] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }: { data: { user: import('@supabase/supabase-js').User | null } }) => {
       if (user?.app_metadata?.provider === "google") setIsGoogleUser(true);
+      if (user?.email) setUserEmail(user.email);
     });
   }, [supabase]);
 
@@ -165,6 +167,8 @@ export default function ParametresPage() {
           </div>
 
           <form onSubmit={handlePasswordChange} className="space-y-4">
+            {/* Hidden username field for Chrome password manager */}
+            <input type="hidden" autoComplete="username" value={userEmail} readOnly />
             <div>
               <label htmlFor="current-password" className="mb-1 block text-sm font-medium text-[#0F0F10]">
                 Mot de passe actuel
