@@ -47,6 +47,7 @@ export async function generateMetadata({
   return {
     title: `${feature.title} - PowerBug France`,
     description: feature.description,
+    alternates: { canonical: `/fonctionnalites/${slug}` },
   };
 }
 
