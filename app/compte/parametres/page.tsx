@@ -167,7 +167,21 @@ export default function ParametresPage() {
           </div>
 
           <form onSubmit={handlePasswordChange} className="space-y-4">
-            <input type="hidden" name="username" autoComplete="username" value={userEmail} readOnly />
+            <div>
+              <label htmlFor="username" className="mb-1 block text-sm font-medium text-[#0F0F10]">
+                Compte
+              </label>
+              <input
+                type="email"
+                id="username"
+                name="username"
+                value={userEmail}
+                readOnly
+                autoComplete="username"
+                className={inputClass + " bg-[#F9FAFB] text-[#6B7280] cursor-default"}
+                tabIndex={-1}
+              />
+            </div>
             <div>
               <label htmlFor="current-password" className="mb-1 block text-sm font-medium text-[#0F0F10]">
                 Mot de passe actuel
