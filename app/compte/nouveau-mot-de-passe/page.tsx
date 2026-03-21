@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronRight, Loader2, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
-import { createBrowserClient } from "@/lib/supabase/browser";
 
 export default function NouveauMotDePassePage() {
   const router = useRouter();
@@ -18,14 +17,6 @@ export default function NouveauMotDePassePage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
-
-  useEffect(() => {
-    const supabase = createBrowserClient();
-    supabase.auth.getUser().then(({ data: { user } }: { data: { user: import('@supabase/supabase-js').User | null } }) => {
-      if (user?.email) setUserEmail(user.email);
-    });
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,8 +48,7 @@ export default function NouveauMotDePassePage() {
       return;
     }
 
-    // Delay so Chrome can detect the new password and offer to save it
-    setTimeout(() => setSuccess(true), 500);
+    setSuccess(true);
   };
 
   const inputClass =
@@ -112,8 +102,6 @@ export default function NouveauMotDePassePage() {
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-          {/* Hidden username field for Chrome password manager */}
-          <input type="hidden" autoComplete="username" value={userEmail} readOnly />
           {error && (
             <div className="rounded-[10px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               {error}
