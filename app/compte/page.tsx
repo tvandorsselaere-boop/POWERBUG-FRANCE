@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
-import { Package, MapPin, Settings, ChevronRight } from "lucide-react";
+import { Package, MapPin, Settings, ChevronRight, LogOut } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { SavedToast } from "./saved-toast";
+import { LogoutButton } from "./logout-button";
 
 export default async function ComptePage() {
   const supabase = await createClient();
@@ -97,6 +98,8 @@ export default async function ComptePage() {
           </h3>
           <p className="mt-1 text-sm text-[#6B7280]">{user.email}</p>
         </div>
+
+        <LogoutButton />
       </div>
     </div>
   );
