@@ -97,9 +97,12 @@ export default function ParametresPage() {
         type: "success",
         text: "Mot de passe modifie avec succes.",
       });
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
+      // Delay clearing fields so Chrome can detect the password change and offer to save
+      setTimeout(() => {
+        setCurrentPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
+      }, 500);
     }
     setPwLoading(false);
   };
@@ -163,11 +166,12 @@ export default function ParametresPage() {
 
           <form onSubmit={handlePasswordChange} className="space-y-4">
             <div>
-              <label className="mb-1 block text-sm font-medium text-[#0F0F10]">
+              <label htmlFor="current-password" className="mb-1 block text-sm font-medium text-[#0F0F10]">
                 Mot de passe actuel
               </label>
               <input
                 type="password"
+                id="current-password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 required
@@ -176,11 +180,12 @@ export default function ParametresPage() {
               />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-[#0F0F10]">
+              <label htmlFor="new-password" className="mb-1 block text-sm font-medium text-[#0F0F10]">
                 Nouveau mot de passe
               </label>
               <input
                 type="password"
+                id="new-password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
@@ -193,11 +198,12 @@ export default function ParametresPage() {
               </p>
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-[#0F0F10]">
+              <label htmlFor="confirm-password" className="mb-1 block text-sm font-medium text-[#0F0F10]">
                 Confirmer le nouveau mot de passe
               </label>
               <input
                 type="password"
+                id="confirm-password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
