@@ -1,16 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronRight, Loader2, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
+import { createBrowserClient } from "@/lib/supabase/browser";
 
 export default function NouveauMotDePassePage() {
   const router = useRouter();
   const { updatePassword } = useAuth();
   const [password, setPassword] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    const supabase = createBrowserClient();
+    supabase.auth.getUser().then(({ data: { user } }: { data: { user: import('@supabase/supabase-js').User | null } }) => {
+      if (user?.email) setUserEmail(user.email);
+    });
+  }, []);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -102,6 +111,7 @@ export default function NouveauMotDePassePage() {
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+          <input type="hidden" name="username" autoComplete="username" value={userEmail} readOnly />
           {error && (
             <div className="rounded-[10px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
               {error}
