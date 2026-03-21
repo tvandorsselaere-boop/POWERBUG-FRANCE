@@ -80,10 +80,10 @@ export default function MentionsLegalesPage() {
               <p>
                 <strong className="text-[#0F0F10]">Email :</strong>{" "}
                 <a
-                  href="mailto:fred@powerbug.fr"
+                  href="mailto:contact@powerbug.fr"
                   className="text-[#356B0D] underline"
                 >
-                  fred@powerbug.fr
+                  contact@powerbug.fr
                 </a>
               </p>
               <p>
@@ -261,10 +261,10 @@ export default function MentionsLegalesPage() {
           <p className="mt-2 text-sm leading-relaxed text-[#6B7280]">
             Pour exercer ces droits, vous pouvez nous contacter à l&apos;adresse{" "}
             <a
-              href="mailto:fred@powerbug.fr"
+              href="mailto:contact@powerbug.fr"
               className="text-[#356B0D] underline"
             >
-              fred@powerbug.fr
+              contact@powerbug.fr
             </a>
             . Vous disposez également du droit d&apos;introduire une
             réclamation auprès de la CNIL (Commission Nationale de
@@ -364,10 +364,10 @@ export default function MentionsLegalesPage() {
             Pour toute question relative aux mentions légales, vous pouvez nous
             contacter à{" "}
             <a
-              href="mailto:fred@powerbug.fr"
+              href="mailto:contact@powerbug.fr"
               className="text-[#356B0D] underline"
             >
-              fred@powerbug.fr
+              contact@powerbug.fr
             </a>{" "}
             ou par téléphone au{" "}
             <a href="tel:+33788239784" className="text-[#356B0D] underline">

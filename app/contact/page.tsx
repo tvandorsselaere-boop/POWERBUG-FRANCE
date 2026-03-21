@@ -225,7 +225,7 @@ export default function ContactPage() {
                 <Mail className="mt-0.5 h-5 w-5 shrink-0 text-[#356B0D]" />
                 <div>
                   <p className="text-sm font-medium text-[#0F0F10]">Email</p>
-                  <a href="mailto:fred@powerbug.fr" className="text-sm text-[#6B7280] hover:text-[#356B0D]">fred@powerbug.fr</a>
+                  <a href="mailto:contact@powerbug.fr" className="text-sm text-[#6B7280] hover:text-[#356B0D]">contact@powerbug.fr</a>
                 </div>
               </div>
               <div className="flex items-start gap-3">

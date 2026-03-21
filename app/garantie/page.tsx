@@ -119,7 +119,7 @@ export default function GarantiePage() {
               Contactez-nous
             </h3>
             <p className="mt-2 text-sm text-[#6B7280]">
-              Envoyez-nous un email a fred@powerbug.fr ou appelez le 07 88 23 97 84 en decrivant le probleme rencontre.
+              Envoyez-nous un email a contact@powerbug.fr ou appelez le 07 88 23 97 84 en decrivant le probleme rencontre.
             </p>
           </div>
 
@@ -184,10 +184,10 @@ export default function GarantiePage() {
             <div className="flex items-center gap-3">
               <Mail className="h-5 w-5 shrink-0 text-[#356B0D]" />
               <a
-                href="mailto:fred@powerbug.fr"
+                href="mailto:contact@powerbug.fr"
                 className="text-sm text-[#6B7280] hover:text-[#356B0D]"
               >
-                fred@powerbug.fr
+                contact@powerbug.fr
               </a>
             </div>
             <div className="flex items-center gap-3">

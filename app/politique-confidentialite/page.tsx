@@ -25,7 +25,7 @@ export default function PolitiqueConfidentialitePage() {
             <strong>PRO GOLF DISTRIBUTION</strong> — SASU au capital de 1 000 €<br />
             SIREN 888 311 610 — RCS Aix-en-Provence<br />
             Siège social : Domaine de Riquetti, 13290 Aix-en-Provence<br />
-            Email : <a href="mailto:fred@powerbug.fr" className="text-[#356B0D] hover:underline">fred@powerbug.fr</a>
+            Email : <a href="mailto:contact@powerbug.fr" className="text-[#356B0D] hover:underline">contact@powerbug.fr</a>
           </p>
         </section>
 
@@ -101,8 +101,8 @@ export default function PolitiqueConfidentialitePage() {
           </ul>
           <p className="mt-4 leading-relaxed text-[#374151]">
             Pour exercer ces droits, contactez-nous à :{" "}
-            <a href="mailto:fred@powerbug.fr" className="text-[#356B0D] hover:underline">
-              fred@powerbug.fr
+            <a href="mailto:contact@powerbug.fr" className="text-[#356B0D] hover:underline">
+              contact@powerbug.fr
             </a>
             . Nous répondrons dans un délai maximum de 30 jours.
           </p>

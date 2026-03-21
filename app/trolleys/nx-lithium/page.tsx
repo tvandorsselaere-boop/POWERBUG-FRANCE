@@ -155,7 +155,7 @@ export default async function NxLithiumPage() {
           <h2 className="mb-6 text-2xl font-bold text-[#0F0F10]">Livraison et paiement</h2>
           <div className="max-w-3xl space-y-4 text-[#6B7280]">
             <p className="leading-relaxed">
-              Le NX Lithium est livré à domicile par DPD en 1 à 3 jours ouvrés (14,90&nbsp;&euro;, France métropolitaine). Le paiement s&apos;effectue par carte bancaire, Apple Pay ou Google Pay via Stripe, plateforme de paiement sécurisée. Vous disposez d&apos;un droit de rétractation de 14 jours conformément à la législation française. Pour toute question, contactez-nous à <a href="mailto:fred@powerbug.fr" className="text-[#356B0D] underline">fred@powerbug.fr</a> ou au <a href="tel:+33788239784" className="text-[#356B0D] underline">07&nbsp;88&nbsp;23&nbsp;97&nbsp;84</a>.
+              Le NX Lithium est livré à domicile par DPD en 1 à 3 jours ouvrés (14,90&nbsp;&euro;, France métropolitaine). Le paiement s&apos;effectue par carte bancaire, Apple Pay ou Google Pay via Stripe, plateforme de paiement sécurisée. Vous disposez d&apos;un droit de rétractation de 14 jours conformément à la législation française. Pour toute question, contactez-nous à <a href="mailto:contact@powerbug.fr" className="text-[#356B0D] underline">contact@powerbug.fr</a> ou au <a href="tel:+33788239784" className="text-[#356B0D] underline">07&nbsp;88&nbsp;23&nbsp;97&nbsp;84</a>.
             </p>
           </div>
         </section>
