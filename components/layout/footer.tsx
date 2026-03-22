@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Zap } from "lucide-react";
+import { Zap, Facebook, Twitter, Instagram } from "lucide-react";
 
 const footerLinks = {
   produits: [
@@ -42,6 +42,35 @@ export function Footer() {
               Distributeur exclusif France des chariots electriques de golf PowerBug.
               Qualite britannique depuis 2003.
             </p>
+            <div className="flex items-center gap-3 pt-1">
+              <a
+                href="https://www.facebook.com/powerbugfrance"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook PowerBug France"
+                className="text-[#6B7280] transition-colors hover:text-[#356B0D]"
+              >
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a
+                href="https://www.instagram.com/powerbugfr/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram PowerBug France"
+                className="text-[#6B7280] transition-colors hover:text-[#356B0D]"
+              >
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a
+                href="https://x.com/PowerBugFrance"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (Twitter) PowerBug France"
+                className="text-[#6B7280] transition-colors hover:text-[#356B0D]"
+              >
+                <Twitter className="h-5 w-5" />
+              </a>
+            </div>
           </div>
 
           {/* Produits */}

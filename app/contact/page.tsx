@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronRight, Mail, Phone, MapPin, Loader2, CheckCircle } from "lucide-react";
+import { ChevronRight, Mail, Phone, MapPin, Loader2, CheckCircle, Facebook, Instagram, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function ContactPage() {
@@ -249,6 +249,18 @@ export default function ContactPage() {
                 <strong className="text-[#0F0F10]">Delai de reponse :</strong>{" "}
                 Nous repondons a toutes les demandes sous 24h ouvrees.
               </p>
+              <div className="mt-4 flex items-center gap-4">
+                <span className="text-sm font-medium text-[#0F0F10]">Suivez-nous</span>
+                <a href="https://www.facebook.com/powerbugfrance" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="text-[#6B7280] transition-colors hover:text-[#356B0D]">
+                  <Facebook className="h-5 w-5" />
+                </a>
+                <a href="https://www.instagram.com/powerbugfr/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-[#6B7280] transition-colors hover:text-[#356B0D]">
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a href="https://x.com/PowerBugFrance" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" className="text-[#6B7280] transition-colors hover:text-[#356B0D]">
+                  <Twitter className="h-5 w-5" />
+                </a>
+              </div>
             </div>
           </div>
         </div>

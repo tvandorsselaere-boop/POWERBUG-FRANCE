@@ -110,7 +110,11 @@ const schemaOrganization = {
     contactType: "customer service",
     availableLanguage: "French",
   },
-  sameAs: ["https://www.facebook.com/powerbugfrance"],
+  sameAs: [
+    "https://www.facebook.com/powerbugfrance",
+    "https://www.instagram.com/powerbugfr/",
+    "https://x.com/PowerBugFrance",
+  ],
 };
 
 export default function RootLayout({
