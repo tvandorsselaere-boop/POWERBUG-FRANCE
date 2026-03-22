@@ -69,9 +69,20 @@ export default async function FeatureDetailPage({
         ? "NX DHC Lithium uniquement"
         : "NX Lithium uniquement";
 
+  const schemaBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://www.powerbug.fr" },
+      { "@type": "ListItem", position: 2, name: "Fonctionnalités", item: "https://www.powerbug.fr/fonctionnalites" },
+      { "@type": "ListItem", position: 3, name: feature.title, item: `https://www.powerbug.fr/fonctionnalites/${slug}` },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-[#FFFFFF]">
       <div className="mx-auto max-w-[1600px] px-6 py-12">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaBreadcrumb) }} />
         {/* Breadcrumb */}
         <nav className="mb-10 flex items-center gap-2 text-sm text-[#6B7280]">
           <Link href="/" className="transition-colors hover:text-[#356B0D]">

@@ -48,8 +48,18 @@ const steps = [
 export default async function PiecesDetacheesPage() {
   const pieces = await getPiecesDetachees();
 
+  const schemaBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://www.powerbug.fr" },
+      { "@type": "ListItem", position: 2, name: "Pièces détachées", item: "https://www.powerbug.fr/pieces-detachees" },
+    ],
+  };
+
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-12 sm:py-16 lg:px-10">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaBreadcrumb) }} />
       {/* Breadcrumb */}
       <nav className="mb-8 flex items-center gap-2 text-sm text-[#6B7280]">
         <Link href="/" className="hover:text-[#356B0D]">

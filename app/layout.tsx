@@ -4,6 +4,7 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { TrustBanner } from "@/components/trust-banner";
 import { Analytics } from "@/components/analytics";
+import { MetaPixel } from "@/components/meta-pixel";
 import { CookieConsent } from "@/components/cookie-consent";
 import "./globals.css";
 
@@ -109,7 +110,7 @@ const schemaOrganization = {
     contactType: "customer service",
     availableLanguage: "French",
   },
-  sameAs: [],
+  sameAs: ["https://www.facebook.com/powerbugfrance"],
 };
 
 export default function RootLayout({
@@ -127,6 +128,7 @@ export default function RootLayout({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaWebsite) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrganization) }} />
         <Analytics />
+        <MetaPixel />
         <CookieConsent />
       </body>
     </html>

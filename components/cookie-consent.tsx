@@ -30,6 +30,7 @@ export function CookieConsent() {
       setVisible(true);
     } else if (consent === "accepted") {
       enableGA4();
+      enableMetaPixel();
     }
   }, []);
 
@@ -42,10 +43,19 @@ export function CookieConsent() {
     }
   }
 
+  function enableMetaPixel() {
+    // Meta Pixel: grant consent and fire PageView
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      window.fbq("consent", "grant");
+      window.fbq("track", "PageView");
+    }
+  }
+
   function handleAccept() {
     setConsentCookie("accepted");
     setVisible(false);
     enableGA4();
+    enableMetaPixel();
   }
 
   function handleRefuse() {
@@ -59,7 +69,7 @@ export function CookieConsent() {
     <div className="fixed bottom-0 left-0 right-0 z-[9999] border-t border-[#DBDBDB] bg-white px-4 py-4 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] sm:px-6">
       <div className="mx-auto flex max-w-[1600px] flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm leading-relaxed text-[#6B7280]">
-          Ce site utilise Google Analytics pour mesurer son audience.
+          Ce site utilise Google Analytics et Meta Pixel pour mesurer son audience.
           Ces cookies ne sont déposés qu&apos;avec votre consentement.{" "}
           <a href="/politique-confidentialite" className="text-[#356B0D] underline">
             En savoir plus

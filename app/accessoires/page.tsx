@@ -24,8 +24,18 @@ export default async function AccessoiresPage() {
     image: acc.product_images?.[0] ?? null,
   }));
 
+  const schemaBreadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: "https://www.powerbug.fr" },
+      { "@type": "ListItem", position: 2, name: "Accessoires", item: "https://www.powerbug.fr/accessoires" },
+    ],
+  };
+
   return (
     <div className="mx-auto max-w-[1600px] px-6 py-12 sm:py-16 lg:px-10">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaBreadcrumb) }} />
       <nav className="mb-8 flex items-center gap-2 text-sm text-[#6B7280]">
         <Link href="/" className="hover:text-[#356B0D]">Accueil</Link>
         <ChevronRight className="h-3 w-3" />
