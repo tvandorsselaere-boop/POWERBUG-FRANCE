@@ -244,37 +244,56 @@ Page interactive `/configurateur` :
 #### RESTE À FAIRE
 - [ ] Migration emails ZeptoMail → Resend (en attente DNS Jimmy)
 
-### Phase 3 — SEO (score actuel 72/100, objectif 85+)
-> Source : Guide Facile-IA SEO v5, audit du 19 mars 2026
+### Phase 3 — SEO (score actuel 83/100, objectif 92+)
+> Source : Guide Facile-IA SEO v9, audit du 21 mars 2026
 
-#### 3A — Quick Wins SEO — FAIT ✅ (sessions 12-15)
+#### 3A — SEO technique — FAIT ✅ (100%)
 - [x] Canonical URLs sur toutes les pages
-- [x] Schema.org WebSite + Organization JSON-LD dans layout.tsx
-- [x] Schema.org Product JSON-LD sur fiches NX et NX DHC (+ image, shippingDetails, hasMerchantReturnPolicy)
-- [x] Breadcrumb Schema BreadcrumbList JSON-LD
-- [x] Section FAQ visible + Schema FAQPage sur homepage
-- [x] Google Analytics GA4 (G-VEKW0YYE2L)
+- [x] Schema.org WebSite + Organization + Store + FAQPage + BreadcrumbList + Product
+- [x] Google Analytics GA4 (G-VEKW0YYE2L) + Consent Mode v2 CNIL
 - [x] Sitemap dynamique : 27 URLs (inclut toutes les features pages)
-- [x] OG image dans layout.tsx (hérité par toutes les pages)
-- [x] Security headers 5/6 (HSTS, X-Frame, X-Content-Type, Referrer, Permissions)
+- [x] OG complet (10 tags) + Twitter Cards + hreflang fr-FR + meta robots googleBot
+- [x] Security headers 6/6 (HSTS, X-Frame, X-Content-Type, Referrer, Permissions, CSP)
 - [x] force-static + revalidate 3600 (TTFB ~50ms)
+- [x] Cookie banner RGPD + politique de confidentialité
+- [x] Bing Webmaster Tools + IndexNow (session 17)
+- [x] Hero mobile : image WebP 48 KB au lieu de vidéo 4.9 MB (session 17)
+- [x] JS blocking : 1 = plancher Next.js, NON RÉSOLVABLE
 
-#### 3B — Contenu SEO — EN COURS
-- [x] Enrichir homepage (1500+ mots, specs vérifiées powerbug.eu)
+#### 3B — Contenu SEO — EN COURS (score → ~92)
+- [x] Homepage 1 119 mots + FAQ visible 8 questions
 - [x] Meta tags optimisés + OG image par défaut
 - [x] Google Search Console (préfixe URL vérifié)
-- [x] Accents dans descriptions meta (session 15)
-- [ ] Fiches trolleys enrichies à 700+ mots chacune
-- [ ] 1 JS blocking script à résoudre
+- [ ] Homepage enrichie à 1 500+ mots (sections "Pourquoi PowerBug", "Technologie lithium", tableau comparatif)
+- [ ] Fiches trolleys enrichies à 700+ mots chacune + FAQ produit
+- [ ] Pages catégories : /chariots-electriques/, /guide-achat/ (maillage interne)
+- [ ] Blog SEO (5 articles : guide chariot, comparatif marques, NX vs NX DHC, batterie lithium, parcours PACA)
 
-#### 3C — Blog SEO + AEO (score 90→95+)
-- [ ] Blog SEO (5 articles prioritaires)
-- [ ] Schema.org étendu pour AEO (VideoObject, Review, etc.)
+#### 3C — Quick wins code (identifiés audit session 17)
+- [ ] Sitemap : ajouter URLs /accessoires/[slug] et /pieces-detachees/[slug]
+- [ ] Canonical sur /accessoires/[slug] et /fonctionnalites/[slug]
+- [ ] BreadcrumbList schema sur pages dynamiques
 
 ### Phase 4 — Autorité & Local (post-lancement, 1-3 mois)
-- [ ] Google Business Profile
-- [ ] Citations NAP, backlinks golf
-- [ ] Réseaux sociaux : Facebook + Instagram PowerBug France
+- [ ] Google Business Profile (bloqué — infos Jimmy)
+- [ ] Citations NAP (Pages Jaunes, Golfy, FFGolf, Yelp France)
+- [ ] Forums golf : golf-pair.com, golftechnic.com, FB "Golf en France" (Fred)
+- [ ] Backlinks organiques (guides comparatifs = link magnets)
+
+### Phase 6 — Google Merchant Center (NOUVEAU v9)
+- [ ] Feed XML produits (app/api/feed/route.ts)
+- [ ] Configurer Merchant Center + activer Shopping gratuit
+- [ ] Coût : 0€
+
+### Phase 7 — Social Pro (NOUVEAU v9)
+- [ ] Créer pages Facebook + Instagram PowerBug France
+- [ ] Posts 3-4x/semaine via Social Pro (app FACILE-IA)
+- [ ] Coût : 0€
+
+### Phase 8 — Ads Facebook/Instagram (NOUVEAU v9)
+- [ ] Pixel Meta sur powerbug.fr
+- [ ] Budget test 245€ sur 5 semaines (après 3 sem organique)
+- [ ] Ciblage : golfeurs 40-70 ans, CSP+, France
 
 ### Phase 5 — Go-Live — SITE LIVE ✅ (20 mars 2026)
 

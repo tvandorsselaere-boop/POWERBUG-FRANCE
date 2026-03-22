@@ -86,7 +86,7 @@ export default async function PiecesDetacheesPage() {
           <h2 className="mb-8 text-2xl font-bold text-[#0F0F10]">
             Catalogue pieces
           </h2>
-          <SortableGrid products={pieces.map((item) => ({
+          <SortableGrid basePath="/pieces-detachees" products={pieces.map((item) => ({
             id: item.id,
             slug: item.slug,
             name: item.name,

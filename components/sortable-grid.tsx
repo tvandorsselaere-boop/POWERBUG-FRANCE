@@ -22,7 +22,7 @@ const SORT_OPTIONS: { value: SortKey; label: string }[] = [
   { value: "name-desc", label: "Nom Z → A" },
 ];
 
-export function SortableGrid({ products }: { products: Product[] }) {
+export function SortableGrid({ products, basePath = "/accessoires" }: { products: Product[]; basePath?: string }) {
   const [sort, setSort] = useState<SortKey>("price-asc");
 
   const sorted = useMemo(() => {
@@ -67,6 +67,7 @@ export function SortableGrid({ products }: { products: Product[] }) {
             description={p.description}
             price={p.price}
             image={p.image}
+            basePath={basePath}
           />
         ))}
       </div>

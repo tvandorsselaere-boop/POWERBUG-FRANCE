@@ -15,9 +15,10 @@ type Props = {
   description: string;
   price: number;
   image?: { url: string; alt_text: string | null } | null;
+  basePath?: string;
 };
 
-export function AccessoireCard({ slug, name, description, price, image }: Props) {
+export function AccessoireCard({ slug, name, description, price, image, basePath = "/accessoires" }: Props) {
   const [added, setAdded] = useState(false);
   const addItem = useCartStore((s) => s.addItem);
   const isBundle = BUNDLE_SLUGS.includes(slug);
@@ -32,7 +33,7 @@ export function AccessoireCard({ slug, name, description, price, image }: Props)
 
   return (
     <div className="group card-glass rounded-2xl p-6 transition-all hover:border-[#356B0D]/30 hover:shadow-lg flex flex-col">
-      <Link href={`/accessoires/${slug}`} className="flex-1">
+      <Link href={`${basePath}/${slug}`} className="flex-1">
         <div className="mb-4 flex h-40 items-center justify-center rounded-xl bg-[#F5F5F5]">
           {image ? (
             <Image

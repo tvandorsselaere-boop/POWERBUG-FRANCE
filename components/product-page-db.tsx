@@ -27,8 +27,9 @@ export function ProductPageDb({ product }: { product: DbProduct }) {
       ? description.slice(0, 200).trimEnd() + "\u2026"
       : description;
 
-  const categoryLabel = isTrolley ? "Chariots" : isAccessoire ? "Accessoires" : "Piles & Pieces";
-  const categoryHref = isTrolley ? "/trolleys" : isAccessoire ? "/accessoires" : "/batteries";
+  const isPiece = categorySlug === "pieces-detachees";
+  const categoryLabel = isTrolley ? "Chariots" : isAccessoire ? "Accessoires" : isPiece ? "Pièces détachées" : "Batteries";
+  const categoryHref = isTrolley ? "/trolleys" : isAccessoire ? "/accessoires" : isPiece ? "/pieces-detachees" : "/batteries";
 
   // Build a Product-compatible object for AddToCartButton
   const cartProduct = {

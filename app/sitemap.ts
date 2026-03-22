@@ -27,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const piecesUrls: MetadataRoute.Sitemap = pieces.map((p) => ({
-    url: `${BASE_URL}/accessoires/${p.slug}`,
+    url: `${BASE_URL}/pieces-detachees/${p.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.7,
