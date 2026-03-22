@@ -8,7 +8,7 @@ const trustItems = [
 
 export function TrustBanner() {
   return (
-    <div className="border-y border-[#DBDBDB] bg-[#F5F5F5]">
+    <div className="hidden md:block border-y border-[#DBDBDB] bg-[#F5F5F5]">
       <div className="mx-auto flex max-w-[1600px] flex-wrap items-center justify-center gap-6 px-6 py-3 sm:gap-10 lg:px-10">
         {trustItems.map((item) => (
           <div
